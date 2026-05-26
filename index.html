@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Guía turística interactiva de Potrerillos, Mendoza. Lugares, miradores, gastronomía y aventura con Mads Experiences.">
+<title>Potrerillos · Guía Turística</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--orange:#E8825A;--dark:#1A1510;--stone:#C4B89A;--river:#2D6A7F;--sky:#87CEDC;--earth:#5C4A32;--green:#4CAF7A}
+body{font-family:'DM Sans',sans-serif;background:var(--dark);color:#fff;min-height:100vh;overflow-x:hidden}
+
+/* HERO */
+.hero{position:relative;height:280px;overflow:hidden;background:linear-gradient(160deg,#1A2835 0%,#2D4A3E 40%,#3D3020 100%)}
+.hero svg{position:absolute;inset:0;width:100%;height:100%}
+.hero-text{position:absolute;bottom:20px;left:20px;right:20px}
+.hero-text h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;line-height:1.2}
+.hero-text h1 em{color:var(--orange);font-style:italic;font-weight:400}
+.hero-text p{font-size:11px;color:rgba(255,255,255,0.55);margin-top:6px;letter-spacing:2px;text-transform:uppercase}
+
+/* MADS BANNER */
+.mads-banner{background:var(--orange);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;text-decoration:none}
+.mads-banner-left p{font-size:10px;color:rgba(255,255,255,0.8);text-transform:uppercase;letter-spacing:1px}
+.mads-banner-left h3{font-family:'Playfair Display',serif;font-size:16px;color:#fff;font-style:italic}
+.mads-banner-btn{background:#fff;color:var(--orange);font-size:12px;font-weight:500;padding:7px 16px;border-radius:20px;border:none;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif}
+
+/* SECTION */
+.section{padding:18px}
+.section-label{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--stone);margin-bottom:12px}
+
+/* CHIPS */
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;margin-bottom:0}
+.chips::-webkit-scrollbar{display:none}
+.chip{background:rgba(255,255,255,0.07);border:0.5px solid rgba(255,255,255,0.15);border-radius:20px;padding:8px 16px;font-size:12px;white-space:nowrap;cursor:pointer;transition:all 0.2s;flex-shrink:0;font-family:'DM Sans',sans-serif;color:#fff}
+.chip.active{background:var(--orange);border-color:var(--orange)}
+
+/* PLACES */
+.places{display:flex;flex-direction:column;gap:12px;margin-top:14px}
+.place-card{background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:14px;overflow:hidden;cursor:pointer}
+.place-img{height:130px;display:flex;align-items:center;justify-content:center;font-size:40px;position:relative}
+.place-badge{position:absolute;top:10px;left:10px;background:var(--orange);color:#fff;font-size:10px;font-weight:500;padding:3px 10px;border-radius:10px;text-transform:uppercase;letter-spacing:0.5px}
+.place-badge.verde{background:var(--green)}
+.place-badge.azul{background:var(--river)}
+.place-body{padding:12px 14px}
+.place-body h3{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;margin-bottom:4px}
+.place-body p{font-size:12px;color:rgba(255,255,255,0.55);line-height:1.5}
+.place-footer{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.place-tag{font-size:11px;color:var(--stone)}
+.place-link{font-size:12px;color:var(--sky);font-weight:500}
+
+/* MADS CARDS */
+.mads-cards{display:flex;gap:12px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.mads-cards::-webkit-scrollbar{display:none}
+.mads-card{min-width:170px;background:rgba(232,130,90,0.1);border:0.5px solid rgba(232,130,90,0.25);border-radius:14px;overflow:hidden;flex-shrink:0;cursor:pointer;text-decoration:none;display:block}
+.mads-card-img{height:100px;display:flex;align-items:center;justify-content:center;font-size:36px}
+.mads-card-body{padding:10px 12px}
+.mads-card-body h4{font-family:'Playfair Display',serif;font-size:13px;color:#fff}
+.mads-card-body .precio{font-size:12px;color:var(--orange);margin-top:3px;font-weight:500}
+.mads-card-body .btn-res{display:block;width:100%;background:var(--orange);color:#fff;border:none;border-radius:8px;padding:7px;font-size:11px;font-weight:500;cursor:pointer;margin-top:8px;text-align:center;font-family:'DM Sans',sans-serif;text-decoration:none}
+
+/* AUDIO BAR */
+.audio-bar{background:rgba(45,106,127,0.15);border:0.5px solid rgba(135,206,220,0.15);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;cursor:pointer;margin:0 18px 18px}
+.audio-play{width:36px;height:36px;background:var(--river);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.audio-info p{font-size:10px;color:var(--sky);text-transform:uppercase;letter-spacing:1px}
+.audio-info h4{font-size:12px;font-weight:500;margin-top:2px}
+.audio-info span{font-size:11px;color:rgba(255,255,255,0.4)}
+
+/* DETAIL */
+.detail{display:none;position:fixed;inset:0;background:var(--dark);z-index:200;overflow-y:auto}
+.detail.open{display:block}
+.detail-back{position:fixed;top:16px;left:16px;background:rgba(0,0,0,0.6);border:0.5px solid rgba(255,255,255,0.2);border-radius:20px;padding:6px 14px;font-size:13px;cursor:pointer;z-index:201;color:#fff;font-family:'DM Sans',sans-serif}
+.detail-hero{height:240px;display:flex;align-items:center;justify-content:center;font-size:80px}
+.detail-content{padding:20px}
+.detail-content h1{font-family:'Playfair Display',serif;font-size:24px;margin-bottom:8px}
+.detail-content p{font-size:13px;color:rgba(255,255,255,0.65);line-height:1.7;margin-bottom:16px}
+.detail-actions{display:flex;gap:10px;margin-bottom:20px}
+.btn-orange{background:var(--orange);color:#fff;border:none;border-radius:10px;padding:12px 20px;font-size:13px;font-weight:500;cursor:pointer;flex:1;font-family:'DM Sans',sans-serif}
+.btn-ghost{background:rgba(255,255,255,0.07);color:#fff;border:0.5px solid rgba(255,255,255,0.2);border-radius:10px;padding:12px 20px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif}
+.detail-mads{background:rgba(232,130,90,0.08);border:0.5px solid rgba(232,130,90,0.2);border-radius:12px;padding:14px}
+.detail-mads p{font-size:11px;color:var(--orange);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.detail-mads h4{font-size:13px;color:rgba(255,255,255,0.75);line-height:1.5;margin-bottom:10px}
+.detail-mads a{display:block;background:var(--orange);color:#fff;text-align:center;border-radius:8px;padding:10px;font-size:13px;font-weight:500;text-decoration:none;font-family:'DM Sans',sans-serif}
+
+/* WAP FLOAT */
+.wap{position:fixed;bottom:80px;right:16px;width:50px;height:50px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:100;text-decoration:none}
+
+/* NAV */
+.nav{position:fixed;bottom:0;left:0;right:0;background:rgba(26,21,16,0.97);border-top:0.5px solid rgba(255,255,255,0.08);display:flex;padding:8px 0 12px;z-index:100;backdrop-filter:blur(10px)}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;opacity:0.45;color:#fff;text-decoration:none}
+.nav-item.active{opacity:1;color:var(--orange)}
+.nav-item svg{width:22px;height:22px}
+.nav-item span{font-size:9px;letter-spacing:0.5px;text-transform:uppercase;font-family:'DM Sans',sans-serif}
+
+.spacer{height:90px}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+<svg viewBox="0 0 380 280" xmlns="http://www.w3.org/2000/svg">
+<polygon points="0,180 60,90 120,140 180,70 240,120 300,80 380,150 380,220 0,220" fill="#1E3018" opacity="0.85"/>
+<polygon points="0,200 50,130 100,165 160,100 220,145 280,110 340,150 380,130 380,240 0,240" fill="#2A3D28"/>
+<polygon points="155,105 160,95 165,103" fill="rgba(255,255,255,0.4)"/>
+<polygon points="175,73 180,62 185,71" fill="rgba(255,255,255,0.5)"/>
+<polygon points="295,83 300,72 305,81" fill="rgba(255,255,255,0.35)"/>
+<polygon points="0,230 80,195 160,215 240,190 320,210 380,195 380,280 0,280" fill="#1A2010"/>
+<ellipse cx="190" cy="252" rx="140" ry="20" fill="#2D6A7F" opacity="0.6"/>
+</svg>
+<div class="hero-text">
+  <h1>Descubrí<br><em>Potrerillos</em></h1>
+  <p>Alta Montaña · Mendoza · Argentina</p>
+</div>
+</div>
+
+<!-- MADS BANNER -->
+<a class="mads-banner" href="https://madsexperiences.com" target="_blank">
+  <div class="mads-banner-left">
+    <p>Mads Experiences</p>
+    <h3>Viví el Río Mendoza →</h3>
+  </div>
+  <button class="mads-banner-btn">Reservar</button>
+</a>
+
+<!-- CATEGORÍAS -->
+<div class="section">
+  <p class="section-label">Explorar</p>
+  <div class="chips">
+    <div class="chip active" onclick="filtrar('todo',this)">Todo</div>
+    <div class="chip" onclick="filtrar('naturaleza',this)">Naturaleza</div>
+    <div class="chip" onclick="filtrar('miradores',this)">Miradores</div>
+    <div class="chip" onclick="filtrar('gastronomia',this)">Gastronomía</div>
+    <div class="chip" onclick="filtrar('camping',this)">Camping</div>
+    <div class="chip" onclick="filtrar('secretos',this)">Spots secretos</div>
+  </div>
+</div>
+
+<!-- AUDIO GUÍA -->
+<div class="audio-bar" onclick="window.location.href='#'">
+  <div class="audio-play">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><polygon points="6,4 20,12 6,20"/></svg>
+  </div>
+  <div class="audio-info">
+    <p>Audioguía · Ep.1</p>
+    <h4>El pueblo bajo el agua</h4>
+    <span>8 min · escuchá mientras manejás</span>
+  </div>
+</div>
+
+<!-- LUGARES -->
+<div class="section" style="padding-top:0">
+  <p class="section-label">Lugares</p>
+  <div class="places" id="lugares"></div>
+</div>
+
+<!-- EXPERIENCIAS MADS -->
+<div class="section">
+  <p class="section-label">Experiencias Mads</p>
+  <div class="mads-cards" id="experiencias"></div>
+</div>
+
+<div class="spacer"></div>
+
+<!-- DETAIL OVERLAY -->
+<div class="detail" id="detail">
+  <button class="detail-back" onclick="cerrarDetail()">← Volver</button>
+  <div id="detail-content"></div>
+</div>
+
+<!-- WHATSAPP FLOTANTE -->
+<a class="wap" href="https://wa.me/5492612000000?text=Hola!%20Vi%20la%20guía%20de%20Potrerillos%20y%20quiero%20info%20sobre%20Mads%20Experiences" target="_blank" aria-label="WhatsApp Mads">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+</a>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-item active" href="index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>Inicio</span>
+  </a>
+  <a class="nav-item" href="#">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+    <span>Mapa</span>
+  </a>
+  <a class="nav-item" href="https://madsexperiences.com" target="_blank">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+    <span>Mads</span>
+  </a>
+  <a class="nav-item" href="#">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+    <span>Audio</span>
+  </a>
+  <a class="nav-item" href="#">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <span>Info</span>
+  </a>
+</nav>
+
+<script>
+const lugares = [
+  {id:1, cat:'naturaleza', emoji:'🏔', bg:'#1A2835', nombre:'Vista Panorámica del Dique', desc:'El punto más fotografiado de Potrerillos. Vista completa del lago rodeado de los Andes.', badge:'Destacado', badgeClass:'', tag:'Naturaleza · 5 min', mads:'A pocos minutos arranca la aventura de rafting con Mads Experiences.', maps:'https://maps.google.com/?q=Dique+Potrerillos+Mendoza'},
+  {id:2, cat:'miradores', emoji:'🔭', bg:'#2A1A08', nombre:'Mirador 1 del Dique', desc:'Deck de observación con bajada al agua. 4.8 estrellas · 1250 reseñas en Google.', badge:'4.8 ⭐', badgeClass:'azul', tag:'Mirador · libre', mads:'Desde acá podés ver el recorrido del río donde opera Mads.', maps:'https://maps.google.com/?q=Mirador+Dique+Potrerillos'},
+  {id:3, cat:'miradores', emoji:'🌅', bg:'#201018', nombre:'Mirador Principal', desc:'El primer acceso al dique. Kayak y SUP disponibles en la orilla. Tranquilo y espectacular.', badge:'Top foto', badgeClass:'', tag:'Mirador · libre', mads:'Bajando por el río, Mads lleva grupos de rafting por este paisaje.', maps:'https://maps.google.com/?q=Mirador+Potrerillos'},
+  {id:4, cat:'gastronomia', emoji:'🍽', bg:'#1A0E06', nombre:'La Escondida', desc:'La joya gastronómica de Potrerillos. Menú de 3 pasos, empanadas y costillar al asador.', badge:'4.6 ⭐', badgeClass:'', tag:'Gastronomía · mediodía', mads:'El combo perfecto: almorzar en La Escondida y después bajar el río con Mads.', maps:'https://maps.google.com/?q=La+Escondida+Potrerillos'},
+  {id:5, cat:'gastronomia', emoji:'🍷', bg:'#180E08', nombre:'Los Negritos Bodegón', desc:'Cocina regional auténtica. Chivito, empanadas mendocinas y parrilla con vista a los cerros.', badge:'4.6 ⭐', badgeClass:'', tag:'Gastronomía · mediodía', mads:'Después del rafting con Mads, Los Negritos es el cierre perfecto del día.', maps:'https://maps.google.com/?q=Los+Negritos+Potrerillos'},
+  {id:6, cat:'camping', emoji:'⛺', bg:'#0D1A10', nombre:'Camping Las Chacritas', desc:'El camping más visitado de Potrerillos. Parrillas, dormitorios y baños con agua caliente.', badge:'4.3 ⭐', badgeClass:'verde', tag:'Camping · con dormis', mads:'Muchos grupos que acampan acá arrancan el rafting con Mads al día siguiente.', maps:'https://maps.google.com/?q=Camping+Chacritas+Potrerillos'},
+  {id:7, cat:'camping', emoji:'🌲', bg:'#0A1808', nombre:'Refugio Las Vegas', desc:'El camping mejor valorado de la zona. Familiar, pet-friendly, actividades para chicos.', badge:'4.7 ⭐', badgeClass:'verde', tag:'Camping · pet-friendly', mads:'Perfecto para familias que quieren combinar camping y aventura con Mads.', maps:'https://maps.google.com/?q=Refugio+Las+Vegas+Mendoza'},
+  {id:8, cat:'secretos', emoji:'🏖', bg:'#0D1A18', nombre:'Playa secreta del Dique', desc:'Solo los locales la conocen. 400m caminando desde el camping. Arena fina y agua turquesa.', badge:'Spot secreto', badgeClass:'azul', tag:'Secreto local', mads:'Después de la playa, el río Mendoza te espera con Mads Experiences.', maps:'https://maps.google.com/?q=Dique+Potrerillos+playa'},
+];
+
+const experiencias = [
+  {nombre:'Rafting Clásico', emoji:'🚣', desc:'22km · Río Mendoza', precio:'Desde USD 85', link:'https://madsexperiences.com'},
+  {nombre:'Sunset River', emoji:'🌅', desc:'Atardecer en el río', precio:'Desde USD 60', link:'https://madsexperiences.com'},
+  {nombre:'Kayak + Trekking', emoji:'🏕', desc:'Aventura completa', precio:'Desde USD 70', link:'https://madsexperiences.com'},
+];
+
+function renderLugares(cat='todo') {
+  const lista = cat === 'todo' ? lugares : lugares.filter(l => l.cat === cat);
+  document.getElementById('lugares').innerHTML = lista.map(l => `
+    <div class="place-card" onclick="abrirDetail(${l.id})">
+      <div class="place-img" style="background:${l.bg}">
+        <span style="font-size:50px">${l.emoji}</span>
+        <span class="place-badge ${l.badgeClass}">${l.badge}</span>
+      </div>
+      <div class="place-body">
+        <h3>${l.nombre}</h3>
+        <p>${l.desc}</p>
+        <div class="place-footer">
+          <span class="place-tag">${l.tag}</span>
+          <span class="place-link">Ver más →</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderExperiencias() {
+  document.getElementById('experiencias').innerHTML = experiencias.map(e => `
+    <a class="mads-card" href="${e.link}" target="_blank">
+      <div class="mads-card-img" style="background:#2A1208">${e.emoji}</div>
+      <div class="mads-card-body">
+        <h4>${e.nombre}</h4>
+        <p style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px">${e.desc}</p>
+        <div class="precio">${e.precio}</div>
+        <span class="btn-res">Reservar →</span>
+      </div>
+    </a>
+  `).join('');
+}
+
+function filtrar(cat, el) {
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderLugares(cat);
+}
+
+function abrirDetail(id) {
+  const l = lugares.find(x => x.id === id);
+  if (!l) return;
+  document.getElementById('detail-content').innerHTML = `
+    <div class="detail-hero" style="background:${l.bg};font-size:80px">${l.emoji}</div>
+    <div class="detail-content">
+      <h1>${l.nombre}</h1>
+      <p>${l.desc} Uno de los puntos más visitados de Potrerillos, ideal para fotos increíbles y desconectarse de la ciudad.</p>
+      <div class="detail-actions">
+        <button class="btn-orange" onclick="window.open('${l.maps}','_blank')">Cómo llegar</button>
+        <button class="btn-ghost" onclick="cerrarDetail()">Volver</button>
+      </div>
+      <div class="detail-mads">
+        <p>Mads Experiences</p>
+        <h4>${l.mads}</h4>
+        <a href="https://madsexperiences.com" target="_blank">Ver experiencias →</a>
+      </div>
+    </div>
+  `;
+  document.getElementById('detail').classList.add('open');
+  window.scrollTo(0,0);
+}
+
+function cerrarDetail() {
+  document.getElementById('detail').classList.remove('open');
+}
+
+renderLugares();
+renderExperiencias();
+</script>
+</body>
+</html>
