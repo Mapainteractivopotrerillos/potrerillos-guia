@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reservar · Mads Experiences</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--orange:#E8825A;--dark:#1A1510;--green:#4CAF7A;--stone:#C4B89A}
+body{font-family:'DM Sans',sans-serif;background:#111008;color:#F0EDE5;min-height:100vh}
+
+.hdr{padding:16px 18px 0;display:flex;align-items:center;justify-content:space-between}
+.hdr-back{font-size:12px;color:rgba(255,255,255,0.4);background:none;border:none;cursor:pointer;padding:0;font-family:'DM Sans',sans-serif}
+.hdr-brand{font-size:10px;color:var(--orange);letter-spacing:2px;text-transform:uppercase}
+
+.hero-label{padding:20px 18px 0}
+.hero-label p{font-size:10px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.hero-label h1{font-family:'Playfair Display',serif;font-size:24px;font-style:italic;line-height:1.3}
+
+/* EXP CARDS */
+.sec{padding:18px 18px 0}
+.sec-label{font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px}
+.exp-list{display:flex;flex-direction:column;gap:8px}
+.exp-card{background:#1A1814;border:0.5px solid rgba(255,255,255,0.08);border-radius:12px;padding:13px 14px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:all 0.15s}
+.exp-card.sel{border-color:var(--orange);background:rgba(232,130,90,0.07)}
+.exp-icon{font-size:28px;flex-shrink:0}
+.exp-info{flex:1}
+.exp-info h3{font-family:'Playfair Display',serif;font-size:14px;margin-bottom:2px}
+.exp-card.sel .exp-info h3{color:#FFB894}
+.exp-info p{font-size:11px;color:rgba(255,255,255,0.4)}
+.exp-price{font-size:12px;font-weight:500;color:var(--orange);flex-shrink:0}
+.radio{width:18px;height:18px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.2);flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.exp-card.sel .radio{border-color:var(--orange);background:var(--orange)}
+.radio-dot{width:7px;height:7px;border-radius:50%;background:#fff;display:none}
+.exp-card.sel .radio-dot{display:block}
+
+/* FECHAS */
+.dates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.date-opt{background:#1A1814;border:0.5px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px;cursor:pointer;text-align:center;transition:all 0.15s}
+.date-opt.sel{border-color:var(--orange);background:rgba(232,130,90,0.07)}
+.date-opt.lleno{opacity:0.35;cursor:not-allowed}
+.date-day{font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:2px}
+.date-num{font-size:14px;font-weight:500}
+.date-opt.sel .date-num{color:#FFB894}
+.date-avail{font-size:10px;color:var(--green);margin-top:2px}
+.date-full{font-size:10px;color:rgba(255,255,255,0.3);margin-top:2px}
+
+/* COUNTER */
+.counter{background:#1A1814;border:0.5px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between}
+.counter-info h3{font-size:14px;margin-bottom:2px}
+.counter-info p{font-size:11px;color:rgba(255,255,255,0.35)}
+.counter-ctrl{display:flex;align-items:center;gap:14px}
+.c-btn{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.08);border:0.5px solid rgba(255,255,255,0.12);color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;font-family:'DM Sans',sans-serif}
+.c-val{font-size:18px;font-weight:500;min-width:20px;text-align:center}
+
+/* INPUTS */
+.input{width:100%;background:#1A1814;border:0.5px solid rgba(255,255,255,0.12);border-radius:10px;padding:12px 14px;font-size:14px;color:#F0EDE5;outline:none;font-family:'DM Sans',sans-serif;transition:border-color 0.15s}
+.input:focus{border-color:rgba(232,130,90,0.5)}
+.input::placeholder{color:rgba(255,255,255,0.2)}
+.input.err{border-color:rgba(220,80,80,0.5)}
+
+/* SUMMARY */
+.summary{background:rgba(232,130,90,0.07);border:0.5px solid rgba(232,130,90,0.2);border-radius:14px;padding:14px}
+.summary-title{font-size:10px;color:var(--orange);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px}
+.s-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:0.5px solid rgba(255,255,255,0.06);font-size:13px}
+.s-row:last-child{border-bottom:none;padding-top:8px;margin-top:4px}
+.s-row span:first-child{color:rgba(255,255,255,0.5)}
+.s-row span:last-child{font-weight:500}
+.s-row.total span:first-child{color:#F0EDE5;font-weight:500}
+.s-row.total span:last-child{color:var(--orange);font-size:15px}
+
+/* WA NOTE */
+.wa-note{background:rgba(37,211,102,0.06);border:0.5px solid rgba(37,211,102,0.18);border-radius:12px;padding:11px 13px;display:flex;gap:9px;align-items:flex-start}
+.wa-note p{font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6}
+.wa-note strong{color:var(--green);font-weight:500}
+
+/* BTN */
+.wa-btn{width:100%;background:#25D366;color:#fff;border:none;border-radius:14px;padding:15px;font-size:16px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;font-family:'DM Sans',sans-serif}
+
+/* CONFIRM */
+.confirm{display:none;padding:50px 18px 32px;text-align:center}
+.confirm.show{display:block}
+.confirm-icon{width:60px;height:60px;border-radius:50%;background:rgba(37,211,102,0.12);border:1px solid rgba(37,211,102,0.3);display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
+.confirm h2{font-family:'Playfair Display',serif;font-size:22px;font-style:italic;margin-bottom:10px;line-height:1.3}
+.confirm p{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:22px}
+.confirm-box{background:#1A1814;border:0.5px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px;text-align:left;margin-bottom:22px}
+.c-row{display:flex;justify-content:space-between;padding:5px 0;font-size:13px}
+.c-row span:first-child{color:rgba(255,255,255,0.4)}
+.c-row span:last-child{font-weight:500}
+
+/* NAV */
+.nav{position:fixed;bottom:0;left:0;right:0;background:rgba(17,16,8,0.97);border-top:0.5px solid rgba(255,255,255,0.08);display:flex;padding:8px 0 12px;z-index:100}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;opacity:0.45;color:#fff;text-decoration:none}
+.nav-item.active{opacity:1;color:var(--orange)}
+.nav-item svg{width:22px;height:22px}
+.nav-item span{font-size:9px;letter-spacing:0.5px;text-transform:uppercase;font-family:'DM Sans',sans-serif}
+
+.spacer{height:90px}
+</style>
+</head>
+<body>
+
+<div id="form-screen">
+
+<div class="hdr">
+  <button class="hdr-back" onclick="history.back()">← Volver</button>
+  <span class="hdr-brand">Mads Experiences</span>
+</div>
+
+<div class="hero-label">
+  <p>Reserva tu aventura</p>
+  <h1>¿Qué querés<br>vivir?</h1>
+</div>
+
+<!-- EXPERIENCIAS -->
+<div class="sec">
+  <p class="sec-label">Elegí una experiencia</p>
+  <div class="exp-list" id="exp-list"></div>
+</div>
+
+<!-- FECHAS -->
+<div class="sec">
+  <p class="sec-label">Elegí una fecha</p>
+  <div class="dates" id="dates"></div>
+</div>
+
+<!-- PERSONAS -->
+<div class="sec">
+  <p class="sec-label">¿Cuántas personas?</p>
+  <div class="counter">
+    <div class="counter-info">
+      <h3>Personas</h3>
+      <p>Mín. 2 · Máx. 12</p>
+    </div>
+    <div class="counter-ctrl">
+      <button class="c-btn" onclick="cambiarPax(-1)">−</button>
+      <span class="c-val" id="pax-val">2</span>
+      <button class="c-btn" onclick="cambiarPax(1)">+</button>
+    </div>
+  </div>
+</div>
+
+<!-- DATOS -->
+<div class="sec">
+  <p class="sec-label">Tus datos</p>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <input class="input" id="inp-nombre" type="text" placeholder="Nombre y apellido" autocomplete="name"/>
+    <input class="input" id="inp-tel" type="tel" placeholder="Tu WhatsApp (ej: +54 9 261 ...)" autocomplete="tel"/>
+    <input class="input" id="inp-nota" type="text" placeholder="Consulta o dato especial (opcional)"/>
+  </div>
+</div>
+
+<!-- RESUMEN -->
+<div class="sec">
+  <p class="sec-label">Resumen</p>
+  <div class="summary">
+    <div class="summary-title">Tu reserva</div>
+    <div class="s-row"><span>Experiencia</span><span id="s-exp">—</span></div>
+    <div class="s-row"><span>Fecha</span><span id="s-fecha">—</span></div>
+    <div class="s-row"><span>Personas</span><span id="s-pax">2 personas</span></div>
+    <div class="s-row total"><span>Precio estimado</span><span id="s-total">—</span></div>
+  </div>
+</div>
+
+<!-- NOTA WA -->
+<div class="sec">
+  <div class="wa-note">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="#4CAF7A" flex-shrink="0" style="flex-shrink:0;margin-top:1px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+    <p><strong>No se paga en la app.</strong> Al tocar el botón se abre WhatsApp con tus datos listos. El equipo de Mads te confirma disponibilidad y te pasa el link de pago.</p>
+  </div>
+</div>
+
+<!-- BOTÓN -->
+<div class="sec" style="padding-bottom:0">
+  <button class="wa-btn" onclick="enviar()">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+    Confirmar por WhatsApp
+  </button>
+</div>
+
+<div class="spacer"></div>
+
+</div>
+
+<!-- CONFIRM -->
+<div class="confirm" id="confirm-screen">
+  <div class="confirm-icon">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#4CAF7A" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+  <h2>¡Listo! Tu consulta<br>está en camino</h2>
+  <p>Se abrió WhatsApp con tus datos. El equipo de Mads te responde en menos de 2 horas para confirmar tu lugar.</p>
+  <div class="confirm-box" id="confirm-box"></div>
+  <button class="wa-btn" id="confirm-wa-btn">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+    Abrir WhatsApp
+  </button>
+  <div style="margin-top:16px">
+    <a href="index.html" style="font-size:13px;color:rgba(255,255,255,0.4);text-decoration:none">← Volver al inicio</a>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-item" href="index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>Inicio</span>
+  </a>
+  <a class="nav-item" href="mapa.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+    <span>Mapa</span>
+  </a>
+  <a class="nav-item" href="https://madsexperiences.com" target="_blank">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+    <span>Mads</span>
+  </a>
+  <a class="nav-item" href="audio.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+    <span>Audio</span>
+  </a>
+  <a class="nav-item active" href="reserva.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <span>Reserva</span>
+  </a>
+</nav>
+
+<script>
+const WA_NUMBER = '5492612000000';
+
+const exps = [
+  {id:'rafting', emoji:'🚣', nombre:'Rafting Clásico', desc:'22km · Río Mendoza · Fotos incluidas', precio:85, dur:'Día completo'},
+  {id:'sunset', emoji:'🌅', nombre:'Sunset River', desc:'Atardecer en el río · Picnic incluido', precio:60, dur:'Tarde'},
+  {id:'kayak', emoji:'🏕', nombre:'Kayak + Trekking', desc:'Aventura completa · Guía certificado', precio:70, dur:'Día completo'},
+];
+
+let selExp = 'rafting', selFecha = null, pax = 2, waUrl = '';
+
+function getDates() {
+  const dias = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  const meses = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  const hoy = new Date();
+  const opts = [];
+  for (let i = 1; i <= 6; i++) {
+    const d = new Date(hoy);
+    d.setDate(hoy.getDate() + i);
+    opts.push({
+      label: dias[d.getDay()],
+      fecha: d.getDate() + ' ' + meses[d.getMonth()],
+      lleno: i === 3 || i === 5,
+      raw: d
+    });
+  }
+  return opts;
+}
+
+function renderExps() {
+  document.getElementById('exp-list').innerHTML = exps.map(e => `
+    <div class="exp-card${e.id === selExp ? ' sel' : ''}" onclick="seleccionarExp('${e.id}')">
+      <span class="exp-icon">${e.emoji}</span>
+      <div class="exp-info">
+        <h3>${e.nombre}</h3>
+        <p>${e.desc}</p>
+      </div>
+      <span class="exp-price">USD ${e.precio}</span>
+      <div class="radio"><div class="radio-dot"></div></div>
+    </div>
+  `).join('');
+}
+
+function renderDates() {
+  const opts = getDates();
+  document.getElementById('dates').innerHTML = opts.map((d, i) => `
+    <div class="date-opt${d.lleno ? ' lleno' : ''}${selFecha === i ? ' sel' : ''}" onclick="${d.lleno ? '' : 'seleccionarFecha(' + i + ')'}">
+      <div class="date-day">${d.label}</div>
+      <div class="date-num">${d.fecha}</div>
+      ${d.lleno ? '<div class="date-full">Sin lugares</div>' : '<div class="date-avail">Disponible</div>'}
+    </div>
+  `).join('');
+}
+
+function seleccionarExp(id) {
+  selExp = id;
+  renderExps();
+  actualizarResumen();
+}
+
+function seleccionarFecha(i) {
+  selFecha = i;
+  renderDates();
+  actualizarResumen();
+}
+
+function cambiarPax(d) {
+  pax = Math.max(2, Math.min(12, pax + d));
+  document.getElementById('pax-val').textContent = pax;
+  actualizarResumen();
+}
+
+function actualizarResumen() {
+  const e = exps.find(x => x.id === selExp);
+  const dates = getDates();
+  document.getElementById('s-exp').textContent = e ? e.nombre : '—';
+  document.getElementById('s-fecha').textContent = selFecha !== null ? dates[selFecha].label + ' ' + dates[selFecha].fecha : '—';
+  document.getElementById('s-pax').textContent = pax + ' persona' + (pax > 1 ? 's' : '');
+  document.getElementById('s-total').textContent = e ? 'USD ' + (e.precio * pax) : '—';
+}
+
+function enviar() {
+  const nombre = document.getElementById('inp-nombre');
+  const tel = document.getElementById('inp-tel');
+  [nombre, tel].forEach(el => el.classList.remove('err'));
+
+  if (!nombre.value.trim()) { nombre.classList.add('err'); nombre.focus(); return; }
+  if (!tel.value.trim()) { tel.classList.add('err'); tel.focus(); return; }
+  if (selFecha === null) { alert('Por favor elegí una fecha'); return; }
+
+  const e = exps.find(x => x.id === selExp);
+  const dates = getDates();
+  const fechaStr = dates[selFecha].label + ' ' + dates[selFecha].fecha;
+  const nota = document.getElementById('inp-nota').value.trim();
+  const total = e.precio * pax;
+
+  const msg = `Hola Mads! 👋 Quiero reservar una experiencia.
+
+🏄 *Experiencia:* ${e.nombre}
+📅 *Fecha:* ${fechaStr}
+👥 *Personas:* ${pax}
+💵 *Estimado:* USD ${total}
+👤 *Nombre:* ${nombre.value.trim()}
+📱 *WhatsApp:* ${tel.value.trim()}
+${nota ? '📝 *Nota:* ' + nota : ''}
+
+Vengo desde la guía turística de Potrerillos.`;
+
+  waUrl = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
+
+  document.getElementById('confirm-box').innerHTML = `
+    <div class="c-row"><span>Experiencia</span><span>${e.nombre}</span></div>
+    <div class="c-row"><span>Fecha</span><span>${fechaStr}</span></div>
+    <div class="c-row"><span>Personas</span><span>${pax}</span></div>
+    <div class="c-row"><span>Estimado</span><span style="color:var(--orange)">USD ${total}</span></div>
+    <div class="c-row"><span>Nombre</span><span>${nombre.value.trim()}</span></div>
+  `;
+
+  document.getElementById('confirm-wa-btn').onclick = () => window.open(waUrl, '_blank');
+  document.getElementById('form-screen').style.display = 'none';
+  document.getElementById('confirm-screen').classList.add('show');
+  window.open(waUrl, '_blank');
+}
+
+renderExps();
+renderDates();
+actualizarResumen();
+</script>
+</body>
+</html>
