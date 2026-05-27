@@ -9,15 +9,15 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--orange:#C17F3E;--dark:#0D0B08;--river:#3A6B8A;--sky:#A8C4E0;--stone:#E8D5B0;--green:#5C8A3A}
-body{font-family:'Lato',sans-serif;background:var(--dark);color:#fff;display:flex;flex-direction:column;height:100vh;overflow:hidden}
+html,body{height:100%;width:100%;overflow:hidden;font-family:'Lato',sans-serif;background:var(--dark);color:#fff}
 
-.topbar{background:#111008;border-bottom:0.5px solid rgba(255,255,255,0.06);padding:12px 22px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.topbar{position:fixed;top:0;left:0;right:0;background:#111008;border-bottom:0.5px solid rgba(255,255,255,0.06);padding:12px 22px;display:flex;align-items:center;justify-content:space-between;z-index:3000;height:56px}
 .topbar-left{display:flex;flex-direction:column}
 .topbar-eyebrow{font-size:9px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;margin-bottom:2px}
 .topbar-title{font-family:'Playfair Display',serif;font-size:17px;font-style:italic;color:var(--stone)}
 .topbar-brand{font-size:9px;color:rgba(255,255,255,0.3);letter-spacing:2px;text-transform:uppercase}
 
-#map{flex:1;z-index:1}
+#map{position:fixed;top:56px;left:0;right:0;bottom:64px;z-index:1}
 .leaflet-tile-pane{filter:brightness(0.8) saturate(0.7) hue-rotate(10deg)}
 
 .pin-mads{background:#C17F3E;border:2px solid #FFD4A0;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 2px 12px rgba(193,127,62,0.5)}
@@ -26,33 +26,33 @@ body{font-family:'Lato',sans-serif;background:var(--dark);color:#fff;display:fle
 .pin-food{background:#1A0E06;border:2px solid #C17F3E;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:12px}
 .pin-camp{background:#0A1808;border:2px solid #5C8A3A;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:12px}
 
-.legend{position:absolute;top:72px;right:10px;background:rgba(13,11,8,0.92);border:0.5px solid rgba(255,255,255,0.08);border-radius:8px;padding:8px 10px;z-index:1000;display:flex;flex-direction:column;gap:5px}
+.legend{position:fixed;top:68px;right:10px;background:rgba(13,11,8,0.92);border:0.5px solid rgba(255,255,255,0.08);border-radius:8px;padding:8px 10px;z-index:2000;display:flex;flex-direction:column;gap:5px}
 .leg{display:flex;align-items:center;gap:5px;font-size:9px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.5px}
 .leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 
-.panel{position:fixed;bottom:64px;left:0;right:0;background:#111008;border-top:0.5px solid rgba(255,255,255,0.08);z-index:2000;transform:translateY(100%);transition:transform 0.3s ease;max-height:60vh;overflow-y:auto}
+.panel{position:fixed;bottom:64px;left:0;right:0;background:#111008;border-top:0.5px solid rgba(255,255,255,0.08);z-index:2500;transform:translateY(100%);transition:transform 0.3s ease;max-height:55vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .panel.open{transform:translateY(0)}
-.panel-hdr{padding:16px 22px 0;display:flex;align-items:flex-start;justify-content:space-between;position:relative}
+.panel-hdr{padding:16px 22px 0;display:flex;align-items:flex-start;justify-content:space-between}
 .panel-eyebrow{font-size:9px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
 .panel-title{font-family:'Playfair Display',serif;font-size:18px;line-height:1.3;color:var(--stone)}
 .panel-badge{display:inline-block;font-size:10px;padding:3px 9px;border-radius:3px;margin-top:6px;font-family:'Lato',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.5px}
-.panel-close{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.1);border:none;color:#fff;font-size:18px;cursor:pointer;flex-shrink:0;font-family:'Lato',sans-serif;touch-action:manipulation}
+.panel-close{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.12);border:none;color:#fff;font-size:20px;cursor:pointer;flex-shrink:0;font-family:'Lato',sans-serif;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent}
 .panel-body{padding:8px 22px 0;font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6}
 .panel-mads{margin:12px 22px 4px;background:rgba(193,127,62,0.07);border:0.5px solid rgba(193,127,62,0.18);border-radius:4px;padding:12px;display:flex;align-items:center;gap:10px}
 .panel-mads-text{font-size:12px;color:rgba(255,255,255,0.5);line-height:1.4;flex:1}
 .panel-mads-text strong{color:var(--orange);font-weight:700}
 .panel-mads-btn{background:var(--orange);color:#fff;border:none;border-radius:3px;padding:8px 12px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'Lato',sans-serif;letter-spacing:0.5px;text-transform:uppercase}
-.panel-actions{display:flex;gap:8px;padding:10px 22px 16px}
-.btn-main{flex:1;background:var(--orange);color:#fff;border:none;border-radius:3px;padding:12px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Lato',sans-serif;letter-spacing:1px;text-transform:uppercase}
-.btn-sec{background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.5);border:0.5px solid rgba(255,255,255,0.1);border-radius:3px;padding:12px 16px;font-size:12px;cursor:pointer;font-family:'Lato',sans-serif}
+.panel-actions{display:flex;gap:8px;padding:10px 22px 20px}
+.btn-main{flex:1;background:var(--orange);color:#fff;border:none;border-radius:3px;padding:13px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Lato',sans-serif;letter-spacing:1px;text-transform:uppercase}
+.btn-sec{background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.5);border:0.5px solid rgba(255,255,255,0.1);border-radius:3px;padding:13px 16px;font-size:12px;cursor:pointer;font-family:'Lato',sans-serif}
 
-.nav{background:rgba(13,11,8,0.98);border-top:0.5px solid rgba(255,255,255,0.06);display:flex;padding:8px 0 14px;flex-shrink:0;z-index:1000}
+.nav{position:fixed;bottom:0;left:0;right:0;background:rgba(13,11,8,0.98);border-top:0.5px solid rgba(255,255,255,0.06);display:flex;padding:8px 0 14px;z-index:3000}
 .nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;opacity:0.4;color:#fff;text-decoration:none}
 .nav-item.active{opacity:1;color:var(--orange)}
 .nav-item svg{width:20px;height:20px}
 .nav-item span{font-size:8px;letter-spacing:1px;text-transform:uppercase;font-family:'Lato',sans-serif}
 
-.wap{position:fixed;bottom:76px;right:16px;width:46px;height:46px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:999;text-decoration:none;box-shadow:0 4px 14px rgba(37,211,102,0.3)}
+.wap{position:fixed;bottom:76px;right:16px;width:46px;height:46px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2400;text-decoration:none;box-shadow:0 4px 14px rgba(37,211,102,0.3)}
 .leaflet-popup{display:none}
 </style>
 </head>
@@ -82,16 +82,16 @@ body{font-family:'Lato',sans-serif;background:var(--dark);color:#fff;display:fle
       <div class="panel-title" id="p-title">—</div>
       <div class="panel-badge" id="p-badge">—</div>
     </div>
-    <button class="panel-close" onclick="cerrar()" style="position:absolute;top:12px;right:16px;z-index:1001;width:40px;height:40px;font-size:20px;background:rgba(255,255,255,0.15);color:#fff;border:none;border-radius:50%;cursor:pointer;touch-action:manipulation">✕</button>
+    <button class="panel-close" id="btn-cerrar">✕</button>
   </div>
   <div class="panel-body" id="p-body">—</div>
   <div class="panel-mads" id="p-mads">
     <div class="panel-mads-text"><strong>Mads Experiences</strong><br><span id="p-mads-text">—</span></div>
-    <button class="panel-mads-btn" onclick="window.open('https://madsexperiences.com','_blank')">Reservar →</button>
+    <button class="panel-mads-btn" id="btn-reservar">Reservar →</button>
   </div>
   <div class="panel-actions">
-    <button class="btn-main" id="p-btn-main" onclick="abrirMaps()">Cómo llegar</button>
-    <button class="btn-sec" onclick="cerrar()">Cerrar</button>
+    <button class="btn-main" id="p-btn-main">Cómo llegar</button>
+    <button class="btn-sec" id="btn-cerrar2">Cerrar</button>
   </div>
 </div>
 
@@ -148,6 +148,7 @@ const map=L.map('map',{center:[-32.975,-69.22],zoom:13,zoomControl:true});
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap',maxZoom:18}).addTo(map);
 
 let mapsUrl='';
+
 puntos.forEach(p=>{
   const icono=L.divIcon({html:iconos[p.tipo],className:'',iconSize:p.tipo==='mads'?[34,34]:[28,28],iconAnchor:p.tipo==='mads'?[17,17]:[14,14]});
   L.marker([p.lat,p.lng],{icon:icono}).addTo(map).on('click',()=>mostrar(p));
@@ -161,15 +162,38 @@ function mostrar(d){
   const madsEl=document.getElementById('p-mads');
   if(d.madsText===null){madsEl.style.display='none';}
   else{madsEl.style.display='flex';document.getElementById('p-mads-text').textContent=d.madsText;}
-  const btn=document.getElementById('p-btn-main');
-  btn.textContent=d.id==='mads'?'Ver experiencias':'Cómo llegar';
+  const btnMain=document.getElementById('p-btn-main');
+  btnMain.textContent=d.id==='mads'?'Ver experiencias':'Cómo llegar';
   mapsUrl=d.maps;
   document.getElementById('panel').classList.add('open');
   map.panTo([d.lat,d.lng]);
 }
 
-function cerrar(){document.getElementById('panel').classList.remove('open')}
-function abrirMaps(){window.open(mapsUrl,'_blank')}
+function cerrar(){
+  document.getElementById('panel').classList.remove('open');
+}
+
+// Usar addEventListener en lugar de onclick para iOS
+document.getElementById('btn-cerrar').addEventListener('touchend',function(e){
+  e.preventDefault();
+  cerrar();
+});
+document.getElementById('btn-cerrar').addEventListener('click',function(){
+  cerrar();
+});
+document.getElementById('btn-cerrar2').addEventListener('touchend',function(e){
+  e.preventDefault();
+  cerrar();
+});
+document.getElementById('btn-cerrar2').addEventListener('click',function(){
+  cerrar();
+});
+document.getElementById('p-btn-main').addEventListener('click',function(){
+  window.open(mapsUrl,'_blank');
+});
+document.getElementById('btn-reservar').addEventListener('click',function(){
+  window.open('https://madsexperiences.com','_blank');
+});
 </script>
 </body>
 </html>
