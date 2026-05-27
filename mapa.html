@@ -5,84 +5,80 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mapa · Potrerillos</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--orange:#E8825A;--dark:#1A1510;--river:#2D6A7F;--green:#4CAF7A;--stone:#C4B89A}
-body{font-family:'DM Sans',sans-serif;background:#111008;color:#fff;display:flex;flex-direction:column;height:100vh;overflow:hidden}
+:root{--orange:#C17F3E;--dark:#0D0B08;--river:#3A6B8A;--sky:#A8C4E0;--stone:#E8D5B0;--green:#5C8A3A}
+body{font-family:'Lato',sans-serif;background:var(--dark);color:#fff;display:flex;flex-direction:column;height:100vh;overflow:hidden}
 
-.topbar{background:#1A1814;border-bottom:0.5px solid rgba(255,255,255,0.08);padding:12px 18px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;z-index:1000}
-.topbar h1{font-family:'Playfair Display',serif;font-size:17px;font-style:italic;color:#F5F0E8}
-.topbar-brand{font-size:10px;color:var(--orange);letter-spacing:2px;text-transform:uppercase}
+.topbar{background:#111008;border-bottom:0.5px solid rgba(255,255,255,0.06);padding:12px 22px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.topbar-left{display:flex;flex-direction:column}
+.topbar-eyebrow{font-size:9px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;margin-bottom:2px}
+.topbar-title{font-family:'Playfair Display',serif;font-size:17px;font-style:italic;color:var(--stone)}
+.topbar-brand{font-size:9px;color:rgba(255,255,255,0.3);letter-spacing:2px;text-transform:uppercase}
 
 #map{flex:1;z-index:1}
+.leaflet-tile-pane{filter:brightness(0.8) saturate(0.7) hue-rotate(10deg)}
 
-/* Estilos del mapa oscuro */
-.leaflet-tile-pane{filter:brightness(0.85) saturate(0.9)}
+.pin-mads{background:#C17F3E;border:2px solid #FFD4A0;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 2px 12px rgba(193,127,62,0.5)}
+.pin-nature{background:#1A2835;border:2px solid #3A6B8A;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:12px}
+.pin-mirador{background:#2A1A08;border:2px solid #C17F3E;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:12px}
+.pin-food{background:#1A0E06;border:2px solid #C17F3E;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:12px}
+.pin-camp{background:#0A1808;border:2px solid #5C8A3A;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:12px}
 
-/* PINS CUSTOM */
-.pin-mads{background:#E8825A;border:2px solid #FFB894;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 2px 8px rgba(232,130,90,0.5)}
-.pin-nature{background:#2D6A7F;border:2px solid #87CEDC;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:12px}
-.pin-mirador{background:#5C4A32;border:2px solid #C4A86A;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:12px}
-.pin-food{background:#3D2010;border:2px solid #E8825A;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:12px}
-.pin-camp{background:#1A3020;border:2px solid #4CAF7A;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:12px}
-
-/* PANEL */
-.panel{position:absolute;bottom:64px;left:0;right:0;background:#1A1510;border-top:0.5px solid rgba(255,255,255,0.1);z-index:1000;transform:translateY(100%);transition:transform 0.3s ease;max-height:55vh;overflow-y:auto}
-.panel.open{transform:translateY(0)}
-.panel-hdr{padding:14px 16px 0;display:flex;align-items:flex-start;justify-content:space-between}
-.panel-title{font-family:'Playfair Display',serif;font-size:17px;line-height:1.3;color:#F5F0E8}
-.panel-badge{display:inline-block;font-size:10px;padding:3px 9px;border-radius:10px;margin-top:4px;font-family:'DM Sans',sans-serif;font-weight:500;text-transform:uppercase;letter-spacing:0.5px}
-.panel-close{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.07);border:none;color:rgba(255,255,255,0.5);font-size:16px;cursor:pointer;flex-shrink:0;font-family:'DM Sans',sans-serif}
-.panel-body{padding:8px 16px 0;font-size:13px;color:rgba(255,255,255,0.6);line-height:1.6}
-.panel-mads{margin:12px 16px 4px;background:rgba(232,130,90,0.08);border:0.5px solid rgba(232,130,90,0.2);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px}
-.panel-mads-text{font-size:12px;color:rgba(255,255,255,0.55);line-height:1.4;flex:1}
-.panel-mads-text strong{color:var(--orange);font-weight:500}
-.panel-mads-btn{background:var(--orange);color:#fff;border:none;border-radius:8px;padding:7px 12px;font-size:11px;font-weight:500;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif}
-.panel-actions{display:flex;gap:8px;padding:10px 16px 14px}
-.btn-main{flex:1;background:var(--orange);color:#fff;border:none;border-radius:10px;padding:11px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif}
-.btn-sec{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.6);border:0.5px solid rgba(255,255,255,0.12);border-radius:10px;padding:11px 16px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif}
-
-/* LEYENDA */
-.legend{position:absolute;top:70px;right:10px;background:rgba(26,21,16,0.92);border:0.5px solid rgba(255,255,255,0.1);border-radius:10px;padding:8px 10px;z-index:1000;display:flex;flex-direction:column;gap:5px}
-.leg{display:flex;align-items:center;gap:5px;font-size:9px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.5px}
+.legend{position:absolute;top:72px;right:10px;background:rgba(13,11,8,0.92);border:0.5px solid rgba(255,255,255,0.08);border-radius:8px;padding:8px 10px;z-index:1000;display:flex;flex-direction:column;gap:5px}
+.leg{display:flex;align-items:center;gap:5px;font-size:9px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.5px}
 .leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 
-/* NAV */
-.nav{background:rgba(17,16,8,0.97);border-top:0.5px solid rgba(255,255,255,0.08);display:flex;padding:8px 0 12px;flex-shrink:0;z-index:1000}
-.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;opacity:0.45;color:#fff;text-decoration:none}
+.panel{position:absolute;bottom:64px;left:0;right:0;background:#111008;border-top:0.5px solid rgba(255,255,255,0.08);z-index:1000;transform:translateY(100%);transition:transform 0.3s ease;max-height:55vh;overflow-y:auto}
+.panel.open{transform:translateY(0)}
+.panel-hdr{padding:16px 22px 0;display:flex;align-items:flex-start;justify-content:space-between}
+.panel-eyebrow{font-size:9px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+.panel-title{font-family:'Playfair Display',serif;font-size:18px;line-height:1.3;color:var(--stone)}
+.panel-badge{display:inline-block;font-size:10px;padding:3px 9px;border-radius:3px;margin-top:6px;font-family:'Lato',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.5px}
+.panel-close{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.06);border:none;color:rgba(255,255,255,0.4);font-size:16px;cursor:pointer;flex-shrink:0;font-family:'Lato',sans-serif}
+.panel-body{padding:8px 22px 0;font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6}
+.panel-mads{margin:12px 22px 4px;background:rgba(193,127,62,0.07);border:0.5px solid rgba(193,127,62,0.18);border-radius:4px;padding:12px;display:flex;align-items:center;gap:10px}
+.panel-mads-text{font-size:12px;color:rgba(255,255,255,0.5);line-height:1.4;flex:1}
+.panel-mads-text strong{color:var(--orange);font-weight:700}
+.panel-mads-btn{background:var(--orange);color:#fff;border:none;border-radius:3px;padding:8px 12px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'Lato',sans-serif;letter-spacing:0.5px;text-transform:uppercase}
+.panel-actions{display:flex;gap:8px;padding:10px 22px 16px}
+.btn-main{flex:1;background:var(--orange);color:#fff;border:none;border-radius:3px;padding:12px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Lato',sans-serif;letter-spacing:1px;text-transform:uppercase}
+.btn-sec{background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.5);border:0.5px solid rgba(255,255,255,0.1);border-radius:3px;padding:12px 16px;font-size:12px;cursor:pointer;font-family:'Lato',sans-serif}
+
+.nav{background:rgba(13,11,8,0.98);border-top:0.5px solid rgba(255,255,255,0.06);display:flex;padding:8px 0 14px;flex-shrink:0;z-index:1000}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;opacity:0.4;color:#fff;text-decoration:none}
 .nav-item.active{opacity:1;color:var(--orange)}
-.nav-item svg{width:22px;height:22px}
-.nav-item span{font-size:9px;letter-spacing:0.5px;text-transform:uppercase;font-family:'DM Sans',sans-serif}
+.nav-item svg{width:20px;height:20px}
+.nav-item span{font-size:8px;letter-spacing:1px;text-transform:uppercase;font-family:'Lato',sans-serif}
 
-.wap{position:absolute;bottom:70px;right:16px;width:46px;height:46px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:999;text-decoration:none}
-
-/* Popup de Leaflet — lo ocultamos, usamos nuestro panel */
+.wap{position:absolute;bottom:70px;right:16px;width:46px;height:46px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:999;text-decoration:none;box-shadow:0 4px 14px rgba(37,211,102,0.3)}
 .leaflet-popup{display:none}
 </style>
 </head>
 <body>
 
 <div class="topbar">
-  <h1>Mapa de Potrerillos</h1>
+  <div class="topbar-left">
+    <div class="topbar-eyebrow">Potrerillos · Mendoza</div>
+    <div class="topbar-title">Mapa interactivo</div>
+  </div>
   <span class="topbar-brand">Mads Experiences</span>
 </div>
 
 <div id="map"></div>
 
-<!-- LEYENDA -->
 <div class="legend">
-  <div class="leg"><div class="leg-dot" style="background:#E8825A"></div>Mads</div>
-  <div class="leg"><div class="leg-dot" style="background:#87CEDC"></div>Dique</div>
-  <div class="leg"><div class="leg-dot" style="background:#C4A86A"></div>Miradores</div>
-  <div class="leg"><div class="leg-dot" style="background:#E8825A"></div>Resto</div>
-  <div class="leg"><div class="leg-dot" style="background:#4CAF7A"></div>Camping</div>
+  <div class="leg"><div class="leg-dot" style="background:#C17F3E"></div>Mads / Resto</div>
+  <div class="leg"><div class="leg-dot" style="background:#3A6B8A"></div>Dique</div>
+  <div class="leg"><div class="leg-dot" style="background:#C17F3E"></div>Miradores</div>
+  <div class="leg"><div class="leg-dot" style="background:#5C8A3A"></div>Camping</div>
 </div>
 
-<!-- PANEL DETALLE -->
 <div class="panel" id="panel">
   <div class="panel-hdr">
     <div>
+      <div class="panel-eyebrow">Potrerillos</div>
       <div class="panel-title" id="p-title">—</div>
       <div class="panel-badge" id="p-badge">—</div>
     </div>
@@ -99,12 +95,10 @@ body{font-family:'DM Sans',sans-serif;background:#111008;color:#fff;display:flex
   </div>
 </div>
 
-<!-- WHATSAPP -->
-<a class="wap" href="https://wa.me/5492616040302?text=Hola!%20Vi%20el%20mapa%20de%20Potrerillos%20y%20quiero%20info%20sobre%20Mads%20Experiences" target="_blank" aria-label="WhatsApp">
+<a class="wap" href="https://wa.me/5492616040302?text=Hola!%20Vi%20el%20mapa%20de%20Potrerillos%20y%20quiero%20info%20sobre%20Mads%20Experiences" target="_blank">
   <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
 </a>
 
-<!-- NAV -->
 <nav class="nav">
   <a class="nav-item" href="index.html">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -130,80 +124,52 @@ body{font-family:'DM Sans',sans-serif;background:#111008;color:#fff;display:flex
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-const puntos = [
-  {id:'mads', lat:-32.9639, lng:-69.1993, tipo:'mads', emoji:'🚣', nombre:'Mads Experiences', badge:'★ Experiencia premium', badgeBg:'rgba(232,130,90,0.15)', badgeColor:'#FFB894', desc:'La empresa referente de aventura en Potrerillos. Rafting en el Río Mendoza, kayak, sunset river y más. Guías certificados y fotos incluidas.', madsText:null, maps:'https://madsexperiences.com'},
-  {id:'dique', lat:-32.9625, lng:-69.1866, tipo:'nature', emoji:'🏔', nombre:'Vista Panorámica del Dique', badge:'4.8 ⭐ · 2044 reseñas', badgeBg:'rgba(45,106,127,0.2)', badgeColor:'#87CEDC', desc:'El punto más fotografiado de Potrerillos. Vista completa del lago artificial rodeado de los Andes. Ideal al atardecer.', madsText:'A pocos minutos de acá arranca la aventura de rafting con Mads.', maps:'https://maps.google.com/?q=-32.9625,-69.1866'},
-  {id:'mirador1', lat:-32.9940, lng:-69.1454, tipo:'mirador', emoji:'🔭', nombre:'Mirador 1 del Dique', badge:'4.8 ⭐ · 1250 reseñas', badgeBg:'rgba(92,74,50,0.3)', badgeColor:'#C4A86A', desc:'Deck de observación con bajada al agua para nadar. Venden snacks y piedras semipreciosas locales.', madsText:'Desde acá podés ver el recorrido del río donde opera Mads.', maps:'https://maps.google.com/?q=-32.9940,-69.1454'},
-  {id:'mirador2', lat:-32.9852, lng:-69.1703, tipo:'mirador', emoji:'📸', nombre:'Mirador Principal', badge:'4.8 ⭐ · 1579 reseñas', badgeBg:'rgba(92,74,50,0.3)', badgeColor:'#C4A86A', desc:'El primer acceso al dique. Kayak y SUP disponibles en la orilla. Ambiente tranquilo y vistas espectaculares.', madsText:'Bajando por el río, Mads lleva grupos de rafting por este paisaje.', maps:'https://maps.google.com/?q=-32.9852,-69.1703'},
-  {id:'escondida', lat:-32.9623, lng:-69.2037, tipo:'food', emoji:'🍽', nombre:'La Escondida', badge:'4.6 ⭐ · 2909 reseñas', badgeBg:'rgba(61,32,16,0.4)', badgeColor:'#E8825A', desc:'La joya gastronómica de Potrerillos. Menú de 3 pasos, empanadas y costillar al asador. Solo almuerzo, martes a domingo.', madsText:'El combo perfecto: almorzar en La Escondida y después bajar el río con Mads.', maps:'https://maps.google.com/?q=-32.9623,-69.2037'},
-  {id:'granhotel', lat:-32.9601, lng:-69.1922, tipo:'food', emoji:'🍷', nombre:'Gran Hotel Restaurant', badge:'4.3 ⭐ · Bodega propia', badgeBg:'rgba(61,32,16,0.4)', badgeColor:'#E8825A', desc:'Cocina de autor con vistas al río y al dique. Bodega propia en el lugar, carta de vinos locales.', madsText:'Cena en el Gran Hotel + rafting al día siguiente con Mads: el plan ideal.', maps:'https://maps.google.com/?q=-32.9601,-69.1922'},
-  {id:'negritos', lat:-33.0135, lng:-69.2723, tipo:'food', emoji:'🥩', nombre:'Los Negritos Bodegón', badge:'4.6 ⭐ · Cocina regional', badgeBg:'rgba(61,32,16,0.4)', badgeColor:'#E8825A', desc:'Bodegón de montaña auténtico. Chivito, empanadas mendocinas y parrilla con terraza exterior.', madsText:'Después del rafting con Mads, Los Negritos es el cierre perfecto del día.', maps:'https://maps.google.com/?q=-33.0135,-69.2723'},
-  {id:'chacritas', lat:-32.9687, lng:-69.2393, tipo:'camp', emoji:'⛺', nombre:'Camping Las Chacritas', badge:'4.3 ⭐ · Con dormis', badgeBg:'rgba(26,48,32,0.4)', badgeColor:'#4CAF7A', desc:'El camping más visitado de Potrerillos. Parrillas, dormitorios y baños con agua caliente. A orillas del río.', madsText:'Muchos grupos que acampan acá arrancan el rafting con Mads al día siguiente.', maps:'https://maps.google.com/?q=-32.9687,-69.2393'},
-  {id:'lasvegas', lat:-33.0186, lng:-69.2847, tipo:'camp', emoji:'🌲', nombre:'Refugio Las Vegas', badge:'4.7 ⭐ · Pet-friendly', badgeBg:'rgba(26,48,32,0.4)', badgeColor:'#4CAF7A', desc:'El camping mejor valorado de la zona. Familiar, pet-friendly, actividades para chicos. Muy limpio.', madsText:'Perfecto para familias que quieren combinar camping y aventura con Mads.', maps:'https://maps.google.com/?q=-33.0186,-69.2847'},
+const puntos=[
+  {id:'mads',lat:-32.9639,lng:-69.1993,tipo:'mads',emoji:'🚣',nombre:'Mads Experiences',badge:'★ Experiencia premium',badgeBg:'rgba(193,127,62,0.15)',badgeColor:'#FFD4A0',desc:'La empresa referente de aventura en Potrerillos. Rafting, kayak, trekking y más. Guías certificados.',madsText:null,maps:'https://madsexperiences.com'},
+  {id:'dique',lat:-32.9625,lng:-69.1866,tipo:'nature',emoji:'🏔',nombre:'Vista Panorámica del Dique',badge:'4.8 ⭐ · 2044 reseñas',badgeBg:'rgba(58,107,138,0.2)',badgeColor:'#A8C4E0',desc:'El punto más fotografiado de Potrerillos. Vista completa del lago artificial rodeado de los Andes.',madsText:'A pocos minutos de acá arranca la aventura de rafting con Mads.',maps:'https://maps.google.com/?q=-32.9625,-69.1866'},
+  {id:'mirador1',lat:-32.9940,lng:-69.1454,tipo:'mirador',emoji:'🔭',nombre:'Mirador 1 del Dique',badge:'4.8 ⭐ · 1250 reseñas',badgeBg:'rgba(193,127,62,0.15)',badgeColor:'#C17F3E',desc:'Deck de observación con bajada al agua. Venden snacks y hay piedras semipreciosas locales.',madsText:'Desde acá podés ver el recorrido del río donde opera Mads.',maps:'https://maps.google.com/?q=-32.9940,-69.1454'},
+  {id:'mirador2',lat:-32.9852,lng:-69.1703,tipo:'mirador',emoji:'📸',nombre:'Mirador Principal',badge:'4.8 ⭐ · 1579 reseñas',badgeBg:'rgba(193,127,62,0.15)',badgeColor:'#C17F3E',desc:'El primer acceso al dique. Kayak y SUP disponibles en la orilla.',madsText:'Bajando por el río, Mads lleva grupos de rafting por este paisaje.',maps:'https://maps.google.com/?q=-32.9852,-69.1703'},
+  {id:'escondida',lat:-32.9623,lng:-69.2037,tipo:'food',emoji:'🍽',nombre:'La Escondida',badge:'4.6 ⭐ · 2909 reseñas',badgeBg:'rgba(193,127,62,0.15)',badgeColor:'#C17F3E',desc:'La joya gastronómica de Potrerillos. Menú de 3 pasos, empanadas y costillar al asador.',madsText:'El combo perfecto: almorzar en La Escondida y después bajar el río con Mads.',maps:'https://maps.google.com/?q=-32.9623,-69.2037'},
+  {id:'granhotel',lat:-32.9601,lng:-69.1922,tipo:'food',emoji:'🍷',nombre:'Gran Hotel Restaurant',badge:'4.3 ⭐ · Bodega propia',badgeBg:'rgba(193,127,62,0.15)',badgeColor:'#C17F3E',desc:'Cocina de autor con vistas al río y al dique. Bodega propia, carta de vinos locales.',madsText:'Cena en el Gran Hotel + rafting al día siguiente con Mads: el plan ideal.',maps:'https://maps.google.com/?q=-32.9601,-69.1922'},
+  {id:'negritos',lat:-33.0135,lng:-69.2723,tipo:'food',emoji:'🥩',nombre:'Los Negritos Bodegón',badge:'4.6 ⭐ · Cocina regional',badgeBg:'rgba(193,127,62,0.15)',badgeColor:'#C17F3E',desc:'Bodegón de montaña auténtico. Chivito, empanadas y parrilla con terraza exterior.',madsText:'Después del rafting con Mads, Los Negritos es el cierre perfecto.',maps:'https://maps.google.com/?q=-33.0135,-69.2723'},
+  {id:'chacritas',lat:-32.9687,lng:-69.2393,tipo:'camp',emoji:'⛺',nombre:'Camping Las Chacritas',badge:'4.3 ⭐ · Con dormis',badgeBg:'rgba(92,138,58,0.15)',badgeColor:'#5C8A3A',desc:'El camping más visitado de Potrerillos. Parrillas, dormitorios y baños con agua caliente.',madsText:'Muchos grupos que acampan acá arrancan el rafting con Mads al día siguiente.',maps:'https://maps.google.com/?q=-32.9687,-69.2393'},
+  {id:'lasvegas',lat:-33.0186,lng:-69.2847,tipo:'camp',emoji:'🌲',nombre:'Refugio Las Vegas',badge:'4.7 ⭐ · Pet-friendly',badgeBg:'rgba(92,138,58,0.15)',badgeColor:'#5C8A3A',desc:'El camping mejor valorado de la zona. Familiar, pet-friendly, actividades para chicos.',madsText:'Perfecto para familias que quieren combinar camping y aventura con Mads.',maps:'https://maps.google.com/?q=-33.0186,-69.2847'},
 ];
 
-const iconos = {
-  mads: '<div class="pin-mads">🚣</div>',
-  nature: '<div class="pin-nature">🏔</div>',
-  mirador: '<div class="pin-mirador">🔭</div>',
-  food: '<div class="pin-food">🍽</div>',
-  camp: '<div class="pin-camp">⛺</div>',
+const iconos={
+  mads:'<div class="pin-mads">🚣</div>',
+  nature:'<div class="pin-nature">🏔</div>',
+  mirador:'<div class="pin-mirador">🔭</div>',
+  food:'<div class="pin-food">🍽</div>',
+  camp:'<div class="pin-camp">⛺</div>',
 };
 
-const map = L.map('map', {
-  center: [-32.975, -69.22],
-  zoom: 13,
-  zoomControl: true,
-}).setView([-32.975, -69.22], 13);
+const map=L.map('map',{center:[-32.975,-69.22],zoom:13,zoomControl:true});
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap',maxZoom:18}).addTo(map);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '© OpenStreetMap',
-  maxZoom: 18,
-}).addTo(map);
-
-let mapsUrl = '';
-
-puntos.forEach(p => {
-  const icono = L.divIcon({
-    html: iconos[p.tipo],
-    className: '',
-    iconSize: p.tipo === 'mads' ? [32,32] : [26,26],
-    iconAnchor: p.tipo === 'mads' ? [16,16] : [13,13],
-  });
-
-  L.marker([p.lat, p.lng], {icon: icono})
-    .addTo(map)
-    .on('click', () => mostrar(p));
+let mapsUrl='';
+puntos.forEach(p=>{
+  const icono=L.divIcon({html:iconos[p.tipo],className:'',iconSize:p.tipo==='mads'?[34,34]:[28,28],iconAnchor:p.tipo==='mads'?[17,17]:[14,14]});
+  L.marker([p.lat,p.lng],{icon:icono}).addTo(map).on('click',()=>mostrar(p));
 });
 
-function mostrar(d) {
-  document.getElementById('p-title').textContent = d.nombre;
-  const badge = document.getElementById('p-badge');
-  badge.textContent = d.badge;
-  badge.style.background = d.badgeBg;
-  badge.style.color = d.badgeColor;
-  document.getElementById('p-body').textContent = d.desc;
-  const madsEl = document.getElementById('p-mads');
-  if (d.madsText === null) {
-    madsEl.style.display = 'none';
-  } else {
-    madsEl.style.display = 'flex';
-    document.getElementById('p-mads-text').textContent = d.madsText;
-  }
-  const btn = document.getElementById('p-btn-main');
-  btn.textContent = d.id === 'mads' ? 'Ver experiencias' : 'Cómo llegar';
-  mapsUrl = d.maps;
+function mostrar(d){
+  document.getElementById('p-title').textContent=d.nombre;
+  const badge=document.getElementById('p-badge');
+  badge.textContent=d.badge;badge.style.background=d.badgeBg;badge.style.color=d.badgeColor;
+  document.getElementById('p-body').textContent=d.desc;
+  const madsEl=document.getElementById('p-mads');
+  if(d.madsText===null){madsEl.style.display='none';}
+  else{madsEl.style.display='flex';document.getElementById('p-mads-text').textContent=d.madsText;}
+  const btn=document.getElementById('p-btn-main');
+  btn.textContent=d.id==='mads'?'Ver experiencias':'Cómo llegar';
+  mapsUrl=d.maps;
   document.getElementById('panel').classList.add('open');
-  map.panTo([d.lat, d.lng]);
+  map.panTo([d.lat,d.lng]);
 }
 
-function cerrar() {
-  document.getElementById('panel').classList.remove('open');
-}
-
-function abrirMaps() {
-  window.open(mapsUrl, '_blank');
-}
+function cerrar(){document.getElementById('panel').classList.remove('open')}
+function abrirMaps(){window.open(mapsUrl,'_blank')}
 </script>
 </body>
 </html>
