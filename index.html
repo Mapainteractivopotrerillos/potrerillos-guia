@@ -43,7 +43,7 @@ body{font-family:'Lato',sans-serif;background:var(--dark);color:#fff;min-height:
 .place-link{font-size:12px;color:var(--sky);font-weight:500}
 .mads-cards{display:flex;gap:12px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
 .mads-cards::-webkit-scrollbar{display:none}
-.mads-card{min-width:130px;background:rgba(193,127,62,0.1);border:0.5px solid rgba(193,127,62,0.25);border-radius:14px;overflow:hidden;flex-shrink:0;cursor:pointer;text-decoration:none;display:block}
+.mads-card{min-width:140px;max-width:140px;background:rgba(193,127,62,0.1);border:0.5px solid rgba(193,127,62,0.25);border-radius:14px;overflow:hidden;flex-shrink:0;cursor:pointer;text-decoration:none;display:block}
 .mads-card-img{height:90px;overflow:hidden}
 .mads-card-body{padding:10px 12px}
 .mads-card-body h4{font-family:'Playfair Display',serif;font-size:13px;color:#fff}
@@ -206,7 +206,7 @@ function renderLugares(cat='todo'){
 function renderExperiencias(){
   document.getElementById('experiencias').innerHTML=experiencias.map(e=>`
     <a class="mads-card" href="${e.link}" target="_blank">
-      <div class="mads-card-img" style="padding:0;overflow:hidden"><img src="${e.foto}" alt="${e.nombre}" style="width:100%;height:100%;object-fit:cover"/></div>
+      <div class="mads-card-img"><img src="${e.foto}" alt="${e.nombre}" style="width:100%;height:100%;object-fit:cover;display:block"/></div>
       <div class="mads-card-body">
         <h4>${e.nombre}</h4>
         <p style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px">${e.desc}</p>
