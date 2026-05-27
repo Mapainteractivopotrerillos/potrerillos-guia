@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin · Potrerillos</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--orange:#C17F3E;--dark:#0D0B08;--card:#161208;--stone:#E8D5B0;--green:#5C8A3A;--river:#3A6B8A}
+body{font-family:'Lato',sans-serif;background:var(--dark);color:#fff;min-height:100vh}
+
+.topbar{background:#1A1510;border-bottom:0.5px solid rgba(255,255,255,0.07);padding:0 16px;height:50px;display:flex;align-items:center;justify-content:space-between}
+.topbar-brand{display:flex;align-items:center;gap:8px}
+.topbar-dot{width:7px;height:7px;border-radius:50%;background:var(--orange)}
+.topbar-name{font-size:13px;font-weight:700;letter-spacing:0.5px}
+.topbar-sub{font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:0.5px}
+.status{font-size:10px;background:rgba(92,138,58,0.15);color:#5C8A3A;border:0.5px solid rgba(92,138,58,0.3);border-radius:10px;padding:4px 10px;letter-spacing:0.5px}
+
+.tabs{display:flex;background:#111008;border-bottom:0.5px solid rgba(255,255,255,0.06);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:12px 14px;font-size:12px;color:rgba(255,255,255,0.4);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all 0.15s;flex-shrink:0;letter-spacing:0.5px;font-family:'Lato',sans-serif}
+.tab.active{color:var(--orange);border-bottom-color:var(--orange)}
+.tab-count{display:inline-block;background:rgba(255,255,255,0.07);border-radius:8px;padding:1px 6px;font-size:10px;margin-left:4px;color:rgba(255,255,255,0.3)}
+.tab.active .tab-count{background:rgba(193,127,62,0.15);color:var(--orange)}
+
+.content{padding:16px}
+.section{display:none}
+.section.active{display:block}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px}
+.stat{background:var(--card);border:0.5px solid rgba(255,255,255,0.06);border-radius:10px;padding:14px}
+.stat-label{font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.stat-val{font-size:24px;font-weight:700;color:#fff;line-height:1}
+.stat-sub{font-size:11px;color:rgba(255,255,255,0.3);margin-top:5px}
+.stat-up{color:var(--green)}
+
+/* SECTION HEADER */
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.sec-hdr h2{font-size:13px;font-weight:700;color:rgba(255,255,255,0.7);letter-spacing:0.5px;text-transform:uppercase}
+.btn-add{background:var(--orange);color:#fff;border:none;border-radius:6px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Lato',sans-serif;letter-spacing:0.5px}
+
+/* ROWS */
+.row{background:var(--card);border:0.5px solid rgba(255,255,255,0.06);border-radius:10px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:background 0.15s}
+.row:hover{background:#1E1A12}
+.row-icon{width:38px;height:38px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:16px}
+.row-info{flex:1;min-width:0}
+.row-info h3{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px}
+.row-info p{font-size:11px;color:rgba(255,255,255,0.35)}
+.badge{font-size:10px;padding:3px 8px;border-radius:6px;font-weight:700}
+.badge-on{background:rgba(92,138,58,0.15);color:var(--green);border:0.5px solid rgba(92,138,58,0.2)}
+.badge-off{background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.3);border:0.5px solid rgba(255,255,255,0.08)}
+.badge-mads{background:rgba(193,127,62,0.12);color:var(--orange);border:0.5px solid rgba(193,127,62,0.2)}
+.row-actions{display:flex;gap:6px;flex-shrink:0}
+.row-btn{background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:6px;padding:5px 10px;font-size:11px;color:rgba(255,255,255,0.5);cursor:pointer;font-family:'Lato',sans-serif}
+.row-btn.del{color:rgba(220,80,80,0.6)}
+
+/* TOGGLE */
+.toggle-wrap{display:flex;align-items:center;justify-content:space-between;padding:13px 14px;background:var(--card);border:0.5px solid rgba(255,255,255,0.06);border-radius:10px;margin-bottom:8px}
+.toggle-info h3{font-size:13px;font-weight:700;margin-bottom:2px}
+.toggle-info p{font-size:11px;color:rgba(255,255,255,0.35)}
+.toggle{position:relative;width:40px;height:22px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.toggle-slider{position:absolute;inset:0;background:rgba(255,255,255,0.1);border-radius:11px;cursor:pointer;transition:background 0.2s}
+.toggle-slider:before{content:'';position:absolute;width:16px;height:16px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform 0.2s}
+.toggle input:checked+.toggle-slider{background:var(--orange)}
+.toggle input:checked+.toggle-slider:before{transform:translateX(18px)}
+
+/* FORM */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:100;align-items:flex-end}
+.overlay.open{display:flex}
+.sheet{background:#1A1510;border-radius:16px 16px 0 0;padding:20px 18px 32px;width:100%;max-height:80vh;overflow-y:auto}
+.sheet h2{font-size:15px;font-weight:700;margin-bottom:16px;font-family:'Playfair Display',serif;color:var(--stone)}
+.field{margin-bottom:14px}
+.field label{font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:6px}
+.field input,.field textarea,.field select{width:100%;background:#0D0B08;border:0.5px solid rgba(255,255,255,0.15);border-radius:8px;padding:10px 12px;font-size:13px;color:#fff;outline:none;font-family:'Lato',sans-serif}
+.field textarea{min-height:70px;resize:vertical}
+.sheet-actions{display:flex;gap:10px;margin-top:18px}
+.btn-save{flex:1;background:var(--orange);color:#fff;border:none;border-radius:8px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Lato',sans-serif}
+.btn-cancel{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.6);border:0.5px solid rgba(255,255,255,0.12);border-radius:8px;padding:12px 18px;font-size:14px;cursor:pointer;font-family:'Lato',sans-serif}
+
+/* ACTIVITY */
+.activity{display:flex;gap:10px;padding:10px 0;border-bottom:0.5px solid rgba(255,255,255,0.04)}
+.activity-dot{width:7px;height:7px;border-radius:50%;margin-top:4px;flex-shrink:0}
+.activity-text{font-size:12px;color:rgba(255,255,255,0.55);line-height:1.5}
+.activity-text strong{color:rgba(255,255,255,0.8);font-weight:700}
+.activity-time{font-size:10px;color:rgba(255,255,255,0.25);margin-top:2px}
+
+/* QR */
+.qr-card{background:var(--card);border:0.5px solid rgba(255,255,255,0.06);border-radius:10px;padding:13px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px}
+.qr-icon{width:42px;height:42px;background:#0D0B08;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.qr-info{flex:1}
+.qr-info h3{font-size:13px;font-weight:700;margin-bottom:2px}
+.qr-info p{font-size:11px;color:rgba(255,255,255,0.35)}
+.qr-scans{text-align:right;flex-shrink:0}
+.qr-scans span{display:block;font-size:18px;font-weight:700;color:var(--orange)}
+.qr-scans small{font-size:10px;color:rgba(255,255,255,0.3)}
+
+/* TOAST */
+#toast{display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--orange);color:#fff;font-size:13px;padding:10px 20px;border-radius:20px;z-index:200;font-family:'Lato',sans-serif;white-space:nowrap;font-weight:700}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-brand">
+    <div class="topbar-dot"></div>
+    <div>
+      <div class="topbar-name">Admin · Potrerillos</div>
+      <div class="topbar-sub">Mads Experiences</div>
+    </div>
+  </div>
+  <div class="status">● Live</div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('dashboard',this)">Dashboard</div>
+  <div class="tab" onclick="switchTab('lugares',this)">Lugares <span class="tab-count">8</span></div>
+  <div class="tab" onclick="switchTab('experiencias',this)">Experiencias <span class="tab-count">6</span></div>
+  <div class="tab" onclick="switchTab('qr',this)">QR <span class="tab-count">8</span></div>
+  <div class="tab" onclick="switchTab('config',this)">Config</div>
+</div>
+
+<div class="content">
+
+<!-- DASHBOARD -->
+<div class="section active" id="s-dashboard">
+  <div class="stats">
+    <div class="stat"><div class="stat-label">Visitas hoy</div><div class="stat-val">284</div><div class="stat-sub stat-up">▲ 18% vs ayer</div></div>
+    <div class="stat"><div class="stat-label">Scans QR</div><div class="stat-val">61</div><div class="stat-sub stat-up">▲ 9 hoy</div></div>
+    <div class="stat"><div class="stat-label">Clicks Mads</div><div class="stat-val">37</div><div class="stat-sub">de 284 visitas</div></div>
+    <div class="stat"><div class="stat-label">Conversión</div><div class="stat-val">13<span style="font-size:14px;color:rgba(255,255,255,0.4)">%</span></div><div class="stat-sub stat-up">▲ 2pts</div></div>
+  </div>
+  <div class="sec-hdr"><h2>Actividad reciente</h2></div>
+  <div class="activity"><div class="activity-dot" style="background:var(--orange)"></div><div><div class="activity-text">Usuario tocó <strong>Reservar</strong> desde rafting</div><div class="activity-time">hace 3 min · QR Mirador 1</div></div></div>
+  <div class="activity"><div class="activity-dot" style="background:var(--green)"></div><div><div class="activity-text">Nuevo scan en <strong>QR Acceso Potrerillos</strong></div><div class="activity-time">hace 11 min</div></div></div>
+  <div class="activity"><div class="activity-dot" style="background:var(--river)"></div><div><div class="activity-text">Episodio 3 reproducido · <strong>22km de adrenalina</strong></div><div class="activity-time">hace 18 min · audioguía</div></div></div>
+  <div class="activity"><div class="activity-dot" style="background:var(--orange)"></div><div><div class="activity-text">Click en WhatsApp de <strong>Mads Experiences</strong></div><div class="activity-time">hace 32 min · QR Camping</div></div></div>
+  <div class="activity"><div class="activity-dot" style="background:var(--green)"></div><div><div class="activity-text">Nuevo scan en <strong>QR Mirador Panorámico</strong></div><div class="activity-time">hace 47 min</div></div></div>
+</div>
+
+<!-- LUGARES -->
+<div class="section" id="s-lugares">
+  <div class="sec-hdr"><h2>Lugares publicados</h2><button class="btn-add" onclick="openForm('lugar')">+ Agregar</button></div>
+  <div id="lugares-list"></div>
+</div>
+
+<!-- EXPERIENCIAS -->
+<div class="section" id="s-experiencias">
+  <div class="sec-hdr"><h2>Experiencias Mads</h2><button class="btn-add" onclick="openForm('exp')">+ Agregar</button></div>
+  <div id="exp-list"></div>
+</div>
+
+<!-- QR -->
+<div class="section" id="s-qr">
+  <div class="sec-hdr"><h2>Códigos QR</h2><button class="btn-add" onclick="openForm('qr')">+ Nuevo QR</button></div>
+  <div id="qr-list"></div>
+</div>
+
+<!-- CONFIG -->
+<div class="section" id="s-config">
+  <div class="sec-hdr"><h2>Configuración</h2></div>
+  <div class="toggle-wrap"><div class="toggle-info"><h3>App en vivo</h3><p>Los turistas pueden ver la app</p></div><label class="toggle"><input type="checkbox" checked onchange="toast('App '+(this.checked?'activada':'pausada'))"><span class="toggle-slider"></span></label></div>
+  <div class="toggle-wrap"><div class="toggle-info"><h3>Banner Mads</h3><p>Muestra el banner naranja en home</p></div><label class="toggle"><input type="checkbox" checked onchange="toast('Banner '+(this.checked?'visible':'oculto'))"><span class="toggle-slider"></span></label></div>
+  <div class="toggle-wrap"><div class="toggle-info"><h3>WhatsApp flotante</h3><p>Botón verde en toda la app</p></div><label class="toggle"><input type="checkbox" checked onchange="toast('WhatsApp '+(this.checked?'activo':'oculto'))"><span class="toggle-slider"></span></label></div>
+  <div class="toggle-wrap"><div class="toggle-info"><h3>Audioguía autoplay</h3><p>Reproducir al abrir la app</p></div><label class="toggle"><input type="checkbox" onchange="toast('Autoplay '+(this.checked?'activado':'desactivado'))"><span class="toggle-slider"></span></label></div>
+  <div style="margin-top:16px">
+    <div class="field"><label>WhatsApp Mads</label><input value="+5492616040302" type="text"/></div>
+    <div class="field"><label>URL sitio Mads</label><input value="https://madsexperiences.com" type="text"/></div>
+    <div class="field"><label>Texto botón principal</label><input value="Reservá tu aventura →" type="text"/></div>
+    <button class="btn-save" style="width:100%" onclick="toast('Configuración guardada ✓')">Guardar cambios</button>
+  </div>
+</div>
+
+</div>
+
+<!-- FORM OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeFormOutside(event)">
+  <div class="sheet">
+    <h2 id="form-title">Agregar</h2>
+    <div id="form-fields"></div>
+    <div class="sheet-actions">
+      <button class="btn-cancel" onclick="closeForm()">Cancelar</button>
+      <button class="btn-save" onclick="saveForm()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const lugares=[
+  {emoji:'🏔',nombre:'Vista Panorámica del Dique',cat:'Naturaleza',activo:true},
+  {emoji:'🔭',nombre:'Mirador 1 del Dique',cat:'Mirador',activo:true},
+  {emoji:'📸',nombre:'Mirador Principal',cat:'Mirador',activo:true},
+  {emoji:'🍽',nombre:'La Escondida',cat:'Gastronomía',activo:true},
+  {emoji:'🥩',nombre:'Los Negritos Bodegón',cat:'Gastronomía',activo:true},
+  {emoji:'⛺',nombre:'Camping Las Chacritas',cat:'Camping',activo:true},
+  {emoji:'🌲',nombre:'Refugio Las Vegas',cat:'Camping',activo:true},
+  {emoji:'🏖',nombre:'Playa secreta del Dique',cat:'Secreto',activo:true},
+];
+
+const exps=[
+  {emoji:'🚣',nombre:'Rafting Clásico',dur:'Medio día',activo:true},
+  {emoji:'🚣',nombre:'Rafting Full Day',dur:'Día completo',activo:true},
+  {emoji:'🥾',nombre:'Trekking Calavera',dur:'Día completo',activo:true},
+  {emoji:'🥾',nombre:'Trekking Mirador',dur:'Medio día',activo:true},
+  {emoji:'🚣',nombre:'Kayak de Lago',dur:'Medio día',activo:true},
+  {emoji:'🐴',nombre:'Cabalgata',dur:'Tarde',activo:true},
+];
+
+const qrs=[
+  {nombre:'Acceso principal',loc:'Rotonda entrada',scans:312},
+  {nombre:'Mirador 1',loc:'Deck de observación',scans:198},
+  {nombre:'Mirador Panorámico',loc:'Costado de ruta',scans:241},
+  {nombre:'Camping Chacritas',loc:'Entrada camping',scans:87},
+  {nombre:'La Escondida',loc:'Mesa exterior',scans:143},
+  {nombre:'Gran Hotel',loc:'Recepción',scans:65},
+  {nombre:'Los Negritos',loc:'Barra del bar',scans:44},
+  {nombre:'Zona Rafting Mads',loc:'Punto de encuentro',scans:176},
+];
+
+const forms={
+  lugar:{title:'Nuevo lugar',fields:`<div class="field"><label>Nombre</label><input placeholder="Ej: Mirador del Atardecer" type="text"/></div><div class="field"><label>Categoría</label><select><option>Naturaleza</option><option>Mirador</option><option>Gastronomía</option><option>Camping</option><option>Secreto</option></select></div><div class="field"><label>Descripción</label><textarea placeholder="Qué va a ver el turista acá..."></textarea></div><div class="field"><label>URL foto</label><input placeholder="https://..." type="text"/></div><div class="field"><label>Link Google Maps</label><input placeholder="https://maps.google.com/..." type="text"/></div>`},
+  exp:{title:'Nueva experiencia',fields:`<div class="field"><label>Nombre</label><input placeholder="Ej: Kayak al atardecer" type="text"/></div><div class="field"><label>Descripción corta</label><input placeholder="Ej: Dique Potrerillos · 2hs" type="text"/></div><div class="field"><label>Precio</label><input placeholder="Ej: Desde USD 60" type="text"/></div><div class="field"><label>URL foto</label><input placeholder="https://..." type="text"/></div>`},
+  qr:{title:'Nuevo QR',fields:`<div class="field"><label>Nombre del QR</label><input placeholder="Ej: QR Entrada Sur" type="text"/></div><div class="field"><label>Ubicación física</label><input placeholder="Ej: Rotonda de entrada" type="text"/></div><div class="field"><label>Pantalla destino</label><select><option>Home</option><option>Mapa</option><option>Mads Experiences</option><option>Audioguía</option><option>Reserva</option></select></div>`},
+};
+
+function renderLugares(){
+  document.getElementById('lugares-list').innerHTML=lugares.map((l,i)=>`
+    <div class="row">
+      <div class="row-icon" style="background:rgba(193,127,62,0.1)">${l.emoji}</div>
+      <div class="row-info"><h3>${l.nombre}</h3><p>${l.cat}</p></div>
+      <span class="badge ${l.activo?'badge-on':'badge-off'}">${l.activo?'Activo':'Off'}</span>
+      <div class="row-actions">
+        <button class="row-btn" onclick="event.stopPropagation();openForm('lugar')">Editar</button>
+        <button class="row-btn del" onclick="event.stopPropagation();toast('Lugar eliminado')">✕</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderExps(){
+  document.getElementById('exp-list').innerHTML=exps.map((e,i)=>`
+    <div class="row">
+      <div class="row-icon" style="background:rgba(193,127,62,0.1)">${e.emoji}</div>
+      <div class="row-info"><h3>${e.nombre}</h3><p>${e.dur}</p></div>
+      <span class="badge badge-mads">Mads</span>
+      <div class="row-actions">
+        <button class="row-btn" onclick="event.stopPropagation();openForm('exp')">Editar</button>
+        <button class="row-btn del" onclick="event.stopPropagation();toast('Experiencia eliminada')">✕</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderQR(){
+  document.getElementById('qr-list').innerHTML=qrs.map((q,i)=>`
+    <div class="qr-card">
+      <div class="qr-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="8" height="8" rx="1.5" stroke="#C17F3E" stroke-width="1.5"/><rect x="14" y="2" width="8" height="8" rx="1.5" stroke="#C17F3E" stroke-width="1.5"/><rect x="2" y="14" width="8" height="8" rx="1.5" stroke="#C17F3E" stroke-width="1.5"/><rect x="4" y="4" width="4" height="4" fill="#C17F3E" rx="0.5"/><rect x="16" y="4" width="4" height="4" fill="#C17F3E" rx="0.5"/><rect x="4" y="16" width="4" height="4" fill="#C17F3E" rx="0.5"/><rect x="14" y="14" width="2" height="2" fill="#C17F3E"/><rect x="18" y="14" width="4" height="2" fill="#C17F3E"/><rect x="14" y="18" width="6" height="2" fill="#C17F3E"/></svg>
+      </div>
+      <div class="qr-info"><h3>${q.nombre}</h3><p>${q.loc}</p></div>
+      <div class="qr-scans"><span>${q.scans}</span><small>scans</small></div>
+      <button class="row-btn" onclick="toast('Descargando QR...')">↓</button>
+    </div>
+  `).join('');
+}
+
+function switchTab(id,el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+}
+
+function openForm(type){
+  const f=forms[type];
+  document.getElementById('form-title').textContent=f.title;
+  document.getElementById('form-fields').innerHTML=f.fields;
+  document.getElementById('overlay').classList.add('open');
+}
+
+function closeForm(){document.getElementById('overlay').classList.remove('open')}
+function closeFormOutside(e){if(e.target===document.getElementById('overlay'))closeForm()}
+function saveForm(){closeForm();toast('Guardado ✓')}
+
+let toastTimer;
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.display='block';
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.style.display='none',2400);
+}
+
+renderLugares();
+renderExps();
+renderQR();
+</script>
+</body>
+</html>
