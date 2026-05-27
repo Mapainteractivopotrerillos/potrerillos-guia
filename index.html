@@ -176,9 +176,11 @@ const lugares = [
 ];
 
 const experiencias = [
-  {nombre:'Rafting Clásico',emoji:'🚣',desc:'22km · Río Mendoza',precio:'Desde USD 85',link:'https://madsexperiences.com'},
-  {nombre:'Sunset River',emoji:'🌅',desc:'Atardecer en el río',precio:'Desde USD 60',link:'https://madsexperiences.com'},
-  {nombre:'Kayak + Trekking',emoji:'🏕',desc:'Aventura completa',precio:'Desde USD 70',link:'https://madsexperiences.com'},
+  {nombre:'Rafting Clásico',foto:'https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1024,h=615,fit=crop/gpoXXdqC8evQIJK5/img_4111-PJeLu2ahZvh5XdP3.JPG',desc:'Aguas bravas · Río Mendoza',precio:'Desde USD 60',link:'https://madsexperiences.com'},
+  {nombre:'Rafting Full Day',foto:'https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=538,fit=crop/gpoXXdqC8evQIJK5/1764095202137-j0bALrkXpNZ50lM2.jpg',desc:'Día completo de aventura',precio:'Desde USD 85',link:'https://madsexperiences.com'},
+  {nombre:'Trekking Calavera',foto:'https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1024,h=942,fit=crop/gpoXXdqC8evQIJK5/cordon.plata-pKNTZmWEERCqEOBh.jpeg',desc:'Alta montaña · Cordón del Plata',precio:'Consultá',link:'https://madsexperiences.com'},
+  {nombre:'Kayak de Lago',foto:'https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1024,h=582,fit=crop/gpoXXdqC8evQIJK5/chatgpt-image-14-may-2026-11_21_15-spb7A2aDhxDfY3ij.png',desc:'Dique Potrerillos · Tranquilo',precio:'Consultá',link:'https://madsexperiences.com'},
+  {nombre:'Cabalgata',foto:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRK3_mnsNRFkJkSvAUFf39VT-mFBBKbIicJww&s',desc:'Montaña a caballo · Atardecer',precio:'Consultá',link:'https://madsexperiences.com'},
 ];
 
 function renderLugares(cat='todo'){
@@ -204,7 +206,7 @@ function renderLugares(cat='todo'){
 function renderExperiencias(){
   document.getElementById('experiencias').innerHTML=experiencias.map(e=>`
     <a class="mads-card" href="${e.link}" target="_blank">
-      <div class="mads-card-img">${e.emoji}</div>
+      <div class="mads-card-img" style="padding:0;overflow:hidden"><img src="${e.foto}" alt="${e.nombre}" style="width:100%;height:100%;object-fit:cover"/></div>
       <div class="mads-card-body">
         <h4>${e.nombre}</h4>
         <p style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px">${e.desc}</p>
