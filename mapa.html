@@ -10,26 +10,21 @@
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--orange:#C17F3E;--dark:#0D0B08;--river:#3A6B8A;--sky:#A8C4E0;--stone:#E8D5B0;--green:#5C8A3A}
 html,body{height:100%;width:100%;overflow:hidden;font-family:'Lato',sans-serif;background:var(--dark);color:#fff}
-
 .topbar{position:fixed;top:0;left:0;right:0;background:#111008;border-bottom:0.5px solid rgba(255,255,255,0.06);padding:12px 22px;display:flex;align-items:center;justify-content:space-between;z-index:3000;height:56px}
 .topbar-left{display:flex;flex-direction:column}
 .topbar-eyebrow{font-size:9px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;margin-bottom:2px}
 .topbar-title{font-family:'Playfair Display',serif;font-size:17px;font-style:italic;color:var(--stone)}
 .topbar-brand{font-size:9px;color:rgba(255,255,255,0.3);letter-spacing:2px;text-transform:uppercase}
-
 #map{position:fixed;top:56px;left:0;right:0;bottom:64px;z-index:1}
 .leaflet-tile-pane{filter:brightness(0.8) saturate(0.7) hue-rotate(10deg)}
-
 .pin-mads{background:#C17F3E;border:2px solid #FFD4A0;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 2px 12px rgba(193,127,62,0.5)}
 .pin-nature{background:#1A2835;border:2px solid #3A6B8A;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:12px}
 .pin-mirador{background:#2A1A08;border:2px solid #C17F3E;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:12px}
 .pin-food{background:#1A0E06;border:2px solid #C17F3E;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:12px}
 .pin-camp{background:#0A1808;border:2px solid #5C8A3A;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:12px}
-
 .legend{position:fixed;top:68px;right:10px;background:rgba(13,11,8,0.92);border:0.5px solid rgba(255,255,255,0.08);border-radius:8px;padding:8px 10px;z-index:2000;display:flex;flex-direction:column;gap:5px}
 .leg{display:flex;align-items:center;gap:5px;font-size:9px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.5px}
 .leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-
 .panel{position:fixed;bottom:64px;left:0;right:0;background:#111008;border-top:0.5px solid rgba(255,255,255,0.08);z-index:2500;transform:translateY(100%);transition:transform 0.3s ease;max-height:55vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .panel.open{transform:translateY(0)}
 .panel-hdr{padding:16px 22px 0;display:flex;align-items:flex-start;justify-content:space-between}
@@ -45,13 +40,11 @@ html,body{height:100%;width:100%;overflow:hidden;font-family:'Lato',sans-serif;b
 .panel-actions{display:flex;gap:8px;padding:10px 22px 20px}
 .btn-main{flex:1;background:var(--orange);color:#fff;border:none;border-radius:3px;padding:13px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Lato',sans-serif;letter-spacing:1px;text-transform:uppercase}
 .btn-sec{background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.5);border:0.5px solid rgba(255,255,255,0.1);border-radius:3px;padding:13px 16px;font-size:12px;cursor:pointer;font-family:'Lato',sans-serif}
-
 .nav{position:fixed;bottom:0;left:0;right:0;background:rgba(13,11,8,0.98);border-top:0.5px solid rgba(255,255,255,0.06);display:flex;padding:8px 0 14px;z-index:3000}
 .nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;opacity:0.4;color:#fff;text-decoration:none}
 .nav-item.active{opacity:1;color:var(--orange)}
 .nav-item svg{width:20px;height:20px}
 .nav-item span{font-size:8px;letter-spacing:1px;text-transform:uppercase;font-family:'Lato',sans-serif}
-
 .wap{position:fixed;bottom:76px;right:16px;width:46px;height:46px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2400;text-decoration:none;box-shadow:0 4px 14px rgba(37,211,102,0.3)}
 .leaflet-popup{display:none}
 </style>
@@ -125,21 +118,22 @@ html,body{height:100%;width:100%;overflow:hidden;font-family:'Lato',sans-serif;b
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 const puntos=[
-  {id:'mads',lat:-32.9639,lng:-69.1993,tipo:'mads',emoji:'🚣',nombre:'Mads Experiences',badge:'★ Experiencia premium',badgeBg:'rgba(193,127,62,0.15)',badgeColor:'#FFD4A0',desc:'La empresa referente de aventura en Potrerillos. Rafting, kayak, trekking y más. Guías certificados.',madsText:null,maps:'https://madsexperiences.com'},
-  {id:'p360',lat:-32.9540,lng:-69.1970,tipo:'nature',emoji:'🔭',nombre:'Potrerillos 360',badge:'Recomendado',badgeBg:'rgba(193,127,62,0.15)',badgeColor:'#C17F3E',desc:'Experiencias únicas en las alturas de Potrerillos. Vistas panorámicas y aventura.',madsText:'Este es el punto de encuentro de Mads Experiences. Aquí arranca toda la aventura.',maps:'https://maps.app.goo.gl/crNTj9Li3Y27SUBD9'},{id:'dique',lat:-32.9625,lng:-69.1866,tipo:'nature',emoji:'🏔',nombre:'Vista Panorámica del Dique',badge:'4.8 ⭐ · 2044 reseñas',badgeBg:'rgba(58,107,138,0.2)',badgeColor:'#A8C4E0',desc:'El punto más fotografiado de Potrerillos. Vista completa del lago artificial rodeado de los Andes.',madsText:'A pocos minutos de acá arranca la aventura de rafting con Mads.',maps:'https://maps.google.com/?q=-32.9625,-69.1866'},
-  {id:'mirador1',lat:-32.9940,lng:-69.1454,tipo:'mirador',emoji:'🔭',nombre:'Mirador 1 del Dique',badge:'4.8 ⭐ · 1250 reseñas',badgeBg:'rgba(193,127,62,0.15)',badgeColor:'#C17F3E',desc:'Deck de observación con bajada al agua. Venden snacks y hay piedras semipreciosas locales.',madsText:'Desde acá podés ver el recorrido del río donde opera Mads.',maps:'https://maps.google.com/?q=-32.9940,-69.1454'},
-  {id:'mirador2',lat:-32.9852,lng:-69.1703,tipo:'mirador',emoji:'📸',nombre:'Mirador Principal',badge:'4.8 ⭐ · 1579 reseñas',badgeBg:'rgba(193,127,62,0.15)',badgeColor:'#C17F3E',desc:'El primer acceso al dique. Kayak y SUP disponibles en la orilla.',madsText:'Bajando por el río, Mads lleva grupos de rafting por este paisaje.',maps:'https://maps.google.com/?q=-32.9852,-69.1703'},
-  {id:'escondida',lat:-32.9623,lng:-69.2037,tipo:'food',emoji:'🍽',nombre:'La Escondida',badge:'4.6 ⭐ · 2909 reseñas',badgeBg:'rgba(193,127,62,0.15)',badgeColor:'#C17F3E',desc:'La joya gastronómica de Potrerillos. Menú de 3 pasos, empanadas y costillar al asador.',madsText:'El combo perfecto: almorzar en La Escondida y después bajar el río con Mads.',maps:'https://maps.google.com/?q=-32.9623,-69.2037'},
-  {id:'granhotel',lat:-32.9601,lng:-69.1922,tipo:'food',emoji:'🍷',nombre:'Gran Hotel Restaurant',badge:'4.3 ⭐ · Bodega propia',badgeBg:'rgba(193,127,62,0.15)',badgeColor:'#C17F3E',desc:'Cocina de autor con vistas al río y al dique. Bodega propia, carta de vinos locales.',madsText:'Cena en el Gran Hotel + rafting al día siguiente con Mads: el plan ideal.',maps:'https://maps.google.com/?q=-32.9601,-69.1922'},
-  {id:'negritos',lat:-33.0135,lng:-69.2723,tipo:'food',emoji:'🥩',nombre:'Los Negritos Bodegón',badge:'4.6 ⭐ · Cocina regional',badgeBg:'rgba(193,127,62,0.15)',badgeColor:'#C17F3E',desc:'Bodegón de montaña auténtico. Chivito, empanadas y parrilla con terraza exterior.',madsText:'Después del rafting con Mads, Los Negritos es el cierre perfecto.',maps:'https://maps.google.com/?q=-33.0135,-69.2723'},
-  {id:'chacritas',lat:-32.9687,lng:-69.2393,tipo:'camp',emoji:'⛺',nombre:'Camping Las Chacritas',badge:'4.3 ⭐ · Con dormis',badgeBg:'rgba(92,138,58,0.15)',badgeColor:'#5C8A3A',desc:'El camping más visitado de Potrerillos. Parrillas, dormitorios y baños con agua caliente.',madsText:'Muchos grupos que acampan acá arrancan el rafting con Mads al día siguiente.',maps:'https://maps.google.com/?q=-32.9687,-69.2393'},
-  {id:'lasvegas',lat:-33.0186,lng:-69.2847,tipo:'camp',emoji:'🌲',nombre:'Refugio Las Vegas',badge:'4.7 ⭐ · Pet-friendly',badgeBg:'rgba(92,138,58,0.15)',badgeColor:'#5C8A3A',desc:'El camping mejor valorado de la zona. Familiar, pet-friendly, actividades para chicos.',madsText:'Perfecto para familias que quieren combinar camping y aventura con Mads.',maps:'https://maps.google.com/?q=-33.0186,-69.2847'},
+  {id:'mads',lat:-32.9639,lng:-69.1993,tipo:'mads',emoji:'🚣',nombre:'Mads Experiences',badge:'★ Base de operaciones',badgeBg:'rgba(193,127,62,0.15)',badgeColor:'#FFD4A0',desc:'La empresa referente de aventura en Potrerillos. Rafting, kayak, trekking y mas. Guias certificados.',madsText:null,maps:'https://madsexperiences.com'},
+  {id:'p360',lat:-32.9540,lng:-69.1970,tipo:'nature',emoji:'🔭',nombre:'Potrerillos 360',badge:'Recomendado',badgeBg:'rgba(193,127,62,0.15)',badgeColor:'#C17F3E',desc:'Experiencias unicas en las alturas de Potrerillos. Vistas panoramicas y aventura.',madsText:'Este es el punto de encuentro de Mads Experiences. Aqui arranca toda la aventura.',maps:'https://maps.app.goo.gl/crNTj9Li3Y27SUBD9'},
+  {id:'dique',lat:-32.9625,lng:-69.1866,tipo:'nature',emoji:'🏔',nombre:'Vista Panoramica del Dique',badge:'4.8 - 2044 resenas',badgeBg:'rgba(58,107,138,0.2)',badgeColor:'#A8C4E0',desc:'El punto mas fotografiado de Potrerillos. Vista completa del lago artificial rodeado de los Andes.',madsText:'A pocos minutos de aca arranca la aventura de rafting con Mads.',maps:'https://maps.google.com/?q=-32.9625,-69.1866'},
+  {id:'mirador1',lat:-32.9940,lng:-69.1454,tipo:'mirador',emoji:'🔭',nombre:'Mirador 1 del Dique',badge:'4.8 - 1250 resenas',badgeBg:'rgba(193,127,62,0.15)',badgeColor:'#C17F3E',desc:'Deck de observacion con bajada al agua. Venden snacks y hay piedras semipreciosas locales.',madsText:'Desde aca podes ver el recorrido del rio donde opera Mads.',maps:'https://maps.google.com/?q=-32.9940,-69.1454'},
+  {id:'mirador2',lat:-32.9852,lng:-69.1703,tipo:'mirador',emoji:'📸',nombre:'Mirador Principal',badge:'4.8 - 1579 resenas',badgeBg:'rgba(193,127,62,0.15)',badgeColor:'#C17F3E',desc:'El primer acceso al dique. Kayak y SUP disponibles en la orilla.',madsText:'Bajando por el rio, Mads lleva grupos de rafting por este paisaje.',maps:'https://maps.google.com/?q=-32.9852,-69.1703'},
+  {id:'escondida',lat:-32.9623,lng:-69.2037,tipo:'food',emoji:'🍽',nombre:'La Escondida',badge:'4.6 - 2909 resenas',badgeBg:'rgba(193,127,62,0.15)',badgeColor:'#C17F3E',desc:'La joya gastronomica de Potrerillos. Menu de 3 pasos, empanadas y costillar al asador.',madsText:'El combo perfecto: almorzar en La Escondida y despues bajar el rio con Mads.',maps:'https://maps.google.com/?q=-32.9623,-69.2037'},
+  {id:'granhotel',lat:-32.9601,lng:-69.1922,tipo:'food',emoji:'🍷',nombre:'Gran Hotel Restaurant',badge:'4.3 - Bodega propia',badgeBg:'rgba(193,127,62,0.15)',badgeColor:'#C17F3E',desc:'Cocina de autor con vistas al rio y al dique. Bodega propia, carta de vinos locales.',madsText:'Cena en el Gran Hotel + rafting al dia siguiente con Mads: el plan ideal.',maps:'https://maps.google.com/?q=-32.9601,-69.1922'},
+  {id:'negritos',lat:-33.0135,lng:-69.2723,tipo:'food',emoji:'🥩',nombre:'Los Negritos Bodegon',badge:'4.6 - Cocina regional',badgeBg:'rgba(193,127,62,0.15)',badgeColor:'#C17F3E',desc:'Bodegon de montana autentico. Chivito, empanadas y parrilla con terraza exterior.',madsText:'Despues del rafting con Mads, Los Negritos es el cierre perfecto.',maps:'https://maps.google.com/?q=-33.0135,-69.2723'},
+  {id:'chacritas',lat:-32.9687,lng:-69.2393,tipo:'camp',emoji:'⛺',nombre:'Camping Las Chacritas',badge:'4.3 - Con dormis',badgeBg:'rgba(92,138,58,0.15)',badgeColor:'#5C8A3A',desc:'El camping mas visitado de Potrerillos. Parrillas, dormitorios y banos con agua caliente.',madsText:'Muchos grupos que acampan aca arrancan el rafting con Mads al dia siguiente.',maps:'https://maps.google.com/?q=-32.9687,-69.2393'},
+  {id:'lasvegas',lat:-33.0186,lng:-69.2847,tipo:'camp',emoji:'🌲',nombre:'Refugio Las Vegas',badge:'4.7 - Pet-friendly',badgeBg:'rgba(92,138,58,0.15)',badgeColor:'#5C8A3A',desc:'El camping mejor valorado de la zona. Familiar, pet-friendly, actividades para chicos.',madsText:'Perfecto para familias que quieren combinar camping y aventura con Mads.',maps:'https://maps.google.com/?q=-33.0186,-69.2847'},
 ];
 
 const iconos={
   mads:'<div class="pin-mads">🚣</div>',
-  nature:'<div class="pin-nature">🏔</div>',
-  mirador:'<div class="pin-mirador">🔭</div>',
+  nature:'<div class="pin-nature">🔭</div>',
+  mirador:'<div class="pin-mirador">📸</div>',
   food:'<div class="pin-food">🍽</div>',
   camp:'<div class="pin-camp">⛺</div>',
 };
@@ -163,7 +157,7 @@ function mostrar(d){
   if(d.madsText===null){madsEl.style.display='none';}
   else{madsEl.style.display='flex';document.getElementById('p-mads-text').textContent=d.madsText;}
   const btnMain=document.getElementById('p-btn-main');
-  btnMain.textContent=d.id==='mads'?'Ver experiencias':'Cómo llegar';
+  btnMain.textContent=d.id==='mads'?'Ver experiencias':'Como llegar';
   mapsUrl=d.maps;
   document.getElementById('panel').classList.add('open');
   map.panTo([d.lat,d.lng]);
@@ -173,27 +167,12 @@ function cerrar(){
   document.getElementById('panel').classList.remove('open');
 }
 
-// Usar addEventListener en lugar de onclick para iOS
-document.getElementById('btn-cerrar').addEventListener('touchend',function(e){
-  e.preventDefault();
-  cerrar();
-});
-document.getElementById('btn-cerrar').addEventListener('click',function(){
-  cerrar();
-});
-document.getElementById('btn-cerrar2').addEventListener('touchend',function(e){
-  e.preventDefault();
-  cerrar();
-});
-document.getElementById('btn-cerrar2').addEventListener('click',function(){
-  cerrar();
-});
-document.getElementById('p-btn-main').addEventListener('click',function(){
-  window.open(mapsUrl,'_blank');
-});
-document.getElementById('btn-reservar').addEventListener('click',function(){
-  window.open('https://madsexperiences.com','_blank');
-});
+document.getElementById('btn-cerrar').addEventListener('touchend',function(e){e.preventDefault();cerrar();});
+document.getElementById('btn-cerrar').addEventListener('click',function(){cerrar();});
+document.getElementById('btn-cerrar2').addEventListener('touchend',function(e){e.preventDefault();cerrar();});
+document.getElementById('btn-cerrar2').addEventListener('click',function(){cerrar();});
+document.getElementById('p-btn-main').addEventListener('click',function(){window.open(mapsUrl,'_blank');});
+document.getElementById('btn-reservar').addEventListener('click',function(){window.open('https://madsexperiences.com','_blank');});
 </script>
 </body>
 </html>
