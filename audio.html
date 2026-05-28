@@ -269,8 +269,8 @@ function prevEp(){if(cur>0)selectEp(cur-1)}
 function nextEp(){if(cur<episodes.length-1)selectEp(cur+1)}
 function cycleSpeed(){speedIdx=(speedIdx+1)%speeds.length;speed=speeds[speedIdx];document.getElementById('speed-btn').textContent=speed+'× velocidad';if(playing){clearInterval(timer);startTimer();}}
 
-// Mostrar texto del episodio 1 al cargar
-document.getElementById('ep-texto').textContent=episodes[0].texto||'';
+// El texto se muestra solo cuando se selecciona un episodio
+document.getElementById('ep-texto').textContent='';
 
 makeWave();
 renderPlaylist();
