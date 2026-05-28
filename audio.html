@@ -102,7 +102,7 @@ body{font-family:'Lato',sans-serif;background:#080604;color:#fff;min-height:100v
   <div style="display:flex;justify-content:center;margin-bottom:16px">
     <button class="speed-btn" id="speed-btn" onclick="cycleSpeed()">1× velocidad</button>
   </div>
-  <div class="tags" id="ep-tags">
+  <div class="tags" id="ep-tags"><div id="ep-texto" style="display:none;margin-top:20px;font-size:14px;color:rgba(255,255,255,0.7);line-height:1.9;font-family:'Lato',sans-serif;white-space:pre-line;padding-bottom:20px"></div>
     <span class="tag">Historia</span>
     <span class="tag">8 min</span>
     <span class="tag">Mientras manejás</span>
@@ -153,7 +153,7 @@ body{font-family:'Lato',sans-serif;background:#080604;color:#fff;min-height:100v
 
 <script>
 const episodes=[
-  {id:0,eyebrow:'Episodio 1 · Historia',title:'El pueblo que duerme bajo el agua',sub:'La historia del viejo Potrerillos, inundado en 2001 para crear el dique. Sus casas, su iglesia, sus calles — todo en el fondo del lago.',dur:'8:24',totalSec:504,tags:['Historia','8 min','Mientras manejás'],bg:'#1A2835',acc:'#3A6B8A'},
+  {id:0,eyebrow:'Episodio 1 · Historia',title:'El pueblo que duerme bajo el agua',sub:'La historia del viejo Potrerillos, inundado en 2001 para crear el dique. Sus casas, su iglesia, sus calles — todo en el fondo del lago.',texto:`🌊 El pueblo bajo el agua\n\nEs difícil imaginarlo mirando este paisaje.\n\nHoy hay un lago inmenso, viento cruzando la montaña y turistas sacando fotos frente al agua. Pero antes de que existiera el dique Potrerillos, acá hubo otra vida.\n\nDebajo de estas aguas hubo calles. Hubo árboles. Hubo casas. Hubo familias enteras viviendo entre la cordillera y el río Mendoza.\n\nDonde hoy ves el lago, antes existía el antiguo pueblo de Potrerillos.\n\nLa gente vivía conectada con la montaña. El río bajaba mucho más salvaje que ahora y este valle era un importante paso hacia Chile. Había movimientos de arrieros, viajeros, trabajadores ferroviarios y familias que hacían vida en medio de uno de los paisajes más increíbles de Mendoza.\n\nPero todo cambió cuando comenzó la construcción del dique Potrerillos en la década de 1990.\n\nEl proyecto buscaba regular el agua del río Mendoza, generar energía y proteger zonas agrícolas río abajo. Con el tiempo, el valle comenzó a transformarse lentamente hasta quedar cubierto por el agua.\n\nEn el año 2001, el embalse comenzó a llenarse.\n\nEl antiguo Potrerillos desapareció bajo el lago.\n\nMuchos habitantes tuvieron que irse. Otros todavía recuerdan cómo era caminar por esas calles antes de la inundación.\n\nY aunque el paisaje cambió para siempre, la esencia del lugar sigue ahí.\n\nAlgunos dicen que cuando baja mucho el nivel del agua todavía pueden verse restos del viejo pueblo. Viejos caminos. Construcciones. Huellas de una vida que quedó suspendida bajo el dique.\n\nHoy, el mismo río que transformó este lugar también le dio una nueva identidad.\n\nPotrerillos se convirtió en uno de los destinos de montaña y aventura más importantes de Mendoza. El viento, la cordillera y el río crearon un escenario perfecto para explorar, desconectarse y vivir experiencias únicas.\n\nBienvenido a Potrerillos.\n\nLa montaña guarda historias. Y algunas todavía descansan bajo el agua.`,dur:'8:24',totalSec:504,tags:['Historia','8 min','Mientras manejás'],bg:'#1A2835',acc:'#3A6B8A'},
   {id:1,eyebrow:'Episodio 2 · Naturaleza',title:'El Río Mendoza y su nacimiento en los Andes',sub:'Desde el glaciar Tupungato hasta el dique: el viaje del agua que le da vida a Mendoza.',dur:'6:45',totalSec:405,tags:['Naturaleza','6 min','Para el camino'],bg:'#1A2810',acc:'#5C8A3A'},
   {id:2,eyebrow:'Episodio 3 · Aventura',title:'22 kilómetros de adrenalina',sub:'El recorrido completo del rafting en el Río Mendoza con Mads Experiences: los rápidos, los nombres, las historias.',dur:'7:10',totalSec:430,tags:['Aventura','7 min','Mads Experiences'],bg:'#2A1208',acc:'#C17F3E'},
   {id:3,eyebrow:'Episodio 4 · Paisaje',title:'Ruta hacia Alta Montaña',sub:'Desde Potrerillos hasta Uspallata: cada kilómetro de la RN7 tiene una historia geológica de 300 millones de años.',dur:'9:02',totalSec:542,tags:['Paisaje','9 min','GPS activo'],bg:'#201810',acc:'#C4A86A'},
@@ -213,7 +213,8 @@ function selectEp(i){
   document.getElementById('prog-fill').style.width='0%';
   document.getElementById('play-icon').innerHTML='<polygon points="6,4 20,12 6,20"/>';
   document.getElementById('ep-tags').innerHTML=e.tags.map(t=>`<span class="tag">${t}</span>`).join('');
-  makeWave();renderPlaylist();
+  document.getElementById('ep-texto').style.display='block';
+document.getElementById('ep-texto').innerText=e.texto||'';makeWave();renderPlaylist();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
