@@ -8,7 +8,7 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--orange:#C17F3E;--dark:#0D0B08;--river:#3A6B8A;--sky:#A8C4E0;--stone:#E8D5B0;--card:#161208}
-body{font-family:'Lato',sans-serif;background:#080604;color:#fff;min-height:100vh;display:flex;flex-direction:column;align-items:center}
+body{font-family:'Lato',sans-serif;background:var(--dark);color:#fff;min-height:100vh}
 
 .hdr{padding:16px 22px 0;display:flex;align-items:center;justify-content:space-between}
 .hdr-back{font-size:11px;color:rgba(255,255,255,0.4);background:none;border:none;cursor:pointer;padding:0;font-family:'Lato',sans-serif;letter-spacing:1px;text-transform:uppercase}
@@ -35,8 +35,10 @@ body{font-family:'Lato',sans-serif;background:#080604;color:#fff;min-height:100v
 .play-btn svg{width:20px;height:20px;fill:#fff;margin-left:2px}
 .speed-btn{font-size:11px;color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:3px;padding:5px 12px;cursor:pointer;font-family:'Lato',sans-serif;letter-spacing:1px;text-transform:uppercase}
 
-.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:0}
 .tag{font-size:10px;padding:4px 10px;border-radius:3px;background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.4);border:0.5px solid rgba(255,255,255,0.08);letter-spacing:0.5px;text-transform:uppercase}
+
+.ep-texto{margin-top:24px;font-size:14px;color:rgba(255,255,255,0.7);line-height:1.9;white-space:pre-line;padding-bottom:20px}
 
 .div{height:0.5px;background:rgba(255,255,255,0.06);margin:22px 22px}
 
@@ -85,7 +87,7 @@ body{font-family:'Lato',sans-serif;background:#080604;color:#fff;min-height:100v
 <div class="player">
   <div class="ep-eyebrow" id="ep-eyebrow">Episodio 1 · Historia</div>
   <h1 class="ep-title" id="ep-title">El pueblo que duerme bajo el agua</h1>
-  <p class="ep-sub" id="ep-sub">La historia del viejo Potrerillos, inundado en 2001 para crear el dique. Sus casas, su iglesia, sus calles — todo en el fondo del lago.</p>
+  <p class="ep-sub" id="ep-sub">La historia del viejo Potrerillos, inundado en 2001 para crear el dique.</p>
   <div class="waveform" id="waveform"></div>
   <div class="prog-row">
     <span class="prog-time" id="time-cur">0:00</span>
@@ -102,19 +104,19 @@ body{font-family:'Lato',sans-serif;background:#080604;color:#fff;min-height:100v
   <div style="display:flex;justify-content:center;margin-bottom:16px">
     <button class="speed-btn" id="speed-btn" onclick="cycleSpeed()">1× velocidad</button>
   </div>
-  <div class="tags" id="ep-tags"><div id="ep-texto" style="display:none;margin-top:20px;font-size:14px;color:rgba(255,255,255,0.7);line-height:1.9;font-family:'Lato',sans-serif;white-space:pre-line;padding-bottom:20px"></div>
+  <div class="tags" id="ep-tags">
     <span class="tag">Historia</span>
     <span class="tag">8 min</span>
     <span class="tag">Mientras manejás</span>
   </div>
+  <div class="ep-texto" id="ep-texto"></div>
 </div>
 
-<div id="ep-texto" style="margin-top:24px;font-size:14px;color:rgba(255,255,255,0.7);line-height:1.9;font-family:'Lato',sans-serif;white-space:pre-line;padding:0 22px 20px"></div>
 <div class="div"></div>
 
 <div class="pl-hdr">
   <span class="pl-hdr-title">Todos los episodios</span>
-  <span class="pl-hdr-count">6 capítulos</span>
+  <span class="pl-hdr-count" id="ep-count">6 capítulos</span>
 </div>
 
 <div id="playlist"></div>
@@ -154,12 +156,16 @@ body{font-family:'Lato',sans-serif;background:#080604;color:#fff;min-height:100v
 
 <script>
 const episodes=[
-  {id:0,eyebrow:'Episodio 1 · Historia',title:'El pueblo que duerme bajo el agua',sub:'La historia del viejo Potrerillos, inundado en 2001 para crear el dique. Sus casas, su iglesia, sus calles — todo en el fondo del lago.',texto:`🌊 El pueblo bajo el agua\n\nEs difícil imaginarlo mirando este paisaje.\n\nHoy hay un lago inmenso, viento cruzando la montaña y turistas sacando fotos frente al agua. Pero antes de que existiera el dique Potrerillos, acá hubo otra vida.\n\nDebajo de estas aguas hubo calles. Hubo árboles. Hubo casas. Hubo familias enteras viviendo entre la cordillera y el río Mendoza.\n\nDonde hoy ves el lago, antes existía el antiguo pueblo de Potrerillos.\n\nLa gente vivía conectada con la montaña. El río bajaba mucho más salvaje que ahora y este valle era un importante paso hacia Chile. Había movimientos de arrieros, viajeros, trabajadores ferroviarios y familias que hacían vida en medio de uno de los paisajes más increíbles de Mendoza.\n\nPero todo cambió cuando comenzó la construcción del dique Potrerillos en la década de 1990.\n\nEl proyecto buscaba regular el agua del río Mendoza, generar energía y proteger zonas agrícolas río abajo. Con el tiempo, el valle comenzó a transformarse lentamente hasta quedar cubierto por el agua.\n\nEn el año 2001, el embalse comenzó a llenarse.\n\nEl antiguo Potrerillos desapareció bajo el lago.\n\nMuchos habitantes tuvieron que irse. Otros todavía recuerdan cómo era caminar por esas calles antes de la inundación.\n\nY aunque el paisaje cambió para siempre, la esencia del lugar sigue ahí.\n\nAlgunos dicen que cuando baja mucho el nivel del agua todavía pueden verse restos del viejo pueblo. Viejos caminos. Construcciones. Huellas de una vida que quedó suspendida bajo el dique.\n\nHoy, el mismo río que transformó este lugar también le dio una nueva identidad.\n\nPotrerillos se convirtió en uno de los destinos de montaña y aventura más importantes de Mendoza. El viento, la cordillera y el río crearon un escenario perfecto para explorar, desconectarse y vivir experiencias únicas.\n\nBienvenido a Potrerillos.\n\nLa montaña guarda historias. Y algunas todavía descansan bajo el agua.`,dur:'8:24',totalSec:504,tags:['Historia','8 min','Mientras manejás'],bg:'#1A2835',acc:'#3A6B8A'},
-  {id:1,eyebrow:'Episodio 2 · Naturaleza',title:'El Río Mendoza y su nacimiento en los Andes',sub:'Desde el glaciar Tupungato hasta el dique: el viaje del agua que le da vida a Mendoza.',dur:'6:45',totalSec:405,tags:['Naturaleza','6 min','Para el camino'],bg:'#1A2810',acc:'#5C8A3A'},
-  {id:2,eyebrow:'Episodio 3 · Aventura',title:'22 kilómetros de adrenalina',sub:'El recorrido completo del rafting en el Río Mendoza con Mads Experiences: los rápidos, los nombres, las historias.',dur:'7:10',totalSec:430,tags:['Aventura','7 min','Mads Experiences'],bg:'#2A1208',acc:'#C17F3E'},
-  {id:3,eyebrow:'Episodio 4 · Paisaje',title:'Ruta hacia Alta Montaña',sub:'Desde Potrerillos hasta Uspallata: cada kilómetro de la RN7 tiene una historia geológica de 300 millones de años.',dur:'9:02',totalSec:542,tags:['Paisaje','9 min','GPS activo'],bg:'#201810',acc:'#C4A86A'},
-  {id:4,eyebrow:'Episodio 5 · Secretos',title:'Los spots que no están en ningún mapa',sub:'Los lugares que solo conocen los locales: playas escondidas, miradores sin nombre y caminos fuera de ruta.',dur:'5:30',totalSec:330,tags:['Secretos','5 min','Recomendado'],bg:'#181820',acc:'#7A8ACA'},
-  {id:5,eyebrow:'Episodio 6 · Atardecer',title:'La hora dorada del dique',sub:'Por qué el atardecer en Potrerillos es uno de los más cinematográficos de la Argentina. Y dónde verlo.',dur:'4:15',totalSec:255,tags:['Atardecer','4 min','Tarde'],bg:'#2A1808',acc:'#C17F3E'},
+  {id:0,eyebrow:'Episodio 1 · Historia',title:'El pueblo que duerme bajo el agua',sub:'La historia del viejo Potrerillos, inundado en 2001 para crear el dique.',dur:'8:24',totalSec:504,tags:['Historia','8 min','Mientras manejás'],bg:'#1A2835',acc:'#3A6B8A',
+  texto:`🌊 El pueblo bajo el agua\n\nEs difícil imaginarlo mirando este paisaje.\n\nHoy hay un lago inmenso, viento cruzando la montaña y turistas sacando fotos frente al agua. Pero antes de que existiera el dique Potrerillos, acá hubo otra vida.\n\nDebajo de estas aguas hubo calles. Hubo árboles. Hubo casas. Hubo familias enteras viviendo entre la cordillera y el río Mendoza.\n\nDonde hoy ves el lago, antes existía el antiguo pueblo de Potrerillos.\n\nLa gente vivía conectada con la montaña. El río bajaba mucho más salvaje que ahora y este valle era un importante paso hacia Chile. Había movimientos de arrieros, viajeros, trabajadores ferroviarios y familias que hacían vida en medio de uno de los paisajes más increíbles de Mendoza.\n\nPero todo cambió cuando comenzó la construcción del dique Potrerillos en la década de 1990.\n\nEl proyecto buscaba regular el agua del río Mendoza, generar energía y proteger zonas agrícolas río abajo. Con el tiempo, el valle comenzó a transformarse lentamente hasta quedar cubierto por el agua.\n\nEn el año 2001, el embalse comenzó a llenarse.\n\nEl antiguo Potrerillos desapareció bajo el lago.\n\nMuchos habitantes tuvieron que irse. Otros todavía recuerdan cómo era caminar por esas calles antes de la inundación.\n\nY aunque el paisaje cambió para siempre, la esencia del lugar sigue ahí.\n\nAlgunos dicen que cuando baja mucho el nivel del agua todavía pueden verse restos del viejo pueblo. Viejos caminos. Construcciones. Huellas de una vida que quedó suspendida bajo el dique.\n\nHoy, el mismo río que transformó este lugar también le dio una nueva identidad.\n\nPotrerillos se convirtió en uno de los destinos de montaña y aventura más importantes de Mendoza. El viento, la cordillera y el río crearon un escenario perfecto para explorar, desconectarse y vivir experiencias únicas.\n\nBienvenido a Potrerillos.\n\nLa montaña guarda historias. Y algunas todavía descansan bajo el agua.`},
+
+  {id:1,eyebrow:'Episodio 2 · Historia',title:'La Estación Guido',sub:'En medio de la montaña, escondida entre el río y la cordillera, permanece uno de los lugares más misteriosos de Potrerillos.',dur:'6:45',totalSec:405,tags:['Historia','6 min','Expedición'],bg:'#1A1A10',acc:'#C17F3E',
+  texto:`🚂 La Estación Guido\n\nEn medio de la montaña, escondida entre el río, las piedras y la cordillera, todavía permanece uno de los lugares más silenciosos y misteriosos de Potrerillos: la antigua Estación Guido.\n\nHace muchos años, este lugar formaba parte del histórico Ferrocarril Trasandino, la línea ferroviaria que conectaba Argentina con Chile atravesando la Cordillera de los Andes. Por aquí pasaban trenes cargados de viajeros, mercadería e historias, en una época donde cruzar la montaña era una verdadera aventura.\n\nLa estación funcionaba como un punto estratégico en medio del recorrido. Hoy, el tiempo parece haberse detenido.\n\nLas viejas estructuras, rodeadas por naturaleza y casi ocultas entre el paisaje, conservan el espíritu de otra época. El viento, el sonido del río y el silencio de la montaña hacen que visitar este lugar se sienta distinto a cualquier otro rincón de Potrerillos.\n\nY lo más increíble es cómo se llega.\n\nActualmente, una de las únicas y más increíbles formas de conocer la Estación Guido es a través de la expedición de rafting de Mads Experiences.\n\nLa travesía comienza 30 kilómetros aguas arriba del dique Potrerillos y recorre sectores completamente salvajes del río Mendoza, atravesando cañones, montañas y paisajes a los que prácticamente no se puede acceder por tierra.\n\nLejos de la ruta y del turismo tradicional, el río se convierte en el único camino hacia este rincón escondido de la cordillera.\n\nDespués de navegar varios kilómetros entre rápidos y aguas de deshielo, la expedición realiza una parada exclusiva en la antigua Estación Guido, permitiendo recorrer el lugar, descubrir parte de la historia del viejo ferrocarril trasandino y vivir una experiencia que muy pocos turistas llegan a conocer.\n\nLa aventura continúa río abajo hasta llegar al dique Potrerillos, completando una travesía única en medio de uno de los paisajes más impactantes de Mendoza.\n\nMás que una excursión, es una forma distinta de descubrir la montaña.\n\nMads Experiences combina aventura, naturaleza e historia para mostrar una cara de Potrerillos que la mayoría nunca llega a ver.\n\nHay lugares que solo se visitan.\n\nY otros que se descubren.\n\nLa Estación Guido pertenece a esos lugares que todavía conservan algo intacto: la sensación de aventura.`},
+
+  {id:2,eyebrow:'Episodio 3 · Aventura',title:'22 kilómetros de adrenalina',sub:'El recorrido completo del rafting en el Río Mendoza con Mads Experiences.',dur:'7:10',totalSec:430,tags:['Aventura','7 min','Mads Experiences'],bg:'#2A1208',acc:'#C17F3E',texto:''},
+  {id:3,eyebrow:'Episodio 4 · Paisaje',title:'Ruta hacia Alta Montaña',sub:'Desde Potrerillos hasta Uspallata: cada kilómetro de la RN7 tiene una historia geológica de 300 millones de años.',dur:'9:02',totalSec:542,tags:['Paisaje','9 min','GPS activo'],bg:'#201810',acc:'#C4A86A',texto:''},
+  {id:4,eyebrow:'Episodio 5 · Secretos',title:'Los spots que no están en ningún mapa',sub:'Los lugares que solo conocen los locales: playas escondidas, miradores sin nombre y caminos fuera de ruta.',dur:'5:30',totalSec:330,tags:['Secretos','5 min','Recomendado'],bg:'#181820',acc:'#7A8ACA',texto:''},
+  {id:5,eyebrow:'Episodio 6 · Atardecer',title:'La hora dorada del dique',sub:'Por qué el atardecer en Potrerillos es uno de los más cinematográficos de la Argentina.',dur:'4:15',totalSec:255,tags:['Atardecer','4 min','Tarde'],bg:'#2A1808',acc:'#C17F3E',texto:''},
 ];
 
 let cur=0,playing=false,elapsed=0,speed=1,timer=null;
@@ -214,9 +220,9 @@ function selectEp(i){
   document.getElementById('prog-fill').style.width='0%';
   document.getElementById('play-icon').innerHTML='<polygon points="6,4 20,12 6,20"/>';
   document.getElementById('ep-tags').innerHTML=e.tags.map(t=>`<span class="tag">${t}</span>`).join('');
-document.getElementById('ep-texto').innerText=e.texto||'';
-  document.getElementById('ep-texto').style.display='block';
-document.getElementById('ep-texto').innerText=e.texto||'';makeWave();renderPlaylist();
+  document.getElementById('ep-texto').textContent=e.texto||'';
+  makeWave();
+  renderPlaylist();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -262,6 +268,9 @@ function seekTo(e){
 function prevEp(){if(cur>0)selectEp(cur-1)}
 function nextEp(){if(cur<episodes.length-1)selectEp(cur+1)}
 function cycleSpeed(){speedIdx=(speedIdx+1)%speeds.length;speed=speeds[speedIdx];document.getElementById('speed-btn').textContent=speed+'× velocidad';if(playing){clearInterval(timer);startTimer();}}
+
+// Mostrar texto del episodio 1 al cargar
+document.getElementById('ep-texto').textContent=episodes[0].texto||'';
 
 makeWave();
 renderPlaylist();
