@@ -109,6 +109,7 @@ body{font-family:'Lato',sans-serif;background:#080604;color:#fff;min-height:100v
   </div>
 </div>
 
+<div id="ep-texto" style="margin-top:24px;font-size:14px;color:rgba(255,255,255,0.7);line-height:1.9;font-family:'Lato',sans-serif;white-space:pre-line;padding:0 22px 20px"></div>
 <div class="div"></div>
 
 <div class="pl-hdr">
@@ -213,6 +214,7 @@ function selectEp(i){
   document.getElementById('prog-fill').style.width='0%';
   document.getElementById('play-icon').innerHTML='<polygon points="6,4 20,12 6,20"/>';
   document.getElementById('ep-tags').innerHTML=e.tags.map(t=>`<span class="tag">${t}</span>`).join('');
+document.getElementById('ep-texto').innerText=e.texto||'';
   document.getElementById('ep-texto').style.display='block';
 document.getElementById('ep-texto').innerText=e.texto||'';makeWave();renderPlaylist();
   window.scrollTo({top:0,behavior:'smooth'});
