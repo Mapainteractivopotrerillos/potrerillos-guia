@@ -17,7 +17,7 @@ html,body{height:100%;width:100%;overflow:hidden;font-family:'Lato',sans-serif;b
 .topbar-brand{font-size:9px;color:rgba(255,255,255,0.3);letter-spacing:2px;text-transform:uppercase}
 #map{position:fixed;top:56px;left:0;right:0;bottom:64px;z-index:1}
 .leaflet-tile-pane{filter:brightness(0.8) saturate(0.7) hue-rotate(10deg)}
-.pin-mads{background:#C17F3E;border:3px solid #FFD4A0;border-radius:50%;width:68px;height:68px;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 4px 20px rgba(193,127,62,0.6)}
+.pin-mads{background:#1A1510;border:3px solid #C17F3E;border-radius:50%;width:68px;height:68px;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 4px 20px rgba(193,127,62,0.6)}
 .pin-nature{background:#1A2835;border:2px solid #3A6B8A;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:12px}
 .pin-mirador{background:#2A1A08;border:2px solid #C17F3E;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:12px}
 .pin-food{background:#1A0E06;border:2px solid #C17F3E;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:12px}
@@ -145,7 +145,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'Â
 let mapsUrl='';
 
 puntos.forEach(p=>{
-  const icono=L.divIcon({html:iconos[p.tipo],className:'',iconSize:p.tipo==='mads'?[68,68]:[28,28],iconAnchor:p.tipo==='mads'?[34,34]:[14,14]});
+  const icono=L.divIcon({html:iconos[p.tipo],className:'',iconSize:p.tipo==='mads'?[46,46]:[28,28],iconAnchor:p.tipo==='mads'?[23,23]:[14,14]});
   L.marker([p.lat,p.lng],{icon:icono}).addTo(map).on('click',()=>mostrar(p));
 });
 
