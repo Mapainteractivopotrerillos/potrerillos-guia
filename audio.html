@@ -169,6 +169,8 @@ const episodes=[
 ];
 
 let cur=0,playing=false,elapsed=0,speed=1,timer=null;
+const audioSrcs={0:'https://archive.org/download/el-pueblo-bajo-el-agua/el-pueblo-bajo-el-agua.m4a'};
+const audioEl=new Audio();
 const speeds=[1,1.25,1.5,2];
 let speedIdx=0;
 
@@ -229,8 +231,23 @@ function selectEp(i){
 function togglePlay(){
   playing=!playing;
   const icon=document.getElementById('play-icon');
-  if(playing){icon.innerHTML='<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';startTimer();}
-  else{icon.innerHTML='<polygon points="6,4 20,12 6,20"/>';clearInterval(timer);}
+  if(playing){
+    icon.innerHTML='<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
+    if(audioSrcs[cur]){
+      if(audioEl.dataset.cur!=cur){
+        audioEl.src=audioSrcs[cur];
+        audioEl.dataset.cur=cur;
+        audioEl.currentTime=elapsed;
+      }
+      audioEl.playbackRate=speed;
+      audioEl.play();
+    }
+    startTimer();
+  } else {
+    icon.innerHTML='<polygon points="6,4 20,12 6,20"/>';
+    audioEl.pause();
+    clearInterval(timer);
+  }
 }
 
 function startTimer(){
