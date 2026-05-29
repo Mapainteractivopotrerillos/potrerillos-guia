@@ -156,7 +156,7 @@ body{font-family:'Lato',sans-serif;background:var(--dark);color:#fff;min-height:
 
 <script>
 const episodes=[
-  {id:0,eyebrow:'Episodio 1 · Historia',title:'El pueblo que duerme bajo el agua',sub:'La historia del viejo Potrerillos, inundado en 2001 para crear el dique.',dur:'8:24',totalSec:504,tags:['Historia','8 min','Mientras manejás'],bg:'#1A2835',acc:'#3A6B8A',
+  {id:0,eyebrow:'Episodio 1 · Historia',title:'El pueblo que duerme bajo el agua',sub:'La historia del viejo Potrerillos, inundado en 2001 para crear el dique.',dur:'2:14',totalSec:134,tags:['Historia','8 min','Mientras manejás'],bg:'#1A2835',acc:'#3A6B8A',
   texto:`🌊 El pueblo bajo el agua\n\nEs difícil imaginarlo mirando este paisaje.\n\nHoy hay un lago inmenso, viento cruzando la montaña y turistas sacando fotos frente al agua. Pero antes de que existiera el dique Potrerillos, acá hubo otra vida.\n\nDebajo de estas aguas hubo calles. Hubo árboles. Hubo casas. Hubo familias enteras viviendo entre la cordillera y el río Mendoza.\n\nDonde hoy ves el lago, antes existía el antiguo pueblo de Potrerillos.\n\nLa gente vivía conectada con la montaña. El río bajaba mucho más salvaje que ahora y este valle era un importante paso hacia Chile. Había movimientos de arrieros, viajeros, trabajadores ferroviarios y familias que hacían vida en medio de uno de los paisajes más increíbles de Mendoza.\n\nPero todo cambió cuando comenzó la construcción del dique Potrerillos en la década de 1990.\n\nEl proyecto buscaba regular el agua del río Mendoza, generar energía y proteger zonas agrícolas río abajo. Con el tiempo, el valle comenzó a transformarse lentamente hasta quedar cubierto por el agua.\n\nEn el año 2001, el embalse comenzó a llenarse.\n\nEl antiguo Potrerillos desapareció bajo el lago.\n\nMuchos habitantes tuvieron que irse. Otros todavía recuerdan cómo era caminar por esas calles antes de la inundación.\n\nY aunque el paisaje cambió para siempre, la esencia del lugar sigue ahí.\n\nAlgunos dicen que cuando baja mucho el nivel del agua todavía pueden verse restos del viejo pueblo. Viejos caminos. Construcciones. Huellas de una vida que quedó suspendida bajo el dique.\n\nHoy, el mismo río que transformó este lugar también le dio una nueva identidad.\n\nPotrerillos se convirtió en uno de los destinos de montaña y aventura más importantes de Mendoza. El viento, la cordillera y el río crearon un escenario perfecto para explorar, desconectarse y vivir experiencias únicas.\n\nBienvenido a Potrerillos.\n\nLa montaña guarda historias. Y algunas todavía descansan bajo el agua.`},
 
   {id:1,eyebrow:'Episodio 2 · Historia',title:'La Estación Guido',sub:'En medio de la montaña, escondida entre el río y la cordillera, permanece uno de los lugares más misteriosos de Potrerillos.',dur:'6:45',totalSec:405,tags:['Historia','6 min','Expedición'],bg:'#1A1A10',acc:'#C17F3E',
@@ -267,6 +267,7 @@ function startTimer(){
 function skip(sec){
   const ep=episodes[cur];
   elapsed=Math.max(0,Math.min(ep.totalSec,elapsed+sec));
+  if(audioEl.src){audioEl.currentTime=elapsed;}
   document.getElementById('prog-fill').style.width=(elapsed/ep.totalSec*100)+'%';
   const m=Math.floor(elapsed/60),s=Math.floor(elapsed%60);
   document.getElementById('time-cur').textContent=m+':'+(s<10?'0':'')+s;
