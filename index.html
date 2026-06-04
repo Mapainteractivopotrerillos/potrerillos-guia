@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Guía turística interactiva de Potrerillos, Mendoza. Lugares, miradores, gastronomía y aventura con Mads Experiences.">
+<meta name="description" content="Guía turística interactiva de Potrerillos, Mendoza.">
 <meta name="robots" content="noindex, nofollow">
 <title>Potrerillos · Guía Turística</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@ body{font-family:'Lato',sans-serif;background:var(--dark);color:#fff;min-height:
 .splash-dot.active{background:var(--orange)}
 .splash-btn{background:var(--orange);color:#fff;font-family:'Lato',sans-serif;font-size:13px;font-weight:700;padding:15px 40px;border-radius:4px;border:none;cursor:pointer;letter-spacing:1.5px;text-transform:uppercase;display:flex;align-items:center;gap:10px}
 .splash-btn svg{width:16px;height:16px}
-.splash-skip{margin-top:16px;font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:1px;text-transform:uppercase;cursor:pointer;text-decoration:none}
+.splash-skip{margin-top:16px;font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:1px;text-transform:uppercase;cursor:pointer}
 
 .hero{position:relative;height:100vh;max-height:700px;overflow:hidden}
 .hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -38,14 +38,25 @@ body{font-family:'Lato',sans-serif;background:var(--dark);color:#fff;min-height:
 .hero-sub{font-size:12px;color:rgba(255,255,255,0.5);letter-spacing:2px;text-transform:uppercase;margin-bottom:24px}
 .hero-btn{display:inline-flex;align-items:center;gap:10px;background:var(--orange);color:#fff;font-family:'Lato',sans-serif;font-size:13px;font-weight:700;padding:13px 24px;border-radius:4px;text-decoration:none;letter-spacing:1px;text-transform:uppercase}
 .hero-btn svg{width:16px;height:16px}
+
 .mads-strip{background:var(--orange);padding:12px 22px;display:flex;align-items:center;justify-content:space-between;text-decoration:none}
 .mads-strip-left{font-family:'Playfair Display',serif;font-size:15px;font-style:italic;color:#fff}
 .mads-strip-left span{display:block;font-family:'Lato',sans-serif;font-size:9px;font-style:normal;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.7);margin-bottom:2px}
 .mads-strip-btn{background:#fff;color:var(--orange);font-size:11px;font-weight:700;padding:7px 16px;border-radius:3px;border:none;cursor:pointer;font-family:'Lato',sans-serif;letter-spacing:1px;text-transform:uppercase;text-decoration:none}
+
 .sec{padding:32px 22px 0}
 .sec-eyebrow{font-size:9px;color:var(--orange);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:8px}
 .sec-eyebrow::before{content:'';width:20px;height:1px;background:var(--orange)}
 .sec-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:400;color:var(--stone);margin-bottom:20px;line-height:1.2}
+
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:20px}
+.tab{background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.08);border-radius:4px;padding:14px 16px;cursor:pointer;transition:all 0.2s}
+.tab.active{background:rgba(193,127,62,0.1);border-color:var(--orange)}
+.tab-eyebrow{font-size:9px;color:rgba(255,255,255,0.3);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+.tab.active .tab-eyebrow{color:var(--orange)}
+.tab-title{font-family:'Playfair Display',serif;font-size:16px;color:rgba(255,255,255,0.4);line-height:1.2}
+.tab.active .tab-title{color:var(--stone)}
+
 .places{display:flex;flex-direction:column;gap:2px}
 .place-card{position:relative;cursor:pointer;overflow:hidden;border-radius:4px}
 .place-card-img{height:220px;width:100%;object-fit:cover;display:block;transition:transform 0.4s}
@@ -59,6 +70,7 @@ body{font-family:'Lato',sans-serif;background:var(--dark);color:#fff;min-height:
 .place-card-content h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;color:#fff;margin-bottom:3px;line-height:1.2}
 .place-card-content p{font-size:11px;color:rgba(255,255,255,0.5);line-height:1.4}
 .place-card-arrow{position:absolute;bottom:16px;right:16px;color:var(--orange);font-size:18px}
+
 .mads-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px}
 .mads-card{position:relative;cursor:pointer;overflow:hidden;border-radius:4px;text-decoration:none;display:block}
 .mads-card-img{height:160px;width:100%;object-fit:cover;display:block;transition:transform 0.4s}
@@ -69,10 +81,12 @@ body{font-family:'Lato',sans-serif;background:var(--dark);color:#fff;min-height:
 .mads-card-content p{font-size:10px;color:rgba(255,255,255,0.5)}
 .mads-card-content .precio{font-size:11px;color:var(--orange);font-weight:700;margin-top:4px}
 .mads-card-badge{position:absolute;top:10px;left:10px;background:var(--orange);color:#fff;font-size:8px;font-weight:700;padding:2px 8px;border-radius:2px;text-transform:uppercase;letter-spacing:1px}
+
 .mads-cta{margin:2px 0 0;background:var(--orange);padding:20px 22px;display:flex;align-items:center;justify-content:space-between}
 .mads-cta-text p{font-size:9px;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:2px;margin-bottom:4px}
 .mads-cta-text h3{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:#fff}
 .mads-cta-btn{background:#fff;color:var(--orange);font-size:11px;font-weight:700;padding:9px 16px;border-radius:3px;border:none;cursor:pointer;font-family:'Lato',sans-serif;letter-spacing:1px;text-transform:uppercase;text-decoration:none;white-space:nowrap}
+
 .detail{display:none;position:fixed;inset:0;background:var(--dark);z-index:200;overflow-y:auto}
 .detail.open{display:block}
 .detail-back{position:fixed;top:16px;left:16px;background:rgba(0,0,0,0.7);border:0.5px solid rgba(255,255,255,0.15);border-radius:3px;padding:7px 14px;font-size:12px;cursor:pointer;z-index:201;color:#fff;font-family:'Lato',sans-serif;letter-spacing:1px;text-transform:uppercase}
@@ -94,6 +108,7 @@ body{font-family:'Lato',sans-serif;background:var(--dark);color:#fff;min-height:
 .detail-mads-label{font-size:9px;color:var(--orange);text-transform:uppercase;letter-spacing:2px;margin-bottom:4px}
 .detail-mads h4{font-family:'Playfair Display',serif;font-size:15px;font-style:italic;color:var(--stone);line-height:1.5;margin-bottom:12px}
 .detail-mads a{display:block;background:var(--orange);color:#fff;text-align:center;border-radius:3px;padding:11px;font-size:12px;font-weight:700;text-decoration:none;font-family:'Lato',sans-serif;letter-spacing:1px;text-transform:uppercase}
+
 .wap{position:fixed;bottom:80px;right:16px;width:48px;height:48px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:100;text-decoration:none;box-shadow:0 4px 16px rgba(37,211,102,0.35)}
 .nav{position:fixed;bottom:0;left:0;right:0;background:rgba(13,11,8,0.98);border-top:0.5px solid rgba(255,255,255,0.06);display:flex;padding:8px 0 14px;z-index:100;backdrop-filter:blur(12px)}
 .nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;opacity:0.4;color:#fff;text-decoration:none;transition:opacity 0.15s}
@@ -107,9 +122,7 @@ body{font-family:'Lato',sans-serif;background:var(--dark);color:#fff;min-height:
 
 <div class="splash" id="splash">
   <div class="splash-eyebrow">Potrerillos · Mendoza</div>
-  <div class="splash-hook">
-    <h2 id="hook-text"></h2>
-  </div>
+  <div class="splash-hook"><h2 id="hook-text"></h2></div>
   <div class="splash-dots" id="splash-dots"></div>
   <button class="splash-btn" onclick="cerrarSplash()">
     Descubrir
@@ -141,69 +154,21 @@ body{font-family:'Lato',sans-serif;background:var(--dark);color:#fff;min-height:
 </a>
 
 <div class="sec">
-  <div class="sec-eyebrow">Explorar</div>
-  <h2 class="sec-title">¿Qué querés<br>descubrir?</h2>
-</div>
-
-<div class="sec" style="padding-top:0">
-  <div class="places" id="lugares"></div>
-</div>
-
-<!-- HISTORIAS Y SECRETOS -->
-<div class="sec">
-  <div class="sec-eyebrow">Historias y Secretos</div>
-  <h2 class="sec-title">Lo que casi nadie<br>te cuenta</h2>
-</div>
-<div style="padding:0 22px;display:flex;flex-direction:column;gap:2px;margin-bottom:32px">
-  <div class="place-card" onclick="abrirHistoria(0)">
-    <img class="place-card-img" src="https://media.diariouno.com.ar/p/5838620a65e2442c80e3ef05cc301c12/adjuntos/298/imagenes/008/986/0008986616/1200x0/smart/perilago-norte-potrerillosjpg.jpg" alt="Pueblo inundado"/>
-    <div class="place-card-overlay"></div>
-    <div class="place-card-content">
-      <span class="place-badge azul">📍 Secreto local</span>
-      <h3>El pueblo bajo el agua</h3>
-      <p>¿Sabías que debajo del dique hay un pueblo inundado?</p>
+  <div class="tabs">
+    <div class="tab active" id="tab-explorar" onclick="switchTab('explorar')">
+      <div class="tab-eyebrow">Explorar</div>
+      <div class="tab-title">¿Qué querés descubrir?</div>
     </div>
-    <span class="place-card-arrow">→</span>
+    <div class="tab" id="tab-historias" onclick="switchTab('historias')">
+      <div class="tab-eyebrow">Historias y Secretos</div>
+      <div class="tab-title">Lo que nadie te cuenta</div>
+    </div>
   </div>
-  <div class="place-card" onclick="abrirHistoria(1)">
-    <img class="place-card-img" src="https://www.tangol.com/blog/Fotos/Notas/que-hacer-en-potrerillos-y-como-ir-al-dique-de-mendoza_18294_202505121950310.JPEG" alt="Secretos Potrerillos"/>
-    <div class="place-card-overlay"></div>
-    <div class="place-card-content">
-      <span class="place-badge default">🔥 Imperdible</span>
-      <h3>7 secretos que casi nadie conoce</h3>
-      <p>Los rincones que los turistas nunca encuentran.</p>
-    </div>
-    <span class="place-card-arrow">→</span>
+  <div id="panel-explorar">
+    <div class="places" id="lugares"></div>
   </div>
-  <div class="place-card" onclick="abrirHistoria(2)">
-    <img class="place-card-img" src="https://lujandecuyo.tur.ar/wp-content/uploads/original-2-7.jpg" alt="Atardecer Mendoza"/>
-    <div class="place-card-overlay"></div>
-    <div class="place-card-content">
-      <span class="place-badge default">🌅 Atardeceres</span>
-      <h3>Los 5 mejores atardeceres</h3>
-      <p>Los lugares exactos para ver el sol caer sobre los Andes.</p>
-    </div>
-    <span class="place-card-arrow">→</span>
-  </div>
-  <div class="place-card" onclick="abrirHistoria(3)">
-    <img class="place-card-img" src="https://inmendoza.com/wp-content/uploads/2021/09/IMG_6439.jpg" alt="Mate con vista"/>
-    <div class="place-card-overlay"></div>
-    <div class="place-card-content">
-      <span class="place-badge azul">🧉 Local tip</span>
-      <h3>Dónde tomar el mejor mate</h3>
-      <p>Los spots secretos donde los locales van a tomar mate.</p>
-    </div>
-    <span class="place-card-arrow">→</span>
-  </div>
-  <div class="place-card" onclick="abrirHistoria(4)">
-    <img class="place-card-img" src="https://lujandecuyo.tur.ar/wp-content/uploads/jet-engine-forms/23/Vallecitos-02.webp" alt="Alta Montaña nieve"/>
-    <div class="place-card-overlay"></div>
-    <div class="place-card-content">
-      <span class="place-badge azul">❄️ Alta Montaña</span>
-      <h3>Lo que nadie te cuenta antes de subir</h3>
-      <p>¿Vas a la nieve? Leé esto antes de salir.</p>
-    </div>
-    <span class="place-card-arrow">→</span>
+  <div id="panel-historias" style="display:none">
+    <div class="places" id="historias-list"></div>
   </div>
 </div>
 
@@ -230,7 +195,7 @@ body{font-family:'Lato',sans-serif;background:var(--dark);color:#fff;min-height:
   <div id="detail-content"></div>
 </div>
 
-<a class="wap" href="https://wa.me/5492616040302?text=Hola!%20Vi%20la%20guía%20de%20Potrerillos%20y%20quiero%20info%20sobre%20Mads%20Experiences" target="_blank" aria-label="WhatsApp Mads">
+<a class="wap" href="https://wa.me/5492616040302?text=Hola!%20Vi%20la%20guía%20de%20Potrerillos%20y%20quiero%20info%20sobre%20Mads%20Experiences" target="_blank">
   <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
 </a>
 
@@ -265,20 +230,13 @@ const hooks=[
   {emoji:'🧉',texto:'Dónde tomar mate con la <em>mejor vista</em> de Potrerillos'},
   {emoji:'❄️',texto:'¿Vas a la nieve? Lo que <em>nadie te cuenta</em> antes de subir'},
 ];
-
-let hookActual=0;
-let hookTimer;
+let hookActual=0,hookTimer;
 const hookEl=document.getElementById('hook-text');
 const dotsEl=document.getElementById('splash-dots');
 dotsEl.innerHTML=hooks.map((_,i)=>`<div class="splash-dot${i===0?' active':''}" id="dot-${i}"></div>`).join('');
-
 function mostrarHook(i){
   hookEl.classList.remove('visible');
-  setTimeout(()=>{
-    hookEl.innerHTML=hooks[i].emoji+' '+hooks[i].texto;
-    hookEl.classList.add('visible');
-    document.querySelectorAll('.splash-dot').forEach((d,j)=>d.classList.toggle('active',j===i));
-  },300);
+  setTimeout(()=>{hookEl.innerHTML=hooks[i].emoji+' '+hooks[i].texto;hookEl.classList.add('visible');document.querySelectorAll('.splash-dot').forEach((d,j)=>d.classList.toggle('active',j===i));},300);
 }
 function avanzarHook(){hookActual=(hookActual+1)%hooks.length;mostrarHook(hookActual);}
 mostrarHook(0);
@@ -290,102 +248,22 @@ function cerrarSplash(){
 }
 
 const lugares=[
-  {
-    id:0,
-    foto:'https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1024,h=615,fit=crop/gpoXXdqC8evQIJK5/img_4111-PJeLu2ahZvh5XdP3.JPG',
-    nombre:'Mads Experiences',
-    desc:'La experiencia premium del Río Mendoza. Rafting, kayak, trekking y más con guías certificados.',
-    badge:'Reservar →',badgeClass:'default',
-    intro:'El río que baja de los Andes te espera.',
-    historia:'El Río Mendoza nace en el deshielo de la Cordillera y recorre más de 400km antes de perderse en el desierto. Mads Experiences nació de la pasión por ese río — hoy es la operadora de aventura más reconocida de Potrerillos, con guías certificados y años de experiencia en aguas bravas.',
-    dato:'En primavera el deshielo convierte al río en una bestia de categoría IV. En verano baja a categoría II-III, ideal para familias y primeras veces.',
-    mads:null,
-    maps:'https://maps.app.goo.gl/crNTj9Li3Y27SUBD9'
-  },
-  {
-    id:1,
-    foto:'https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=512,fit=crop/gpoXXdqC8evQIJK5/potre-360-6LozTCTLMp44arwe.webp',
-    nombre:'Potrerillos 360',
-    desc:'Vistas panorámicas únicas. El punto de partida de todas las aventuras.',
-    badge:'Recomendado',badgeClass:'default',
-    intro:'Tres valles y el Aconcagua desde un solo lugar.',
-    historia:'Desde las alturas de Potrerillos 360 se pueden ver simultáneamente tres valles distintos y, en días claros, el Aconcagua a más de 150km de distancia. Este lugar se convirtió en el punto de encuentro natural de los aventureros que vienen a Potrerillos — el lugar donde arranca todo.',
-    dato:'El nombre "360" no es casualidad: en días despejados la vista es literalmente panorámica en todas las direcciones. Los atardeceres desde acá tiñen los cerros de naranja y rojo.',
-    mads:'Este es el punto de encuentro oficial de Mads Experiences. Aquí arranca toda la aventura.',
-    maps:'https://maps.app.goo.gl/crNTj9Li3Y27SUBD9'
-  },
-  {
-    id:2,
-    foto:'https://www.tangol.com/blog/Fotos/Notas/que-hacer-en-potrerillos-y-como-ir-al-dique-de-mendoza_18294_202505121950310.JPEG',
-    nombre:'Lago Potrerillos',
-    desc:'El corazón del valle. Debajo de estas aguas turquesas hay un pueblo entero.',
-    badge:'Destacado',badgeClass:'azul',
-    intro:'Debajo de estas aguas hay un pueblo inundado.',
-    historia:'Lo que hoy es un lago turquesa rodeado de montañas fue, hasta el año 2000, el pueblo de Potrerillos Viejo. Cuando se llenó el dique en 2004, el agua cubrió casas, calles, la plaza y hasta la iglesia. Los vecinos fueron relocalizados, pero muchos dicen que en días de mucho viento todavía se puede ver el campanario asomar bajo la superficie.',
-    dato:'El lago tiene 23km de largo y en algunos puntos supera los 80 metros de profundidad. En verano el agua alcanza los 22°C — perfecta para kayak y SUP.',
-    mads:'A pocos minutos de la orilla del lago arranca el recorrido de rafting con Mads Experiences por el Río Mendoza.',
-    maps:'https://maps.google.com/?q=Dique+Potrerillos+Mendoza'
-  },
-  {
-    id:3,
-    foto:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2oUqe0QC9t-iOEOPQ2_hFuiIBCHmDLkwHzQ&s',
-    nombre:'Mirador del Dique — Punto 1',
-    desc:'El mirador más visitado de Potrerillos. 4.8 estrellas en Google.',
-    badge:'4.8 ⭐',badgeClass:'azul',
-    intro:'La foto que todos se sacan. Y tiene razón.',
-    historia:'Este deck de observación es el punto más fotografiado de toda la región. Fue construido sobre una saliente natural de roca que cae directo al lago — desde acá la vista del dique con los Andes de fondo es simplemente imposible de ignorar. Los vendedores locales de piedras semipreciosas llevan décadas en este rincón.',
-    dato:'Las piedras que venden los artesanos locales son amatistas, cuarzos y rodocrositas — la piedra nacional argentina — extraídas de las minas de los cerros vecinos.',
-    mads:'Desde este mirador podés ver exactamente el recorrido del río donde Mads lleva los grupos de rafting.',
-    maps:'https://maps.google.com/?q=Mirador+Dique+Potrerillos'
-  },
-  {
-    id:4,
-    foto:'https://lujandecuyo.tur.ar/wp-content/uploads/original-2-7.jpg',
-    nombre:'Mirador Principal',
-    desc:'El primer acceso al dique. Tranquilo, espectacular y con kayaks disponibles.',
-    badge:'Top foto',badgeClass:'default',
-    intro:'El secreto mejor guardado para ver el lago sin multitudes.',
-    historia:'Mientras el Mirador 1 concentra la mayoría del turismo, este acceso es el preferido de los locales. Más tranquilo, con bajada directa al agua y una perspectiva diferente del lago que pocas guías muestran. En las tardes de semana podés tener el lugar prácticamente para vos solo.',
-    dato:'Desde la orilla de este mirador parten los tours de kayak y SUP del lago. El agua es tan clara en días sin viento que desde la tabla se puede ver el fondo a metros de profundidad.',
-    mads:'Bajando por el río, los grupos de rafting de Mads pasan justo por este paisaje.',
-    maps:'https://maps.google.com/?q=Mirador+Potrerillos'
-  },
-  {
-    id:5,
-    foto:'https://inmendoza.com/wp-content/uploads/2021/09/IMG_6439.jpg',
-    nombre:'Las Palapas',
-    desc:'Bar al borde del lago con DJ en vivo. Solo los sábados de 17 a 23.',
-    badge:'Bar al lago',badgeClass:'azul',
-    intro:'El lugar más inesperado de Potrerillos.',
-    historia:'Nadie espera encontrar un bar con música en vivo al borde de un lago de montaña. Las Palapas apareció casi de la nada y se convirtió en el plan de los sábados para toda la región. Las palapas de paja, los pies en la arena y el sol cayendo sobre los Andes crean una combinación que no existe en ningún otro lugar de Mendoza.',
-    dato:'Solo abre los sábados de 17 a 23hs. Si llegás antes de las 18 conseguís lugar en la orilla del agua. Después de las 19 se llena y la vista desde atrás no es la misma.',
-    mads:'El plan perfecto del sábado: rafting con Mads durante el día y Las Palapas al atardecer.',
-    maps:'https://maps.google.com/?q=-32.9614,-69.1899'
-  },
-  {
-    id:6,
-    foto:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyqyKX2CojO4mKgO3HdhKRVJCI3MLEndRmjw&s',
-    nombre:'Estación de Trenes Guido',
-    desc:'Una estación ferroviaria abandonada en medio de la montaña. Historia pura.',
-    badge:'Historia',badgeClass:'azul',
-    intro:'El tren que unía Mendoza con Chile y quedó en el tiempo.',
-    historia:'La Estación Guido fue parte del Ferrocarril Trasandino, la línea que unía Mendoza con Santiago de Chile cruzando la Cordillera. En su momento de mayor actividad, a principios del siglo XX, por acá pasaban trenes cargados de minerales, pasajeros y sueños de integración sudamericana. Un alud en 1934 clausuró definitivamente el paso y la estación quedó congelada en el tiempo.',
-    dato:'El edificio original de la estación sigue en pie. Las vías todavía se pueden ver entre la vegetación. En invierno, con nieve, el lugar parece una postal de principios del 1900.',
-    mads:'Un desvío perfecto de 15 minutos antes o después de tu aventura con Mads.',
-    maps:'https://maps.google.com/?q=Estacion+Guido+Mendoza'
-  },
-  {
-    id:7,
-    foto:'https://lujandecuyo.tur.ar/wp-content/uploads/jet-engine-forms/23/Vallecitos-02.webp',
-    nombre:'Vallecitos',
-    desc:'Centro de ski y trekking a 2900m de altura. Alta montaña pura.',
-    badge:'Alta montaña',badgeClass:'default',
-    intro:'El centro de ski más antiguo de Mendoza, a 45 minutos de Potrerillos.',
-    historia:'Vallecitos es el centro de ski más antiguo de la provincia y el favorito de los mendocinos que no quieren ir hasta Las Leñas. Está a 2900 metros de altura, en el Cordón del Plata, y en verano se transforma en el punto de partida de los trekkings más populares de la región — incluyendo la cumbre del Plata a 6050 metros.',
-    dato:'En invierno hay nieve garantizada desde junio hasta septiembre. En verano la temperatura baja hasta los 5°C de noche. Siempre llevá abrigo aunque salgas con calor de Potrerillos.',
-    mads:'Combiná un día en Vallecitos con una jornada de rafting en el río con Mads — el contraste entre la nieve y el agua es único.',
-    maps:'https://maps.google.com/?q=Vallecitos+Mendoza'
-  },
+  {id:0,foto:'https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1024,h=615,fit=crop/gpoXXdqC8evQIJK5/img_4111-PJeLu2ahZvh5XdP3.JPG',nombre:'Mads Experiences',desc:'La experiencia premium del Río Mendoza. Rafting, kayak, trekking y más con guías certificados.',badge:'Reservar →',badgeClass:'default',intro:'El río que baja de los Andes te espera.',historia:'El Río Mendoza nace en el deshielo de la Cordillera y recorre más de 400km antes de perderse en el desierto. Mads Experiences nació de la pasión por ese río — hoy es la operadora de aventura más reconocida de Potrerillos, con guías certificados y años de experiencia en aguas bravas.',dato:'En primavera el deshielo convierte al río en una bestia de categoría IV. En verano baja a categoría II-III, ideal para familias y primeras veces.',mads:null,maps:'https://maps.app.goo.gl/crNTj9Li3Y27SUBD9'},
+  {id:1,foto:'https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=512,fit=crop/gpoXXdqC8evQIJK5/potre-360-6LozTCTLMp44arwe.webp',nombre:'Potrerillos 360',desc:'Vistas panorámicas únicas. El punto de partida de todas las aventuras.',badge:'Recomendado',badgeClass:'default',intro:'Tres valles y el Aconcagua desde un solo lugar.',historia:'Desde las alturas de Potrerillos 360 se pueden ver simultáneamente tres valles distintos y, en días claros, el Aconcagua a más de 150km de distancia. Este lugar se convirtió en el punto de encuentro natural de los aventureros que vienen a Potrerillos.',dato:'El nombre "360" no es casualidad: en días despejados la vista es literalmente panorámica. Los atardeceres tiñen los cerros de naranja y rojo.',mads:'Este es el punto de encuentro oficial de Mads Experiences. Aquí arranca toda la aventura.',maps:'https://maps.app.goo.gl/crNTj9Li3Y27SUBD9'},
+  {id:2,foto:'https://www.tangol.com/blog/Fotos/Notas/que-hacer-en-potrerillos-y-como-ir-al-dique-de-mendoza_18294_202505121950310.JPEG',nombre:'Lago Potrerillos',desc:'El corazón del valle. Debajo de estas aguas turquesas hay un pueblo entero.',badge:'Destacado',badgeClass:'azul',intro:'Debajo de estas aguas hay un pueblo inundado.',historia:'Lo que hoy es un lago turquesa rodeado de montañas fue, hasta el año 2000, el pueblo de Potrerillos Viejo. Cuando se llenó el dique en 2004, el agua cubrió casas, calles, la plaza y hasta la iglesia. Los vecinos fueron relocalizados, pero muchos dicen que en días de mucho viento todavía se puede ver el campanario asomar bajo la superficie.',dato:'El lago tiene 23km de largo y en algunos puntos supera los 80 metros de profundidad. En verano el agua alcanza los 22°C — perfecta para kayak y SUP.',mads:'A pocos minutos de la orilla del lago arranca el recorrido de rafting con Mads Experiences.',maps:'https://maps.google.com/?q=Dique+Potrerillos+Mendoza'},
+  {id:3,foto:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2oUqe0QC9t-iOEOPQ2_hFuiIBCHmDLkwHzQ&s',nombre:'Mirador del Dique — Punto 1',desc:'El mirador más visitado de Potrerillos. 4.8 estrellas en Google.',badge:'4.8 ⭐',badgeClass:'azul',intro:'La foto que todos se sacan. Y tiene razón.',historia:'Este deck de observación es el punto más fotografiado de toda la región. Fue construido sobre una saliente natural de roca que cae directo al lago. Los vendedores locales de piedras semipreciosas llevan décadas en este rincón.',dato:'Las piedras que venden los artesanos son amatistas, cuarzos y rodocrositas — la piedra nacional argentina — extraídas de las minas de los cerros vecinos.',mads:'Desde este mirador podés ver exactamente el recorrido del río donde Mads lleva los grupos de rafting.',maps:'https://maps.google.com/?q=Mirador+Dique+Potrerillos'},
+  {id:4,foto:'https://lujandecuyo.tur.ar/wp-content/uploads/original-2-7.jpg',nombre:'Mirador Principal',desc:'El primer acceso al dique. Tranquilo, espectacular y con kayaks disponibles.',badge:'Top foto',badgeClass:'default',intro:'El secreto mejor guardado para ver el lago sin multitudes.',historia:'Mientras el Mirador 1 concentra la mayoría del turismo, este acceso es el preferido de los locales. Más tranquilo, con bajada directa al agua y una perspectiva diferente del lago.',dato:'Desde la orilla de este mirador parten los tours de kayak y SUP del lago. El agua es tan clara que desde la tabla se puede ver el fondo.',mads:'Bajando por el río, los grupos de rafting de Mads pasan justo por este paisaje.',maps:'https://maps.google.com/?q=Mirador+Potrerillos'},
+  {id:5,foto:'https://inmendoza.com/wp-content/uploads/2021/09/IMG_6439.jpg',nombre:'Las Palapas',desc:'Bar al borde del lago con DJ en vivo. Solo los sábados de 17 a 23.',badge:'Bar al lago',badgeClass:'azul',intro:'El lugar más inesperado de Potrerillos.',historia:'Nadie espera encontrar un bar con música en vivo al borde de un lago de montaña. Las Palapas apareció casi de la nada y se convirtió en el plan de los sábados para toda la región. Las palapas de paja, los pies en la arena y el sol cayendo sobre los Andes crean una combinación única.',dato:'Solo abre los sábados de 17 a 23hs. Si llegás antes de las 18 conseguís lugar en la orilla del agua.',mads:'El plan perfecto del sábado: rafting con Mads durante el día y Las Palapas al atardecer.',maps:'https://maps.google.com/?q=-32.9614,-69.1899'},
+  {id:6,foto:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyqyKX2CojO4mKgO3HdhKRVJCI3MLEndRmjw&s',nombre:'Estación de Trenes Guido',desc:'Una estación ferroviaria abandonada en medio de la montaña. Historia pura.',badge:'Historia',badgeClass:'azul',intro:'El tren que unía Mendoza con Chile y quedó en el tiempo.',historia:'La Estación Guido fue parte del Ferrocarril Trasandino, la línea que unía Mendoza con Santiago de Chile cruzando la Cordillera. Un alud en 1934 clausuró definitivamente el paso y la estación quedó congelada en el tiempo.',dato:'El edificio original de la estación sigue en pie. Las vías todavía se pueden ver entre la vegetación. En invierno, con nieve, el lugar parece una postal de principios del 1900.',mads:'Un desvío perfecto de 15 minutos antes o después de tu aventura con Mads.',maps:'https://maps.google.com/?q=Estacion+Guido+Mendoza'},
+  {id:7,foto:'https://lujandecuyo.tur.ar/wp-content/uploads/jet-engine-forms/23/Vallecitos-02.webp',nombre:'Vallecitos',desc:'Centro de ski y trekking a 2900m de altura. Alta montaña pura.',badge:'Alta montaña',badgeClass:'default',intro:'El centro de ski más antiguo de Mendoza, a 45 minutos de Potrerillos.',historia:'Vallecitos es el centro de ski más antiguo de la provincia y el favorito de los mendocinos. Está a 2900 metros de altura, en el Cordón del Plata, y en verano se transforma en el punto de partida de los trekkings más populares de la región.',dato:'En invierno hay nieve garantizada desde junio hasta septiembre. En verano la temperatura baja hasta los 5°C de noche. Siempre llevá abrigo.',mads:'Combiná un día en Vallecitos con una jornada de rafting en el río con Mads.',maps:'https://maps.google.com/?q=Vallecitos+Mendoza'},
+];
+
+const historiasData=[
+  {titulo:'El pueblo bajo el agua',foto:'https://media.diariouno.com.ar/p/5838620a65e2442c80e3ef05cc301c12/adjuntos/298/imagenes/008/986/0008986616/1200x0/smart/perilago-norte-potrerillosjpg.jpg',desc:'¿Sabías que debajo del dique hay un pueblo inundado?',badge:'📍 Secreto local',badgeClass:'azul',intro:'Debajo del lago turquesa hay calles, casas y una plaza.',historia:'Antes de que existiera el dique, el valle de Potrerillos era un lugar de pastores, quintas y familias que vivían al ritmo del río. Cuando la represa se llenó en 2004, el agua cubrió todo — calles, corrales, árboles y hasta los cimientos de las casas del viejo poblado. Los vecinos fueron reubicados años antes, pero muchos tardaron décadas en adaptarse. Hoy, cuando el nivel del lago baja en invierno, se pueden ver los árboles secos asomar sobre la superficie — un bosque fantasma que recuerda lo que había antes.',dato:'En años de sequía severa, cuando el nivel baja mucho, se pueden ver restos de construcciones y caminos a pocos metros bajo el agua desde kayak o SUP.'},
+  {titulo:'7 secretos que casi nadie conoce',foto:'https://www.tangol.com/blog/Fotos/Notas/que-hacer-en-potrerillos-y-como-ir-al-dique-de-mendoza_18294_202505121950310.JPEG',desc:'Los rincones que los turistas nunca encuentran.',badge:'🔥 Imperdible',badgeClass:'default',intro:'Los rincones que los turistas nunca encuentran.',historia:'1. El bosque inundado: al norte del lago hay álamos sumergidos que forman una postal única al amanecer. 2. La playa secreta: 400m a pie desde el mirador principal, sin señalización. 3. La capilla de montaña: una capilla del siglo XIX escondida entre los cerros. 4. El mirador del tren: sobre las vías abandonadas del Trasandino hay una vista del lago que muy pocos conocen. 5. La piedra del cóndor: una formación rocosa donde los cóndores se posan al mediodía. 6. La fuente natural: agua de deshielo que brota directo de la roca, a 10 minutos caminando. 7. El atardecer desde el dique: el único lugar donde el sol se mete exactamente entre dos cerros.',dato:'Ninguno de estos lugares está en Google Maps. Los locales los conocen de memoria y rara vez los comparten con turistas.'},
+  {titulo:'Los 5 mejores atardeceres',foto:'https://lujandecuyo.tur.ar/wp-content/uploads/original-2-7.jpg',desc:'Los lugares exactos para ver el sol caer sobre los Andes.',badge:'🌅 Atardeceres',badgeClass:'default',intro:'Los lugares exactos donde el sol cae sobre los Andes.',historia:'1. Mirador del Dique (Punto 1): el clásico. El sol cae detrás del Cordón del Plata y tiñe el lago de naranja. Llegá 30 minutos antes. 2. Potrerillos 360: desde las alturas, el atardecer ilumina tres valles al mismo tiempo. 3. La orilla norte del lago: sin turistas, solo agua y montaña. 4. Sobre la ruta 82: hay una curva exacta donde el sol se alinea con el valle. 5. Las Palapas (solo sábados): ver el atardecer con música en vivo y los pies en la arena.',dato:'La hora dorada en Potrerillos dura entre 20 y 40 minutos. En verano el sol se pone cerca de las 21hs, en invierno cerca de las 18:30.'},
+  {titulo:'Dónde tomar el mejor mate',foto:'https://inmendoza.com/wp-content/uploads/2021/09/IMG_6439.jpg',desc:'Los spots donde los mendocinos van a desconectarse de verdad.',badge:'🧉 Local tip',badgeClass:'azul',intro:'Los spots donde los mendocinos van cuando quieren desconectarse.',historia:'Tomar mate en Potrerillos es un ritual. Los locales no van al mirador principal — ese es para las fotos. Van a la orilla norte del lago, donde no hay estacionamiento ni señalización, solo pasto, agua y montaña. Otro spot favorito es la base de la represa, del lado que mira al río. Y si querés el mate con más onda, Las Palapas los sábados ofrece algo único: mesa al borde del lago, sin apuro, con los Andes de fondo.',dato:'Los locales dicen que el mejor momento para tomar mate es a las 8 de la mañana, cuando la neblina del lago todavía no se levantó y el lugar parece de otro mundo.'},
+  {titulo:'Lo que nadie te cuenta antes de subir',foto:'https://lujandecuyo.tur.ar/wp-content/uploads/jet-engine-forms/23/Vallecitos-02.webp',desc:'¿Vas a la nieve? Leé esto antes de salir.',badge:'❄️ Alta Montaña',badgeClass:'azul',intro:'¿Vas a Vallecitos? Leé esto antes de salir.',historia:'La mayoría sube a la nieve sin saber que la temperatura en Vallecitos puede bajar a -15°C en la madrugada, incluso cuando en Potrerillos hay 20°C. El mal de altura aparece desde los 2500 metros — dolor de cabeza, náuseas y cansancio extremo son normales el primer día. Lo más importante: la ruta a Vallecitos no tiene combustible ni señal de celular pasando cierto punto. Subir con el tanque lleno, agua, ropa de abrigo extra y una linterna no es opcional.',dato:'El soroche (mal de altura) se previene subiendo despacio, tomando mucha agua y evitando el alcohol el día anterior. Si sentís mareo fuerte, la solución es bajar.'},
 ];
 
 const experiencias=[
@@ -397,74 +275,6 @@ const experiencias=[
   {nombre:'Cabalgata',foto:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRK3_mnsNRFkJkSvAUFf39VT-mFBBKbIicJww&s',desc:'Montaña a caballo · Atardecer',precio:'Consultá'},
 ];
 
-const historias=[
-  {
-    titulo:'El pueblo bajo el agua',
-    foto:'https://media.diariouno.com.ar/p/5838620a65e2442c80e3ef05cc301c12/adjuntos/298/imagenes/008/986/0008986616/1200x0/smart/perilago-norte-potrerillosjpg.jpg',
-    intro:'Debajo del lago turquesa hay calles, casas y una plaza.',
-    historia:'Antes de que existiera el dique, el valle de Potrerillos era un lugar de pastores, quintas y familias que vivían al ritmo del río. Cuando la represa se llenó en 2004, el agua cubrió todo — calles, corrales, árboles y hasta los cimientos de las casas del viejo poblado. Los vecinos fueron reubicados años antes, pero muchos tardaron décadas en adaptarse al nuevo Potrerillos. Hoy, cuando el nivel del lago baja en invierno, se pueden ver los árboles secos asomar sobre la superficie — un bosque fantasma que recuerda lo que había antes.',
-    dato:'En años de sequía severa, cuando el nivel del embalse baja mucho, se pueden ver los restos de construcciones y caminos a pocos metros bajo el agua desde kayak o SUP.'
-  },
-  {
-    titulo:'7 secretos que casi nadie conoce',
-    foto:'https://www.tangol.com/blog/Fotos/Notas/que-hacer-en-potrerillos-y-como-ir-al-dique-de-mendoza_18294_202505121950310.JPEG',
-    intro:'Los rincones que los turistas nunca encuentran.',
-    historia:'1. El bosque inundado: al norte del lago hay álamos sumergidos que forman una postal única al amanecer. 2. La playa secreta: 400m a pie desde el mirador principal, sin señalización. 3. La capilla de montaña: una capilla del siglo XIX escondida entre los cerros que los locales visitan en silencio. 4. El mirador del tren: sobre las vías abandonadas del Trasandino hay una vista del lago que muy pocos conocen. 5. La piedra del cóndor: una formación rocosa donde los cóndores se posan al mediodía. 6. La fuente natural: agua de deshielo que brota directo de la roca, a 10 minutos caminando. 7. El atardecer desde el dique: el único lugar donde el sol se mete exactamente entre dos cerros, creando una sombra perfecta sobre el lago.',
-    dato:'Ninguno de estos lugares está en Google Maps. Los locales los conocen de memoria y rara vez los comparten con turistas.'
-  },
-  {
-    titulo:'Los 5 mejores atardeceres de Potrerillos',
-    foto:'https://lujandecuyo.tur.ar/wp-content/uploads/original-2-7.jpg',
-    intro:'Los lugares exactos donde el sol cae sobre los Andes.',
-    historia:'1. Mirador del Dique (Punto 1): el clásico. El sol cae detrás del Cordón del Plata y tiñe el lago de naranja. Llegá 30 minutos antes para conseguir lugar. 2. Potrerillos 360: desde las alturas, el atardecer ilumina tres valles al mismo tiempo. 3. La orilla norte del lago: sin turistas, solo agua y montaña. El reflejo del cielo en el agua es extraordinario. 4. Sobre la ruta 82: hay una curva exacta donde el sol se alinea con el valle y crea una foto imposible. 5. Las Palapas (solo sábados): ver el atardecer con música en vivo y los pies en la arena es una experiencia que no se olvida.',
-    dato:'La hora dorada en Potrerillos dura entre 20 y 40 minutos dependiendo la época del año. En verano el sol se pone cerca de las 21hs, en invierno cerca de las 18:30.'
-  },
-  {
-    titulo:'Dónde tomar el mejor mate',
-    foto:'https://inmendoza.com/wp-content/uploads/2021/09/IMG_6439.jpg',
-    intro:'Los spots donde los mendocinos van cuando quieren desconectarse de verdad.',
-    historia:'Tomar mate en Potrerillos es un ritual. Los locales no van al mirador principal — ese es para las fotos. Van a la orilla norte del lago, donde no hay estacionamiento ni señalización, solo pasto, agua y montaña. Otro spot favorito es la base de la represa, del lado que mira al río — desde ahí se ve el agua caer y el valle abrirse. Y si querés el mate con más onda, Las Palapas los sábados ofrece algo único: mesa al borde del lago, sin apuro, con los Andes de fondo.',
-    dato:'Los locales dicen que el mejor momento para tomar mate en Potrerillos es a las 8 de la mañana, cuando la neblina del lago todavía no se levantó y el lugar parece de otro mundo.'
-  },
-  {
-    titulo:'Lo que nadie te cuenta antes de subir a la nieve',
-    foto:'https://lujandecuyo.tur.ar/wp-content/uploads/jet-engine-forms/23/Vallecitos-02.webp',
-    intro:'¿Vas a Vallecitos o a Las Leñas? Leé esto antes de salir.',
-    historia:'La mayoría sube a la nieve sin saber que la temperatura en Vallecitos puede bajar a -15°C en la madrugada, incluso cuando en Potrerillos hay 20°C. El mal de altura aparece desde los 2500 metros — dolor de cabeza, náuseas y cansancio extremo son normales el primer día. Lo más importante: la ruta a Vallecitos no tiene combustible ni señal de celular pasando cierto punto. Subir con el tanque lleno, agua, ropa de abrigo extra y una linterna no es opcional — es necesario.',
-    dato:'El soroche (mal de altura) se previene subiendo despacio, tomando mucha agua y evitando el alcohol el día anterior. Si sentís mareo fuerte, la solución es bajar — no esperar que pase.'
-  },
-];
-
-function abrirHistoria(i){
-  const h=historias[i];
-  document.getElementById('detail-content').innerHTML=`
-    <div class="detail-hero">
-      <img src="${h.foto}" alt="${h.titulo}"/>
-      <div class="detail-hero-overlay"></div>
-    </div>
-    <div class="detail-body">
-      <div class="detail-eyebrow">Historias y Secretos</div>
-      <h1>${h.titulo}</h1>
-      <p class="detail-intro">${h.intro}</p>
-      <p>${h.historia}</p>
-      <div class="detail-dato">
-        <div class="detail-dato-label">💡 Dato útil</div>
-        <p>${h.dato}</p>
-      </div>
-      <div class="detail-actions">
-        <button class="btn-orange" onclick="cerrarDetail()">← Volver</button>
-      </div>
-      <div class="detail-mads">
-        <div class="detail-mads-label">Mads Experiences</div>
-        <h4>Rafting, kayak y trekking con guías certificados en Potrerillos.</h4>
-        <a href="reserva.html">Ver experiencias →</a>
-      </div>
-    </div>
-  `;
-  document.getElementById('detail').classList.add('open');
-  window.scrollTo(0,0);
-}
-
 function renderLugares(){
   document.getElementById('lugares').innerHTML=lugares.map(l=>`
     <div class="place-card" onclick="abrirDetail(${l.id})">
@@ -474,6 +284,21 @@ function renderLugares(){
         <span class="place-badge ${l.badgeClass}">${l.badge}</span>
         <h3>${l.nombre}</h3>
         <p>${l.desc}</p>
+      </div>
+      <span class="place-card-arrow">→</span>
+    </div>
+  `).join('');
+}
+
+function renderHistorias(){
+  document.getElementById('historias-list').innerHTML=historiasData.map((h,i)=>`
+    <div class="place-card" onclick="abrirHistoria(${i})">
+      <img class="place-card-img" src="${h.foto}" alt="${h.titulo}"/>
+      <div class="place-card-overlay"></div>
+      <div class="place-card-content">
+        <span class="place-badge ${h.badgeClass}">${h.badge}</span>
+        <h3>${h.titulo}</h3>
+        <p>${h.desc}</p>
       </div>
       <span class="place-card-arrow">→</span>
     </div>
@@ -495,34 +320,25 @@ function renderExperiencias(){
   `).join('');
 }
 
+function switchTab(tab){
+  document.getElementById('tab-explorar').classList.toggle('active',tab==='explorar');
+  document.getElementById('tab-historias').classList.toggle('active',tab==='historias');
+  document.getElementById('panel-explorar').style.display=tab==='explorar'?'block':'none';
+  document.getElementById('panel-historias').style.display=tab==='historias'?'block':'none';
+}
+
 function abrirDetail(id){
   const l=lugares.find(x=>x.id===id);
   if(!l)return;
-  const madsBlock=l.mads?`
-    <div class="detail-mads">
-      <div class="detail-mads-label">Mads Experiences</div>
-      <h4>${l.mads}</h4>
-      <a href="reserva.html">Reservar aventura →</a>
-    </div>`:
-    `<div class="detail-mads">
-      <div class="detail-mads-label">Mads Experiences</div>
-      <h4>Rafting, kayak y trekking con guías certificados en Potrerillos.</h4>
-      <a href="reserva.html">Ver experiencias →</a>
-    </div>`;
+  const madsBlock=l.mads?`<div class="detail-mads"><div class="detail-mads-label">Mads Experiences</div><h4>${l.mads}</h4><a href="reserva.html">Reservar aventura →</a></div>`:`<div class="detail-mads"><div class="detail-mads-label">Mads Experiences</div><h4>Rafting, kayak y trekking con guías certificados en Potrerillos.</h4><a href="reserva.html">Ver experiencias →</a></div>`;
   document.getElementById('detail-content').innerHTML=`
-    <div class="detail-hero">
-      <img src="${l.foto}" alt="${l.nombre}"/>
-      <div class="detail-hero-overlay"></div>
-    </div>
+    <div class="detail-hero"><img src="${l.foto}" alt="${l.nombre}"/><div class="detail-hero-overlay"></div></div>
     <div class="detail-body">
       <div class="detail-eyebrow">Potrerillos · Mendoza</div>
       <h1>${l.nombre}</h1>
       <p class="detail-intro">${l.intro}</p>
       <p>${l.historia}</p>
-      <div class="detail-dato">
-        <div class="detail-dato-label">💡 Dato útil</div>
-        <p>${l.dato}</p>
-      </div>
+      <div class="detail-dato"><div class="detail-dato-label">💡 Dato útil</div><p>${l.dato}</p></div>
       <div class="detail-actions">
         <button class="btn-orange" onclick="window.open('${l.maps}','_blank')">Cómo llegar</button>
         <button class="btn-ghost" onclick="cerrarDetail()">Volver</button>
@@ -534,11 +350,32 @@ function abrirDetail(id){
   window.scrollTo(0,0);
 }
 
+function abrirHistoria(i){
+  const h=historiasData[i];
+  document.getElementById('detail-content').innerHTML=`
+    <div class="detail-hero"><img src="${h.foto}" alt="${h.titulo}"/><div class="detail-hero-overlay"></div></div>
+    <div class="detail-body">
+      <div class="detail-eyebrow">Historias y Secretos</div>
+      <h1>${h.titulo}</h1>
+      <p class="detail-intro">${h.intro}</p>
+      <p>${h.historia}</p>
+      <div class="detail-dato"><div class="detail-dato-label">💡 Dato útil</div><p>${h.dato}</p></div>
+      <div class="detail-actions">
+        <button class="btn-orange" onclick="cerrarDetail()">← Volver</button>
+      </div>
+      <div class="detail-mads"><div class="detail-mads-label">Mads Experiences</div><h4>Rafting, kayak y trekking con guías certificados en Potrerillos.</h4><a href="reserva.html">Ver experiencias →</a></div>
+    </div>
+  `;
+  document.getElementById('detail').classList.add('open');
+  window.scrollTo(0,0);
+}
+
 function cerrarDetail(){
   document.getElementById('detail').classList.remove('open');
 }
 
 renderLugares();
+renderHistorias();
 renderExperiencias();
 </script>
 </body>
