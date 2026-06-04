@@ -11,6 +11,24 @@
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--orange:#C17F3E;--dark:#0D0B08;--stone:#E8D5B0;--river:#3A6B8A;--sky:#A8C4E0;--green:#5C8A3A;--card:#161208}
 body{font-family:'Lato',sans-serif;background:var(--dark);color:#fff;min-height:100vh;overflow-x:hidden}
+
+/* SPLASH */
+.splash{position:fixed;inset:0;z-index:9999;background:var(--dark);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 28px;transition:opacity 0.6s ease}
+.splash.hide{opacity:0;pointer-events:none}
+.splash-eyebrow{font-size:9px;color:var(--orange);letter-spacing:3px;text-transform:uppercase;margin-bottom:28px;display:flex;align-items:center;gap:8px}
+.splash-eyebrow::before,.splash-eyebrow::after{content:'';flex:1;height:1px;background:rgba(193,127,62,0.3)}
+.splash-hook{text-align:center;min-height:120px;display:flex;align-items:center;justify-content:center;margin-bottom:32px}
+.splash-hook h2{font-family:'Playfair Display',serif;font-size:26px;font-weight:400;line-height:1.4;color:var(--stone);opacity:0;transform:translateY(12px);transition:opacity 0.5s ease,transform 0.5s ease}
+.splash-hook h2.visible{opacity:1;transform:translateY(0)}
+.splash-hook h2 em{color:var(--orange);font-style:italic}
+.splash-dots{display:flex;gap:6px;margin-bottom:40px}
+.splash-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.2);transition:background 0.3s}
+.splash-dot.active{background:var(--orange)}
+.splash-btn{background:var(--orange);color:#fff;font-family:'Lato',sans-serif;font-size:13px;font-weight:700;padding:15px 40px;border-radius:4px;border:none;cursor:pointer;letter-spacing:1.5px;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+.splash-btn svg{width:16px;height:16px}
+.splash-skip{margin-top:16px;font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:1px;text-transform:uppercase;cursor:pointer;text-decoration:none}
+
+/* HERO */
 .hero{position:relative;height:100vh;max-height:700px;overflow:hidden}
 .hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(13,11,8,0.3) 0%,rgba(13,11,8,0.15) 40%,rgba(13,11,8,0.85) 100%)}
@@ -84,6 +102,21 @@ body{font-family:'Lato',sans-serif;background:var(--dark);color:#fff;min-height:
 </head>
 <body>
 
+<!-- SPLASH -->
+<div class="splash" id="splash">
+  <div class="splash-eyebrow">Potrerillos · Mendoza</div>
+  <div class="splash-hook">
+    <h2 id="hook-text"></h2>
+  </div>
+  <div class="splash-dots" id="splash-dots"></div>
+  <button class="splash-btn" onclick="cerrarSplash()">
+    Descubrir
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+  </button>
+  <span class="splash-skip" onclick="cerrarSplash()">saltar</span>
+</div>
+
+<!-- HERO -->
 <div class="hero">
   <img class="hero-img" src="https://mendozatrip.com/wp-content/uploads/2025/03/potrerillos.webp" alt="Potrerillos"/>
   <div class="hero-overlay"></div>
@@ -166,15 +199,53 @@ body{font-family:'Lato',sans-serif;background:var(--dark);color:#fff;min-height:
 </nav>
 
 <script>
+const hooks=[
+  {emoji:'🌊',texto:'¿Sabías que debajo del dique hay un <em>pueblo inundado</em>?'},
+  {emoji:'🔥',texto:'7 secretos de Potrerillos que casi <em>ningún turista conoce</em>'},
+  {emoji:'🌅',texto:'Los 5 mejores lugares para ver el <em>atardecer en Mendoza</em>'},
+  {emoji:'🧉',texto:'Dónde tomar mate con la <em>mejor vista</em> de Potrerillos'},
+  {emoji:'❄️',texto:'¿Vas a la nieve? Lo que <em>nadie te cuenta</em> antes de subir'},
+];
+
+let hookActual=0;
+let hookTimer;
+const hookEl=document.getElementById('hook-text');
+const dotsEl=document.getElementById('splash-dots');
+
+dotsEl.innerHTML=hooks.map((_,i)=>`<div class="splash-dot${i===0?' active':''}" id="dot-${i}"></div>`).join('');
+
+function mostrarHook(i){
+  hookEl.classList.remove('visible');
+  setTimeout(()=>{
+    hookEl.innerHTML=hooks[i].emoji+' '+hooks[i].texto;
+    hookEl.classList.add('visible');
+    document.querySelectorAll('.splash-dot').forEach((d,j)=>d.classList.toggle('active',j===i));
+  },300);
+}
+
+function avanzarHook(){
+  hookActual=(hookActual+1)%hooks.length;
+  mostrarHook(hookActual);
+}
+
+mostrarHook(0);
+hookTimer=setInterval(avanzarHook,2800);
+
+function cerrarSplash(){
+  clearInterval(hookTimer);
+  document.getElementById('splash').classList.add('hide');
+  setTimeout(()=>document.getElementById('splash').style.display='none',600);
+}
+
 const lugares=[
-  {id:0,foto:'https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1024,h=615,fit=crop/gpoXXdqC8evQIJK5/img_4111-PJeLu2ahZvh5XdP3.JPG',nombre:'Mads Experiences',desc:'La experiencia premium del Río Mendoza. Rafting, kayak, trekking y más con guías certificados.',badge:'Reservar →',badgeClass:'default',tag:'Aventura · Todo el año',mads:'Viví el Río Mendoza con guías certificados y fotos incluidas.',maps:'https://maps.app.goo.gl/crNTj9Li3Y27SUBD9'},
-  {id:1,foto:'https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=512,fit=crop/gpoXXdqC8evQIJK5/potre-360-6LozTCTLMp44arwe.webp',nombre:'Potrerillos 360',desc:'Experiencias únicas en las alturas de Potrerillos. Vistas panorámicas y aventura.',badge:'Recomendado',badgeClass:'default',tag:'Aventura · Naturaleza',mads:'Este es el punto de encuentro de Mads Experiences.',maps:'https://maps.app.goo.gl/crNTj9Li3Y27SUBD9'},
-  {id:2,foto:'https://www.tangol.com/blog/Fotos/Notas/que-hacer-en-potrerillos-y-como-ir-al-dique-de-mendoza_18294_202505121950310.JPEG',nombre:'Lago Potrerillos',desc:'El corazón del valle. Formado en 2004 con el llenado del dique, transformó para siempre el paisaje de Potrerillos.',badge:'Destacado',badgeClass:'azul',tag:'Naturaleza · 5 min',mads:'A pocos minutos arranca la aventura de rafting con Mads Experiences.',maps:'https://maps.google.com/?q=Dique+Potrerillos+Mendoza'},
-  {id:3,foto:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2oUqe0QC9t-iOEOPQ2_hFuiIBCHmDLkwHzQ&s',nombre:'Mirador del Dique — Punto 1',desc:'Deck de observación con bajada al agua. 4.8 estrellas · 1250 reseñas en Google.',badge:'4.8 ⭐',badgeClass:'azul',tag:'Mirador · libre',mads:'Desde acá podés ver el recorrido del río donde opera Mads.',maps:'https://maps.google.com/?q=Mirador+Dique+Potrerillos'},
-  {id:4,foto:'https://lujandecuyo.tur.ar/wp-content/uploads/original-2-7.jpg',nombre:'Mirador Principal',desc:'El primer acceso al dique. Kayak y SUP disponibles en la orilla. Tranquilo y espectacular.',badge:'Top foto',badgeClass:'default',tag:'Mirador · libre',mads:'Bajando por el río, Mads lleva grupos de rafting por este paisaje.',maps:'https://maps.google.com/?q=Mirador+Potrerillos'},
-  {id:5,foto:'https://inmendoza.com/wp-content/uploads/2021/09/IMG_6439.jpg',nombre:'Las Palapas',desc:'Bar con onda única al borde del lago. DJ en vivo los sábados. Solo abre los sábados de 17 a 23.',badge:'Bar al lago',badgeClass:'azul',tag:'Gastronomía · Sábados',mads:'El plan perfecto: rafting con Mads de día y Las Palapas al atardecer.',maps:'https://maps.google.com/?q=-32.9614,-69.1899'},
-  {id:6,foto:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyqyKX2CojO4mKgO3HdhKRVJCI3MLEndRmjw&s',nombre:'Estación de Trenes Guido',desc:'Antigua estación ferroviaria abandonada rodeada de montañas. Un rincón histórico y fotográfico único.',badge:'Historia',badgeClass:'azul',tag:'Cultura · Foto',mads:'Un desvío perfecto antes o después de tu aventura con Mads.',maps:'https://maps.google.com/?q=Estacion+Guido+Mendoza'},
-  {id:7,foto:'https://lujandecuyo.tur.ar/wp-content/uploads/jet-engine-forms/23/Vallecitos-02.webp',nombre:'Vallecitos',desc:'Centro de ski y montañismo a 2900m de altura. En verano ideal para trekking y vistas impresionantes.',badge:'Alta montaña',badgeClass:'default',tag:'Aventura · Montaña',mads:'Combiná Vallecitos con una jornada de rafting en el río con Mads.',maps:'https://maps.google.com/?q=Vallecitos+Mendoza'},
+  {id:0,foto:'https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1024,h=615,fit=crop/gpoXXdqC8evQIJK5/img_4111-PJeLu2ahZvh5XdP3.JPG',nombre:'Mads Experiences',desc:'La experiencia premium del Río Mendoza. Rafting, kayak, trekking y más con guías certificados.',badge:'Reservar →',badgeClass:'default',mads:'Viví el Río Mendoza con guías certificados y fotos incluidas.',maps:'https://maps.app.goo.gl/crNTj9Li3Y27SUBD9'},
+  {id:1,foto:'https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=768,h=512,fit=crop/gpoXXdqC8evQIJK5/potre-360-6LozTCTLMp44arwe.webp',nombre:'Potrerillos 360',desc:'Experiencias únicas en las alturas de Potrerillos. Vistas panorámicas y aventura.',badge:'Recomendado',badgeClass:'default',mads:'Este es el punto de encuentro de Mads Experiences.',maps:'https://maps.app.goo.gl/crNTj9Li3Y27SUBD9'},
+  {id:2,foto:'https://www.tangol.com/blog/Fotos/Notas/que-hacer-en-potrerillos-y-como-ir-al-dique-de-mendoza_18294_202505121950310.JPEG',nombre:'Lago Potrerillos',desc:'El corazón del valle. Formado en 2004 con el llenado del dique, transformó para siempre el paisaje de Potrerillos.',badge:'Destacado',badgeClass:'azul',mads:'A pocos minutos arranca la aventura de rafting con Mads Experiences.',maps:'https://maps.google.com/?q=Dique+Potrerillos+Mendoza'},
+  {id:3,foto:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2oUqe0QC9t-iOEOPQ2_hFuiIBCHmDLkwHzQ&s',nombre:'Mirador del Dique — Punto 1',desc:'Deck de observación con bajada al agua. 4.8 estrellas · 1250 reseñas en Google.',badge:'4.8 ⭐',badgeClass:'azul',mads:'Desde acá podés ver el recorrido del río donde opera Mads.',maps:'https://maps.google.com/?q=Mirador+Dique+Potrerillos'},
+  {id:4,foto:'https://lujandecuyo.tur.ar/wp-content/uploads/original-2-7.jpg',nombre:'Mirador Principal',desc:'El primer acceso al dique. Kayak y SUP disponibles en la orilla. Tranquilo y espectacular.',badge:'Top foto',badgeClass:'default',mads:'Bajando por el río, Mads lleva grupos de rafting por este paisaje.',maps:'https://maps.google.com/?q=Mirador+Potrerillos'},
+  {id:5,foto:'https://inmendoza.com/wp-content/uploads/2021/09/IMG_6439.jpg',nombre:'Las Palapas',desc:'Bar con onda única al borde del lago. DJ en vivo los sábados. Solo abre los sábados de 17 a 23.',badge:'Bar al lago',badgeClass:'azul',mads:'El plan perfecto: rafting con Mads de día y Las Palapas al atardecer.',maps:'https://maps.google.com/?q=-32.9614,-69.1899'},
+  {id:6,foto:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyqyKX2CojO4mKgO3HdhKRVJCI3MLEndRmjw&s',nombre:'Estación de Trenes Guido',desc:'Antigua estación ferroviaria abandonada rodeada de montañas. Un rincón histórico y fotográfico único.',badge:'Historia',badgeClass:'azul',mads:'Un desvío perfecto antes o después de tu aventura con Mads.',maps:'https://maps.google.com/?q=Estacion+Guido+Mendoza'},
+  {id:7,foto:'https://lujandecuyo.tur.ar/wp-content/uploads/jet-engine-forms/23/Vallecitos-02.webp',nombre:'Vallecitos',desc:'Centro de ski y montañismo a 2900m de altura. En verano ideal para trekking y vistas impresionantes.',badge:'Alta montaña',badgeClass:'default',mads:'Combiná Vallecitos con una jornada de rafting en el río con Mads.',maps:'https://maps.google.com/?q=Vallecitos+Mendoza'},
 ];
 
 const experiencias=[
