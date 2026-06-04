@@ -149,6 +149,64 @@ body{font-family:'Lato',sans-serif;background:var(--dark);color:#fff;min-height:
   <div class="places" id="lugares"></div>
 </div>
 
+<!-- HISTORIAS Y SECRETOS -->
+<div class="sec">
+  <div class="sec-eyebrow">Historias y Secretos</div>
+  <h2 class="sec-title">Lo que casi nadie<br>te cuenta</h2>
+</div>
+<div style="padding:0 22px;display:flex;flex-direction:column;gap:2px;margin-bottom:32px">
+  <div class="place-card" onclick="abrirHistoria(0)">
+    <img class="place-card-img" src="https://media.diariouno.com.ar/p/5838620a65e2442c80e3ef05cc301c12/adjuntos/298/imagenes/008/986/0008986616/1200x0/smart/perilago-norte-potrerillosjpg.jpg" alt="Pueblo inundado"/>
+    <div class="place-card-overlay"></div>
+    <div class="place-card-content">
+      <span class="place-badge azul">📍 Secreto local</span>
+      <h3>El pueblo bajo el agua</h3>
+      <p>¿Sabías que debajo del dique hay un pueblo inundado?</p>
+    </div>
+    <span class="place-card-arrow">→</span>
+  </div>
+  <div class="place-card" onclick="abrirHistoria(1)">
+    <img class="place-card-img" src="https://www.tangol.com/blog/Fotos/Notas/que-hacer-en-potrerillos-y-como-ir-al-dique-de-mendoza_18294_202505121950310.JPEG" alt="Secretos Potrerillos"/>
+    <div class="place-card-overlay"></div>
+    <div class="place-card-content">
+      <span class="place-badge default">🔥 Imperdible</span>
+      <h3>7 secretos que casi nadie conoce</h3>
+      <p>Los rincones que los turistas nunca encuentran.</p>
+    </div>
+    <span class="place-card-arrow">→</span>
+  </div>
+  <div class="place-card" onclick="abrirHistoria(2)">
+    <img class="place-card-img" src="https://lujandecuyo.tur.ar/wp-content/uploads/original-2-7.jpg" alt="Atardecer Mendoza"/>
+    <div class="place-card-overlay"></div>
+    <div class="place-card-content">
+      <span class="place-badge default">🌅 Atardeceres</span>
+      <h3>Los 5 mejores atardeceres</h3>
+      <p>Los lugares exactos para ver el sol caer sobre los Andes.</p>
+    </div>
+    <span class="place-card-arrow">→</span>
+  </div>
+  <div class="place-card" onclick="abrirHistoria(3)">
+    <img class="place-card-img" src="https://inmendoza.com/wp-content/uploads/2021/09/IMG_6439.jpg" alt="Mate con vista"/>
+    <div class="place-card-overlay"></div>
+    <div class="place-card-content">
+      <span class="place-badge azul">🧉 Local tip</span>
+      <h3>Dónde tomar el mejor mate</h3>
+      <p>Los spots secretos donde los locales van a tomar mate.</p>
+    </div>
+    <span class="place-card-arrow">→</span>
+  </div>
+  <div class="place-card" onclick="abrirHistoria(4)">
+    <img class="place-card-img" src="https://lujandecuyo.tur.ar/wp-content/uploads/jet-engine-forms/23/Vallecitos-02.webp" alt="Alta Montaña nieve"/>
+    <div class="place-card-overlay"></div>
+    <div class="place-card-content">
+      <span class="place-badge azul">❄️ Alta Montaña</span>
+      <h3>Lo que nadie te cuenta antes de subir</h3>
+      <p>¿Vas a la nieve? Leé esto antes de salir.</p>
+    </div>
+    <span class="place-card-arrow">→</span>
+  </div>
+</div>
+
 <div class="sec">
   <div class="sec-eyebrow">Mads Experiences</div>
   <h2 class="sec-title">Aventuras que<br>no olvidás</h2>
@@ -338,6 +396,74 @@ const experiencias=[
   {nombre:'Kayak de Lago',foto:'https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1024,h=582,fit=crop/gpoXXdqC8evQIJK5/chatgpt-image-14-may-2026-11_21_15-spb7A2aDhxDfY3ij.png',desc:'Dique Potrerillos · Tranquilo',precio:'Consultá'},
   {nombre:'Cabalgata',foto:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRK3_mnsNRFkJkSvAUFf39VT-mFBBKbIicJww&s',desc:'Montaña a caballo · Atardecer',precio:'Consultá'},
 ];
+
+const historias=[
+  {
+    titulo:'El pueblo bajo el agua',
+    foto:'https://media.diariouno.com.ar/p/5838620a65e2442c80e3ef05cc301c12/adjuntos/298/imagenes/008/986/0008986616/1200x0/smart/perilago-norte-potrerillosjpg.jpg',
+    intro:'Debajo del lago turquesa hay calles, casas y una plaza.',
+    historia:'Antes de que existiera el dique, el valle de Potrerillos era un lugar de pastores, quintas y familias que vivían al ritmo del río. Cuando la represa se llenó en 2004, el agua cubrió todo — calles, corrales, árboles y hasta los cimientos de las casas del viejo poblado. Los vecinos fueron reubicados años antes, pero muchos tardaron décadas en adaptarse al nuevo Potrerillos. Hoy, cuando el nivel del lago baja en invierno, se pueden ver los árboles secos asomar sobre la superficie — un bosque fantasma que recuerda lo que había antes.',
+    dato:'En años de sequía severa, cuando el nivel del embalse baja mucho, se pueden ver los restos de construcciones y caminos a pocos metros bajo el agua desde kayak o SUP.'
+  },
+  {
+    titulo:'7 secretos que casi nadie conoce',
+    foto:'https://www.tangol.com/blog/Fotos/Notas/que-hacer-en-potrerillos-y-como-ir-al-dique-de-mendoza_18294_202505121950310.JPEG',
+    intro:'Los rincones que los turistas nunca encuentran.',
+    historia:'1. El bosque inundado: al norte del lago hay álamos sumergidos que forman una postal única al amanecer. 2. La playa secreta: 400m a pie desde el mirador principal, sin señalización. 3. La capilla de montaña: una capilla del siglo XIX escondida entre los cerros que los locales visitan en silencio. 4. El mirador del tren: sobre las vías abandonadas del Trasandino hay una vista del lago que muy pocos conocen. 5. La piedra del cóndor: una formación rocosa donde los cóndores se posan al mediodía. 6. La fuente natural: agua de deshielo que brota directo de la roca, a 10 minutos caminando. 7. El atardecer desde el dique: el único lugar donde el sol se mete exactamente entre dos cerros, creando una sombra perfecta sobre el lago.',
+    dato:'Ninguno de estos lugares está en Google Maps. Los locales los conocen de memoria y rara vez los comparten con turistas.'
+  },
+  {
+    titulo:'Los 5 mejores atardeceres de Potrerillos',
+    foto:'https://lujandecuyo.tur.ar/wp-content/uploads/original-2-7.jpg',
+    intro:'Los lugares exactos donde el sol cae sobre los Andes.',
+    historia:'1. Mirador del Dique (Punto 1): el clásico. El sol cae detrás del Cordón del Plata y tiñe el lago de naranja. Llegá 30 minutos antes para conseguir lugar. 2. Potrerillos 360: desde las alturas, el atardecer ilumina tres valles al mismo tiempo. 3. La orilla norte del lago: sin turistas, solo agua y montaña. El reflejo del cielo en el agua es extraordinario. 4. Sobre la ruta 82: hay una curva exacta donde el sol se alinea con el valle y crea una foto imposible. 5. Las Palapas (solo sábados): ver el atardecer con música en vivo y los pies en la arena es una experiencia que no se olvida.',
+    dato:'La hora dorada en Potrerillos dura entre 20 y 40 minutos dependiendo la época del año. En verano el sol se pone cerca de las 21hs, en invierno cerca de las 18:30.'
+  },
+  {
+    titulo:'Dónde tomar el mejor mate',
+    foto:'https://inmendoza.com/wp-content/uploads/2021/09/IMG_6439.jpg',
+    intro:'Los spots donde los mendocinos van cuando quieren desconectarse de verdad.',
+    historia:'Tomar mate en Potrerillos es un ritual. Los locales no van al mirador principal — ese es para las fotos. Van a la orilla norte del lago, donde no hay estacionamiento ni señalización, solo pasto, agua y montaña. Otro spot favorito es la base de la represa, del lado que mira al río — desde ahí se ve el agua caer y el valle abrirse. Y si querés el mate con más onda, Las Palapas los sábados ofrece algo único: mesa al borde del lago, sin apuro, con los Andes de fondo.',
+    dato:'Los locales dicen que el mejor momento para tomar mate en Potrerillos es a las 8 de la mañana, cuando la neblina del lago todavía no se levantó y el lugar parece de otro mundo.'
+  },
+  {
+    titulo:'Lo que nadie te cuenta antes de subir a la nieve',
+    foto:'https://lujandecuyo.tur.ar/wp-content/uploads/jet-engine-forms/23/Vallecitos-02.webp',
+    intro:'¿Vas a Vallecitos o a Las Leñas? Leé esto antes de salir.',
+    historia:'La mayoría sube a la nieve sin saber que la temperatura en Vallecitos puede bajar a -15°C en la madrugada, incluso cuando en Potrerillos hay 20°C. El mal de altura aparece desde los 2500 metros — dolor de cabeza, náuseas y cansancio extremo son normales el primer día. Lo más importante: la ruta a Vallecitos no tiene combustible ni señal de celular pasando cierto punto. Subir con el tanque lleno, agua, ropa de abrigo extra y una linterna no es opcional — es necesario.',
+    dato:'El soroche (mal de altura) se previene subiendo despacio, tomando mucha agua y evitando el alcohol el día anterior. Si sentís mareo fuerte, la solución es bajar — no esperar que pase.'
+  },
+];
+
+function abrirHistoria(i){
+  const h=historias[i];
+  document.getElementById('detail-content').innerHTML=`
+    <div class="detail-hero">
+      <img src="${h.foto}" alt="${h.titulo}"/>
+      <div class="detail-hero-overlay"></div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-eyebrow">Historias y Secretos</div>
+      <h1>${h.titulo}</h1>
+      <p class="detail-intro">${h.intro}</p>
+      <p>${h.historia}</p>
+      <div class="detail-dato">
+        <div class="detail-dato-label">💡 Dato útil</div>
+        <p>${h.dato}</p>
+      </div>
+      <div class="detail-actions">
+        <button class="btn-orange" onclick="cerrarDetail()">← Volver</button>
+      </div>
+      <div class="detail-mads">
+        <div class="detail-mads-label">Mads Experiences</div>
+        <h4>Rafting, kayak y trekking con guías certificados en Potrerillos.</h4>
+        <a href="reserva.html">Ver experiencias →</a>
+      </div>
+    </div>
+  `;
+  document.getElementById('detail').classList.add('open');
+  window.scrollTo(0,0);
+}
 
 function renderLugares(){
   document.getElementById('lugares').innerHTML=lugares.map(l=>`
